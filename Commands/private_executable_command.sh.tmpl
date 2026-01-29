@@ -1,0 +1,236 @@
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+# 강조 일반
+print_bold() {
+  if [ ! -z "$1" ]; then
+    echo "${BOLD}${1}${NC}"
+  fi
+}
+
+# 명령어 수행 내용 강조
+print_green() {
+  if [ ! -z "$1" ]; then
+    echo -e "${GREEN}${1}${NC}"
+  fi
+}
+
+# 주의 또는 확인 강조
+print_yellow() {
+  if [ ! -z "$1" ]; then
+    echo -e "${YELLOW}${1}${NC}"
+  fi
+}
+
+# 경고 강조
+print_red() {
+  if [ ! -z "$1" ]; then
+    echo -e "${RED}${1}${NC}"
+  fi
+}
+
+function ls_command() {
+  cat ~/Commands/command.sh| grep -e "^function\s*\(\)\s." | cut -d " " -f 2 | cut -d "(" -f 1
+}
+
+function push_command() {
+  cp ~/Commands/command.sh ~/Library/'Mobile Documents'/com~apple~CloudDocs/Dev/command.sh
+  print_bold "iCloud에 command.sh를 업로드했습니다."
+}
+
+function pull_command() {
+  cp ~/Library/'Mobile Documents'/com~apple~CloudDocs/Dev/command.sh ~/Commands/command.sh
+  print_bold "iCloud에서 command.sh를 다운로드했습니다."
+}
+
+function docker_image_build_uaa() {
+  cd ~/Projects/work/msa-starter/jhipster-uaa
+  print_bold "vroong-uaa 이미지를 빌드합니다"
+  ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest -Djib.from.auth.username={{ .dockerHubUsername }} -Djib.from.auth.password=$DOCKER_HUB_PASSWORD
+  print_bold "완료되었습니다"
+}
+
+function ecr_login() {
+  aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com
+}
+
+function sync_refiner() {
+  if [ "$1" = "" ]; then
+    print_bold "neogeorefiner 이미지를 최신화합니다"
+    echo ""
+    echo "Usage:"
+    echo "  $0 <tag_name>"
+    echo "  e.g. $0 etpost-20220915030019"
+    return 0;
+  fi;
+
+  container=$(docker inspect neogeorefiner --format "{{json .State.Status}}" 2> /dev/null | xargs)
+  if [ "running" = "$container" ]; then
+    print_red "neogeorefiner docker container is running"
+    echo ""
+    print_yellow "cd vroong-neogeo && ./gradlew composeDown"
+    echo ""
+    return 0;
+  fi
+
+  print_bold "기존 이미지를 지울까요? [y/N]"
+  read -r response
+  case "$response" in
+   [yY])
+     candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
+     candidate2=$(docker image ls --filter=reference="{{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
+     docker image rm $candidate1 $candidate2 --force
+     ;;
+  esac
+
+  print_green "ECR에 로그인합니다"
+  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | docker login --username AWS --password-stdin {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com
+
+  echo ""
+
+  print_green "이미지를 내려받습니다"
+  docker pull {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1
+
+  echo ""
+
+  print_green "neogeorefiner:latest 태그를 부여합니다"
+  docker tag {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1 neogeorefiner:latest
+
+  echo ""
+
+  print_bold "완료되었습니다"
+}
+
+function git_tag() {
+  if [ "$1" = "" ]; then
+    print_bold "git tag를 최신화합니다"
+    echo ""
+    echo "Usage:"
+    echo "  $0 <tag_name>"
+    echo "  e.g. $0 1.0.0"
+    return 0;
+  fi;
+
+  print_bold "버전을 선택해주세요."
+  print_bold "--------------------"
+  echo "  RELEASE   : [rR]"
+  echo "  SNAPSHOT  : [sS]"
+  echo "  HOTFIX    : [hH]"
+  echo "  사용 안 함: [nN]"
+  print_bold "--------------------"
+  read -r response
+  case "$response" in
+    [rR])
+      tag_version="-RELEASE"
+      ;;
+    [sS])
+      tag_version="-SNAPSHOT"
+      ;;
+    [hH])
+      tag_version="-HOTFIX"
+      ;;
+    [nN])
+      tag_version=""
+      ;;
+  esac
+
+  tag_name=$1$tag_version
+  
+  print_yellow "태그 이름: $tag_name"
+  
+  echo ""
+
+  print_bold "진행할까요? [y/N] "
+  read -r response
+  case "$response" in
+    [yY])
+      print_green "깃 태그 제거 중..."
+      git tag -d $tag_name
+
+      print_green "깃 태그 생성 중..."
+      git tag $tag_name
+      
+      print_green "깃허브 태그 제거 중..."
+      git push origin :$tag_name
+      
+      print_green "깃허브 태그 생성 중..."
+      git push origin $tag_name
+      
+      return 0;
+  esac
+}
+
+function git_fix() {
+  git add . && git commit --amend --no-edit
+  echo ''
+  print_bold "변경사항을 직전 커밋에 합쳤습니다."
+}
+
+function git_reset() {
+  git add . && git reset --hard
+}
+
+function clean_container() {
+    if [ "$1" = "" ]; then
+    print_green "전체 컨테이너를 정리합니다"
+    docker container ls -a -q | xargs docker container stop
+    docker container prune -f  
+    
+    return 0;
+  fi;
+
+  print_green "$1 문자를 포함하는 컨테이너를 정리합니다"
+  docker container ls -a | grep $1 | awk '{print $1}' | xargs docker container stop
+  docker container prune -f  
+}
+
+function klogs() {
+	if [ "$1" = "" ]
+	then
+		echo "view the k8s pod logs"
+		echo ""
+		echo "Usage:"
+		echo '  klogs <POD_ID>'
+		return 0
+	fi
+	kubectl logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+}
+
+function dlogs() {
+	if [ "$1" = "" ]
+	then
+		echo "view the docker container logs"
+		echo ""
+		echo "Usage:"
+		echo '  dlogs <CONTAINER_ID>'
+		return 0
+	fi
+	docker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+}
+
+function dshell() {
+  if [ "$1" = "" ]
+	then
+		echo "access the docker container shell"
+		echo ""
+		echo "Usage:"
+		echo '  dshell <CONTAINER_ID>'
+		return 0
+	fi
+  docker container exec -it $1 /bin/bash
+}
+
+function add_quot() {
+  pbpaste | sed "s/.*/'&',/" | sed '$s/.$//' | pbcopy
+}
+
+function add_dquot() {
+  pbpaste | sed 's/.*/"&",/' | sed '$s/.$//' | pbcopy
+}
+
+function pretty_json() {
+  pbpaste | jq . | pbcopy
+}
