@@ -1,0 +1,14 @@
+# 시크릿 파일 (기존 파일 덮어쓰지 않음)
+.secrets.zsh
+
+# BetterTouchTool 라이센스 및 런타임 파일
+Library/Application Support/BetterTouchTool/*.bttlicense
+Library/Application Support/BetterTouchTool/*-shm
+Library/Application Support/BetterTouchTool/*-wal
+
+# BetterTouchTool 클립보드 (자주 변경됨)
+Library/Application Support/BetterTouchTool/BTTClipboardManager*
+
+# macOS 시스템 파일
+.DS_Store
+**/.DS_Store

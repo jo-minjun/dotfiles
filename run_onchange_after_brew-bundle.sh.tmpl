@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+# Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
+# 위 해시가 변경되면 이 스크립트가 재실행됨
+
+echo "Running brew bundle..."
+brew bundle --file="{{ .chezmoi.homeDir }}/.Brewfile"
+
+echo "Brew bundle completed"
