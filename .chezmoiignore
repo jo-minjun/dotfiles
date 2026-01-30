@@ -9,6 +9,13 @@ Library/Application Support/BetterTouchTool/*-wal
 # BetterTouchTool 클립보드 (자주 변경됨)
 Library/Application Support/BetterTouchTool/BTTClipboardManager*
 
+# AWS 캐시
+.aws/cli/
+
 # macOS 시스템 파일
 .DS_Store
 **/.DS_Store
+
+# 저장소 문서 (홈에 배포 불필요)
+README.md
+docs/
