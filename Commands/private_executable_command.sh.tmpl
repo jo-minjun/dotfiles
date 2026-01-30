@@ -32,32 +32,32 @@ print_red() {
   fi
 }
 
-function ls_command() {
-  cat ~/Commands/command.sh| grep -e "^function\s*\(\)\s." | cut -d " " -f 2 | cut -d "(" -f 1
+ls_command() {
+  grep -E "^[a-z_]+\(\) \{" ~/Commands/command.sh | cut -d "(" -f 1
 }
 
-function push_command() {
+push_command() {
   cp ~/Commands/command.sh ~/Library/'Mobile Documents'/com~apple~CloudDocs/Dev/command.sh
   print_bold "iCloud에 command.sh를 업로드했습니다."
 }
 
-function pull_command() {
+pull_command() {
   cp ~/Library/'Mobile Documents'/com~apple~CloudDocs/Dev/command.sh ~/Commands/command.sh
   print_bold "iCloud에서 command.sh를 다운로드했습니다."
 }
 
-function docker_image_build_uaa() {
+docker_image_build_uaa() {
   cd ~/Projects/work/msa-starter/jhipster-uaa
   print_bold "vroong-uaa 이미지를 빌드합니다"
-  ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest -Djib.from.auth.username={{ .dockerHubUsername }} -Djib.from.auth.password=$DOCKER_HUB_PASSWORD
+  ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest -Djib.from.auth.username=minjunjomesh -Djib.from.auth.password=$DOCKER_HUB_PASSWORD
   print_bold "완료되었습니다"
 }
 
-function ecr_login() {
-  aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com
+ecr_login() {
+  aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
 }
 
-function sync_refiner() {
+sync_refiner() {
   if [ "$1" = "" ]; then
     print_bold "neogeorefiner 이미지를 최신화합니다"
     echo ""
@@ -67,7 +67,7 @@ function sync_refiner() {
     return 0;
   fi;
 
-  container=$(docker inspect neogeorefiner --format "{{json .State.Status}}" 2> /dev/null | xargs)
+  container=$(docker inspect neogeorefiner --format "{{ "{{json .State.Status}}" }}" 2> /dev/null | xargs)
   if [ "running" = "$container" ]; then
     print_red "neogeorefiner docker container is running"
     echo ""
@@ -81,30 +81,30 @@ function sync_refiner() {
   case "$response" in
    [yY])
      candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
-     candidate2=$(docker image ls --filter=reference="{{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
+     candidate2=$(docker image ls --filter=reference="200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
      docker image rm $candidate1 $candidate2 --force
      ;;
   esac
 
   print_green "ECR에 로그인합니다"
-  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | docker login --username AWS --password-stdin {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com
+  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
 
   echo ""
 
   print_green "이미지를 내려받습니다"
-  docker pull {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1
+  docker pull 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1
 
   echo ""
 
   print_green "neogeorefiner:latest 태그를 부여합니다"
-  docker tag {{ .awsAccountId }}.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1 neogeorefiner:latest
+  docker tag 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1 neogeorefiner:latest
 
   echo ""
 
   print_bold "완료되었습니다"
 }
 
-function git_tag() {
+git_tag() {
   if [ "$1" = "" ]; then
     print_bold "git tag를 최신화합니다"
     echo ""
@@ -163,17 +163,17 @@ function git_tag() {
   esac
 }
 
-function git_fix() {
+git_fix() {
   git add . && git commit --amend --no-edit
   echo ''
   print_bold "변경사항을 직전 커밋에 합쳤습니다."
 }
 
-function git_reset() {
+git_reset() {
   git add . && git reset --hard
 }
 
-function clean_container() {
+clean_container() {
     if [ "$1" = "" ]; then
     print_green "전체 컨테이너를 정리합니다"
     docker container ls -a -q | xargs docker container stop
@@ -187,7 +187,7 @@ function clean_container() {
   docker container prune -f  
 }
 
-function klogs() {
+klogs() {
 	if [ "$1" = "" ]
 	then
 		echo "view the k8s pod logs"
@@ -199,7 +199,7 @@ function klogs() {
 	kubectl logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
-function dlogs() {
+dlogs() {
 	if [ "$1" = "" ]
 	then
 		echo "view the docker container logs"
@@ -211,7 +211,7 @@ function dlogs() {
 	docker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
-function dshell() {
+dshell() {
   if [ "$1" = "" ]
 	then
 		echo "access the docker container shell"
@@ -223,14 +223,14 @@ function dshell() {
   docker container exec -it $1 /bin/bash
 }
 
-function add_quot() {
+add_quot() {
   pbpaste | sed "s/.*/'&',/" | sed '$s/.$//' | pbcopy
 }
 
-function add_dquot() {
+add_dquot() {
   pbpaste | sed 's/.*/"&",/' | sed '$s/.$//' | pbcopy
 }
 
-function pretty_json() {
+pretty_json() {
   pbpaste | jq . | pbcopy
 }

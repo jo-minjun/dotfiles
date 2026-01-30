@@ -1,0 +1,12 @@
+{
+  "language": "ko",
+  "plan": "max",
+  "displayMode": "custom",
+  "lines": [
+    ["model", "context", "rateLimit5h", "rateLimit7d"],
+    ["projectInfo", "sessionDuration", "toolActivity", "agentStatus"]
+  ],
+  "cache": {
+    "ttlSeconds": 60
+  }
+}
