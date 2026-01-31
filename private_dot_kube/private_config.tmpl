@@ -1,5 +1,5 @@
 {{- if lookPath "op" -}}
-{{ onepasswordRead "op://Secrets/AWS Credentials/credentials" }}
+{{ onepasswordRead "op://Secrets/Kubeconfig/config" }}
 {{- else -}}
 # 1Password CLI not installed. Run: brew install 1password-cli && op signin
 {{- end }}
