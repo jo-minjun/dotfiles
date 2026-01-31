@@ -4,28 +4,21 @@
 
 set -e
 
-# Initialize Rust if not already done
+export PNPM_HOME="$HOME/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+# Initialize Rust
 if ! command -v rustc &>/dev/null; then
   echo "Initializing Rust..."
   rustup-init -y --no-modify-path
 fi
 source "$HOME/.cargo/env" 2>/dev/null || true
 
-# Setup pnpm global bin directory
-if ! pnpm config get global-bin-dir &>/dev/null; then
-  echo "Setting up pnpm..."
-  pnpm setup
-  export PNPM_HOME="$HOME/Library/pnpm"
-  export PATH="$PNPM_HOME:$PATH"
-fi
+# Setup pnpm
+pnpm config get global-bin-dir &>/dev/null || pnpm setup
 
 # Install pake-cli
-if ! command -v pake &>/dev/null; then
-  echo "Installing pake-cli..."
-  export PNPM_HOME="$HOME/Library/pnpm"
-  export PATH="$PNPM_HOME:$PATH"
-  pnpm install -g pake-cli
-fi
+command -v pake &>/dev/null || pnpm install -g pake-cli
 
 echo "Pake setup complete."
 {{- end }}

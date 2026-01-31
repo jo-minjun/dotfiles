@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo "Installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    echo "oh-my-zsh installed successfully"
-else
-    echo "oh-my-zsh already installed"
+if [[ -d "$HOME/.oh-my-zsh" ]]; then
+  echo "oh-my-zsh already installed"
+  exit 0
 fi
+
+echo "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+echo "oh-my-zsh installed successfully"

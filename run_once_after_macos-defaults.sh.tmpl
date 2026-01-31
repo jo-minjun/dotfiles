@@ -4,12 +4,10 @@ set -e
 
 echo "Configuring macOS system defaults..."
 
-# 키보드 반복 속도 (낮을수록 빠름, 기본값 6)
+# Keyboard repeat rate (lower = faster, default: 6)
 defaults write -g KeyRepeat -int 1
-
-# 키보드 반복 시작 지연 (낮을수록 빠름, 기본값 25)
+# Keyboard repeat delay (lower = faster, default: 25)
 defaults write -g InitialKeyRepeat -int 10
 
-echo "macOS system defaults configured."
-echo "Note: Some changes may require logout/restart to take effect."
+echo "macOS system defaults configured. Restart may be required."
 {{- end }}

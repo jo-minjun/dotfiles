@@ -4,13 +4,14 @@
 
 PAM_FILE="/etc/pam.d/sudo"
 
-if ! grep -q "pam_tid.so" "$PAM_FILE" 2>/dev/null; then
-  echo "Adding Touch ID support to sudo..."
-  sudo sed -i '' '1a\
+if grep -q "pam_tid.so" "$PAM_FILE" 2>/dev/null; then
+  echo "Touch ID for sudo already configured."
+  exit 0
+fi
+
+echo "Adding Touch ID support to sudo..."
+sudo sed -i '' '1a\
 auth       sufficient     pam_tid.so
 ' "$PAM_FILE"
-  echo "Touch ID for sudo enabled."
-else
-  echo "Touch ID for sudo already configured."
-fi
+echo "Touch ID for sudo enabled."
 {{- end }}
