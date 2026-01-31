@@ -1,0 +1,34 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -e
+
+PRESET_BUNDLES="$HOME/Library/Application Support/BetterTouchTool/PresetBundles"
+
+# BTT가 설치되어 있는지 확인
+if ! command -v bttcli &> /dev/null; then
+    echo "BetterTouchTool CLI not found. Skipping preset import."
+    exit 0
+fi
+
+# 프리셋 디렉토리 확인
+if [ ! -d "$PRESET_BUNDLES" ]; then
+    echo "No PresetBundles directory found. Skipping."
+    exit 0
+fi
+
+# BTT가 실행 중인지 확인
+if ! pgrep -x "BetterTouchTool" > /dev/null; then
+    echo "BetterTouchTool is not running. Please start BTT and run chezmoi apply again."
+    exit 0
+fi
+
+echo "Importing BetterTouchTool presets..."
+
+# PresetBundles 하위의 모든 .bttpreset 파일 찾아서 임포트
+find "$PRESET_BUNDLES" -name "*.bttpreset" -type f | while read -r preset; do
+    echo "Importing: $(basename "$preset")"
+    bttcli import_preset path="$preset" replaceExisting=true || true
+done
+
+echo "BTT preset import completed."
+{{- end }}
