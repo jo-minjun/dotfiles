@@ -1,5 +1,12 @@
-{{- if lookPath "op" -}}
-{{ onepasswordRead "op://Secrets/Kubeconfig/config" }}
+{{- $opExists := lookPath "op" -}}
+{{- if $opExists -}}
+{{-   $checkResult := output "sh" "-c" "op document get 'Kubeconfig' --vault 'Secrets' > /dev/null 2>&1 && echo exists || echo missing" | trim -}}
+{{-   if eq $checkResult "exists" -}}
+{{ onepasswordDocument "Kubeconfig" "Secrets" }}
+{{-   else -}}
+# Kubeconfig not found in 1Password.
+# Run: chezmoi apply (to create the document), then chezmoi apply again.
+{{-   end -}}
 {{- else -}}
 # 1Password CLI not installed. Run: brew install 1password-cli && op signin
 {{- end }}
