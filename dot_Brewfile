@@ -4,6 +4,7 @@ tap "oven-sh/bun"
 # CLI Tools
 brew "chezmoi"
 brew "gh"
+brew "jq"
 brew "tmux"
 brew "tree"
 
@@ -59,6 +60,7 @@ cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
 cask "postman"
+cask "visual-studio-code"
 
 # Casks - Communication
 cask "slack"
