@@ -1,35 +1,56 @@
+# Taps
 tap "oven-sh/bun"
-cask "1password"
-brew "aichat"
-brew "pnpm"
-brew "rustup-init"
-brew "aws-iam-authenticator"
-brew "awscli"
+
+# CLI Tools
 brew "chezmoi"
-brew "claude-squad"
 brew "gh"
-brew "jdtls"
-brew "jenv"
-brew "k9s"
-brew "kafkactl"
-brew "kotlin-language-server"
-brew "kubernetes-cli"
-brew "kubectx"
-brew "libpq"
-brew "maven"
-brew "mise"
-brew "mysql-client"
-brew "node"
-brew "node@24"
-brew "opencode"
-brew "powerlevel10k"
-brew "python-lsp-server"
 brew "tmux"
 brew "tree"
-brew "typescript-language-server"
-cask "1password-cli"
+
+# Cloud & DevOps
+brew "awscli"
+brew "aws-iam-authenticator"
+brew "k9s"
+brew "kafkactl"
+brew "kubernetes-cli"
+brew "kubectx"
+
+# Languages & Runtimes
+brew "mise"
+brew "node"
+brew "node@24"
+brew "jenv"
+brew "maven"
 brew "oven-sh/bun/bun"
+brew "pnpm"
+brew "rustup-init"
+
+# Databases
+brew "libpq"
+brew "mysql-client"
+
+# LSP & Dev Tools
+brew "jdtls"
+brew "kotlin-language-server"
+brew "python-lsp-server"
+brew "typescript-language-server"
+
+# AI Tools
+brew "aichat"
+brew "claude-squad"
+brew "opencode"
+
+# Shell
+brew "powerlevel10k"
+
+# Casks - Productivity
+cask "1password"
+cask "1password-cli"
 cask "bettertouchtool"
+cask "google-drive"
+cask "notion"
+
+# Casks - Development
 cask "claude"
 cask "claude-code"
 cask "cursor"
@@ -37,7 +58,10 @@ cask "cursor-cli"
 cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
-cask "naver-whale"
-cask "notion"
 cask "postman"
+
+# Casks - Communication
 cask "slack"
+
+# Casks - Browser
+cask "naver-whale"
