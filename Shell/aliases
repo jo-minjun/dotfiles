@@ -6,3 +6,7 @@ alias git_reset='git add . && git reset --hard'
 alias add_quot="pbpaste | sed \"s/.*/'&',/\" | sed '\$s/.\$//' | pbcopy"
 alias add_dquot='pbpaste | sed '\''s/.*/"&",/'\'' | sed '\''$s/.$//'\'' | pbcopy'
 alias pretty_json='pbpaste | jq . | pbcopy'
+alias url_enc='pbpaste | python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip()))" | pbcopy'
+alias url_dec='pbpaste | python3 -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))" | pbcopy'
+alias base64_enc='pbpaste | base64 | pbcopy'
+alias base64_dec='pbpaste | base64 -d | pbcopy'

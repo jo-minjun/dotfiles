@@ -19,12 +19,54 @@ ls_shell() {
   grep -E "^alias " ~/Shell/aliases | sed 's/alias \([^=]*\)=.*/\1/'
 }
 
-docker_image_build_uaa() {
-  cd ~/Projects/work/msa-starter/jhipster-uaa
-  print_bold "vroong-uaa 이미지를 빌드합니다"
-  ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest \
-    -Djib.from.auth.username=minjunjomesh -Djib.from.auth.password="$DOCKER_HUB_PASSWORD"
+chezmoi_sync() {
+  print_bold "chezmoi 변경사항을 동기화합니다"
+  echo ""
+
+  chezmoi re-add
+  cd ~/.local/share/chezmoi || return 1
+
+  if [[ -z $(git status --porcelain) ]]; then
+    print_yellow "변경사항이 없습니다"
+    cd - > /dev/null
+    return 0
+  fi
+
+  print_green "변경된 파일:"
+  git status --short
+  echo ""
+
+  print_bold "커밋 메시지를 입력하세요 (빈 입력시 취소): "
+  read -r message
+  if [[ -z "$message" ]]; then
+    cd - > /dev/null
+    return 0
+  fi
+
+  git add -A
+  git commit -m "$message"
+  git push
+
   print_bold "완료되었습니다"
+  cd - > /dev/null
+}
+
+port_kill() {
+  if [[ -z "$1" ]]; then
+    print_bold "Kill process by port"
+    echo ""
+    echo "Usage: port_kill <PORT>"
+    echo "  e.g. port_kill 3000"
+    return 0
+  fi
+  local pid
+  pid=$(lsof -ti :"$1")
+  if [[ -z "$pid" ]]; then
+    print_yellow "포트 $1을 사용하는 프로세스가 없습니다"
+    return 0
+  fi
+  print_green "포트 $1 프로세스(PID: $pid)를 종료합니다"
+  kill -9 $pid
 }
 
 ecr_login() {
