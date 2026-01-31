@@ -10,7 +10,6 @@ export PATH="$PNPM_HOME:$PATH"
 APPS_DIR="/Applications"
 ICON_DIR="$HOME/.config/pake"
 
-# Web apps to build (Google Drive/Calendar managed via native apps)
 # Format: "App Name|URL|Icon"
 WEB_APPS=(
   "Google Gemini|https://gemini.google.com/app|$ICON_DIR/gemini.png"
@@ -18,18 +17,15 @@ WEB_APPS=(
 
 for entry in "${WEB_APPS[@]}"; do
   IFS='|' read -r name url icon <<< "$entry"
-  app_path="$APPS_DIR/$name.app"
 
-  if [[ ! -d "$app_path" ]]; then
-    echo "Building $name..."
-    pake "$url" --name "$name" --icon "$icon"
-    # Move to Applications if built elsewhere
-    if [[ -d "$name.app" ]]; then
-      mv "$name.app" "$APPS_DIR/"
-    fi
-  else
+  if [[ -d "$APPS_DIR/$name.app" ]]; then
     echo "$name already exists, skipping."
+    continue
   fi
+
+  echo "Building $name..."
+  pake "$url" --name "$name" --icon "$icon"
+  [[ -d "$name.app" ]] && mv "$name.app" "$APPS_DIR/"
 done
 
 echo "Web apps build complete."

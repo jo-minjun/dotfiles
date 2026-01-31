@@ -44,14 +44,14 @@ brew "opencode"
 # Shell
 brew "powerlevel10k"
 
-# Casks - Productivity
+# Applications - Productivity
 cask "1password"
 cask "1password-cli"
 cask "bettertouchtool"
 cask "google-drive"
 cask "notion"
 
-# Casks - Development
+# Applications - Development
 cask "claude"
 cask "claude-code"
 cask "cursor"
@@ -62,8 +62,8 @@ cask "jetbrains-toolbox"
 cask "postman"
 cask "visual-studio-code"
 
-# Casks - Communication
+# Applications - Communication
 cask "slack"
 
-# Casks - Browser
+# Applications - Browser
 cask "naver-whale"

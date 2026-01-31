@@ -1,9 +1,7 @@
 [default]
 region = ap-northeast-2
 output = json
+
 [profile meshdev]
-region = ap-northeast-2
-output = json
+
 [profile meshlabs]
-region = ap-northeast-2
-output = json

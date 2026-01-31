@@ -4,21 +4,17 @@
 
 set -e
 
-# Set up Homebrew PATH (Apple Silicon)
-if [[ -f /opt/homebrew/bin/brew ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Check if gh is installed
 if ! command -v gh &>/dev/null; then
-    echo "GitHub CLI not installed. Run 'brew bundle' first."
-    exit 0
+  echo "GitHub CLI not installed. Run 'brew bundle' first."
+  exit 0
 fi
 
-# Check if already authenticated
 if gh auth status &>/dev/null 2>&1; then
-    echo "GitHub CLI already authenticated."
-    exit 0
+  echo "GitHub CLI already authenticated."
+  exit 0
 fi
 
 echo "GitHub CLI not authenticated. Starting login..."

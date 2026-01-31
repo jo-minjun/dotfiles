@@ -1,36 +1,14 @@
+# Terminal colors
 BOLD='\033[1m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-# 강조 일반
-print_bold() {
-  if [ ! -z "$1" ]; then
-    echo "${BOLD}${1}${NC}"
-  fi
-}
-
-# 명령어 수행 내용 강조
-print_green() {
-  if [ ! -z "$1" ]; then
-    echo -e "${GREEN}${1}${NC}"
-  fi
-}
-
-# 주의 또는 확인 강조
-print_yellow() {
-  if [ ! -z "$1" ]; then
-    echo -e "${YELLOW}${1}${NC}"
-  fi
-}
-
-# 경고 강조
-print_red() {
-  if [ ! -z "$1" ]; then
-    echo -e "${RED}${1}${NC}"
-  fi
-}
+print_bold() { [[ -n "$1" ]] && echo -e "${BOLD}${1}${NC}"; }
+print_green() { [[ -n "$1" ]] && echo -e "${GREEN}${1}${NC}"; }
+print_yellow() { [[ -n "$1" ]] && echo -e "${YELLOW}${1}${NC}"; }
+print_red() { [[ -n "$1" ]] && echo -e "${RED}${1}${NC}"; }
 
 ls_command() {
   grep -E "^[a-z_]+\(\) \{" ~/Commands/command.sh | cut -d "(" -f 1
@@ -39,70 +17,67 @@ ls_command() {
 docker_image_build_uaa() {
   cd ~/Projects/work/msa-starter/jhipster-uaa
   print_bold "vroong-uaa 이미지를 빌드합니다"
-  ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest -Djib.from.auth.username=minjunjomesh -Djib.from.auth.password=$DOCKER_HUB_PASSWORD
+  ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest \
+    -Djib.from.auth.username=minjunjomesh -Djib.from.auth.password="$DOCKER_HUB_PASSWORD"
   print_bold "완료되었습니다"
 }
 
 ecr_login() {
-  aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
+  aws ecr get-login-password --region ap-northeast-2 | \
+    docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
 }
 
 sync_refiner() {
-  if [ "$1" = "" ]; then
+  if [[ -z "$1" ]]; then
     print_bold "neogeorefiner 이미지를 최신화합니다"
     echo ""
-    echo "Usage:"
-    echo "  $0 <tag_name>"
-    echo "  e.g. $0 etpost-20220915030019"
-    return 0;
-  fi;
+    echo "Usage: sync_refiner <tag_name>"
+    echo "  e.g. sync_refiner etpost-20220915030019"
+    return 0
+  fi
 
-  container=$(docker inspect neogeorefiner --format "{{ "{{json .State.Status}}" }}" 2> /dev/null | xargs)
-  if [ "running" = "$container" ]; then
+  local container
+  container=$(docker inspect neogeorefiner --format "{{ "{{json .State.Status}}" }}" 2>/dev/null | xargs)
+  if [[ "$container" == "running" ]]; then
     print_red "neogeorefiner docker container is running"
     echo ""
     print_yellow "cd vroong-neogeo && ./gradlew composeDown"
-    echo ""
-    return 0;
+    return 0
   fi
 
   print_bold "기존 이미지를 지울까요? [y/N]"
   read -r response
-  case "$response" in
-   [yY])
-     candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
-     candidate2=$(docker image ls --filter=reference="200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
-     docker image rm $candidate1 $candidate2 --force
-     ;;
-  esac
+  if [[ "$response" =~ ^[yY]$ ]]; then
+    local candidate1 candidate2
+    candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
+    candidate2=$(docker image ls --filter=reference="200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
+    docker image rm $candidate1 $candidate2 --force
+  fi
 
   print_green "ECR에 로그인합니다"
-  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
+  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | \
+    docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
 
   echo ""
-
   print_green "이미지를 내려받습니다"
-  docker pull 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1
+  docker pull "200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1"
 
   echo ""
-
   print_green "neogeorefiner:latest 태그를 부여합니다"
-  docker tag 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1 neogeorefiner:latest
+  docker tag "200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1" neogeorefiner:latest
 
   echo ""
-
   print_bold "완료되었습니다"
 }
 
 git_tag() {
-  if [ "$1" = "" ]; then
+  if [[ -z "$1" ]]; then
     print_bold "git tag를 최신화합니다"
     echo ""
-    echo "Usage:"
-    echo "  $0 <tag_name>"
-    echo "  e.g. $0 1.0.0"
-    return 0;
-  fi;
+    echo "Usage: git_tag <tag_name>"
+    echo "  e.g. git_tag 1.0.0"
+    return 0
+  fi
 
   print_bold "버전을 선택해주세요."
   print_bold "--------------------"
@@ -111,46 +86,34 @@ git_tag() {
   echo "  HOTFIX    : [hH]"
   echo "  사용 안 함: [nN]"
   print_bold "--------------------"
+
+  local tag_version=""
   read -r response
   case "$response" in
-    [rR])
-      tag_version="-RELEASE"
-      ;;
-    [sS])
-      tag_version="-SNAPSHOT"
-      ;;
-    [hH])
-      tag_version="-HOTFIX"
-      ;;
-    [nN])
-      tag_version=""
-      ;;
+    [rR]) tag_version="-RELEASE" ;;
+    [sS]) tag_version="-SNAPSHOT" ;;
+    [hH]) tag_version="-HOTFIX" ;;
   esac
 
-  tag_name=$1$tag_version
-  
+  local tag_name="$1$tag_version"
   print_yellow "태그 이름: $tag_name"
-  
   echo ""
 
   print_bold "진행할까요? [y/N] "
   read -r response
-  case "$response" in
-    [yY])
-      print_green "깃 태그 제거 중..."
-      git tag -d $tag_name
+  if [[ "$response" =~ ^[yY]$ ]]; then
+    print_green "깃 태그 제거 중..."
+    git tag -d "$tag_name"
 
-      print_green "깃 태그 생성 중..."
-      git tag $tag_name
-      
-      print_green "깃허브 태그 제거 중..."
-      git push origin :$tag_name
-      
-      print_green "깃허브 태그 생성 중..."
-      git push origin $tag_name
-      
-      return 0;
-  esac
+    print_green "깃 태그 생성 중..."
+    git tag "$tag_name"
+
+    print_green "깃허브 태그 제거 중..."
+    git push origin ":$tag_name"
+
+    print_green "깃허브 태그 생성 중..."
+    git push origin "$tag_name"
+  fi
 }
 
 git_fix() {
@@ -164,63 +127,49 @@ git_reset() {
 }
 
 clean_container() {
-    if [ "$1" = "" ]; then
+  if [[ -z "$1" ]]; then
     print_green "전체 컨테이너를 정리합니다"
     docker container ls -a -q | xargs docker container stop
-    docker container prune -f  
-    
-    return 0;
-  fi;
+    docker container prune -f
+    return 0
+  fi
 
   print_green "$1 문자를 포함하는 컨테이너를 정리합니다"
-  docker container ls -a | grep $1 | awk '{print $1}' | xargs docker container stop
-  docker container prune -f  
+  docker container ls -a | grep "$1" | awk '{print $1}' | xargs docker container stop
+  docker container prune -f
 }
 
 klogs() {
-	if [ "$1" = "" ]
-	then
-		echo "view the k8s pod logs"
-		echo ""
-		echo "Usage:"
-		echo '  klogs <POD_ID>'
-		return 0
-	fi
-	kubectl logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+  if [[ -z "$1" ]]; then
+    echo "View k8s pod logs"
+    echo ""
+    echo "Usage: klogs <POD_ID>"
+    return 0
+  fi
+  kubectl logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
 dlogs() {
-	if [ "$1" = "" ]
-	then
-		echo "view the docker container logs"
-		echo ""
-		echo "Usage:"
-		echo '  dlogs <CONTAINER_ID>'
-		return 0
-	fi
-	docker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+  if [[ -z "$1" ]]; then
+    echo "View docker container logs"
+    echo ""
+    echo "Usage: dlogs <CONTAINER_ID>"
+    return 0
+  fi
+  docker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
 dshell() {
-  if [ "$1" = "" ]
-	then
-		echo "access the docker container shell"
-		echo ""
-		echo "Usage:"
-		echo '  dshell <CONTAINER_ID>'
-		return 0
-	fi
-  docker container exec -it $1 /bin/bash
+  if [[ -z "$1" ]]; then
+    echo "Access docker container shell"
+    echo ""
+    echo "Usage: dshell <CONTAINER_ID>"
+    return 0
+  fi
+  docker container exec -it "$1" /bin/bash
 }
 
-add_quot() {
-  pbpaste | sed "s/.*/'&',/" | sed '$s/.$//' | pbcopy
-}
-
-add_dquot() {
-  pbpaste | sed 's/.*/"&",/' | sed '$s/.$//' | pbcopy
-}
-
-pretty_json() {
-  pbpaste | jq . | pbcopy
-}
+# Clipboard utilities
+add_quot() { pbpaste | sed "s/.*/'&',/" | sed '$s/.$//' | pbcopy; }
+add_dquot() { pbpaste | sed 's/.*/"&",/' | sed '$s/.$//' | pbcopy; }
+pretty_json() { pbpaste | jq . | pbcopy; }
