@@ -25,7 +25,19 @@ for entry in "${WEB_APPS[@]}"; do
 
   echo "Building $name..."
   pake "$url" --name "$name" --icon "$icon"
-  [[ -d "$name.app" ]] && mv "$name.app" "$APPS_DIR/"
+
+  # Extract .app from the generated .dmg
+  dmg_file="$name.dmg"
+  if [[ -f "$dmg_file" ]]; then
+    mount_point="/Volumes/$name"
+    hdiutil attach "$dmg_file" -nobrowse -quiet
+    if [[ -d "$mount_point/$name.app" ]]; then
+      cp -R "$mount_point/$name.app" "$APPS_DIR/"
+      echo "Installed $name.app to $APPS_DIR"
+    fi
+    hdiutil detach "$mount_point" -quiet
+    rm -f "$dmg_file"
+  fi
 done
 
 echo "Web apps build complete."

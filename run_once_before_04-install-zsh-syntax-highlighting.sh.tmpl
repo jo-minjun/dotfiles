@@ -1,0 +1,15 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -e
+
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+PLUGIN_DIR="$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+
+if [ ! -d "$PLUGIN_DIR" ]; then
+    echo "Installing zsh-syntax-highlighting..."
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$PLUGIN_DIR"
+    echo "zsh-syntax-highlighting installed."
+else
+    echo "zsh-syntax-highlighting already installed."
+fi
+{{- end }}
