@@ -1,0 +1,38 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Build Google web apps using Pake
+
+set -e
+source "$HOME/.cargo/env" 2>/dev/null || true
+export PNPM_HOME="$HOME/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+APPS_DIR="/Applications"
+
+# Google apps only (Slack managed via Brewfile cask)
+# Format: "App Name|URL"
+WEB_APPS=(
+  "Google Drive|https://drive.google.com"
+  "Google Calendar|https://calendar.google.com/calendar/r"
+  "Google Gemini|https://gemini.google.com/app"
+)
+
+for entry in "${WEB_APPS[@]}"; do
+  name="${entry%%|*}"
+  url="${entry##*|}"
+  app_path="$APPS_DIR/$name.app"
+
+  if [[ ! -d "$app_path" ]]; then
+    echo "Building $name..."
+    pake "$url" --name "$name"
+    # Move to Applications if built elsewhere
+    if [[ -d "$name.app" ]]; then
+      mv "$name.app" "$APPS_DIR/"
+    fi
+  else
+    echo "$name already exists, skipping."
+  fi
+done
+
+echo "Web apps build complete."
+{{- end }}

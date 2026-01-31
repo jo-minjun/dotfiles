@@ -36,16 +36,6 @@ ls_command() {
   grep -E "^[a-z_]+\(\) \{" ~/Commands/command.sh | cut -d "(" -f 1
 }
 
-push_command() {
-  cp ~/Commands/command.sh ~/Library/'Mobile Documents'/com~apple~CloudDocs/Dev/command.sh
-  print_bold "iCloud에 command.sh를 업로드했습니다."
-}
-
-pull_command() {
-  cp ~/Library/'Mobile Documents'/com~apple~CloudDocs/Dev/command.sh ~/Commands/command.sh
-  print_bold "iCloud에서 command.sh를 다운로드했습니다."
-}
-
 docker_image_build_uaa() {
   cd ~/Projects/work/msa-starter/jhipster-uaa
   print_bold "vroong-uaa 이미지를 빌드합니다"
