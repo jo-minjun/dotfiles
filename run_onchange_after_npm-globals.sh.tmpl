@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+# npmglobals hash: {{ include "dot_npmglobals" | sha256sum }}
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+echo "Installing npm global packages..."
+
+while IFS= read -r line || [[ -n "$line" ]]; do
+    # Skip empty lines and comments
+    [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+
+    # Trim whitespace
+    package=$(echo "$line" | xargs)
+
+    if [[ -n "$package" ]]; then
+        echo "Installing $package..."
+        npm install -g "$package"
+    fi
+done < "{{ .chezmoi.homeDir }}/.npmglobals"
+
+echo "NPM global packages installed"
