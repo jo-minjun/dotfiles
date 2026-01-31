@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Set up Homebrew PATH (Apple Silicon)
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
 # 위 해시가 변경되면 이 스크립트가 재실행됨
 
