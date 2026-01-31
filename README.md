@@ -52,7 +52,7 @@ Pake로 빌드되는 네이티브 웹앱:
 | Git 이메일 분리 | `~/Projects/work/` → 회사 이메일, 그 외 → 개인 이메일 |
 | Ghostty | JetBrains Mono, Idea 테마 |
 | Claude Code | LSP, statusline, 권한 설정 |
-| AWS/Kube 설정 | 1Password Document에서 자동 로드 |
+| AWS/Kube 설정 | 1Password Document에서 최초 1회 다운로드 |
 | 1Password 시크릿 | Docker Hub, AWS credentials, Kubeconfig |
 | BetterTouchTool | 라이선스 자동 설치 |
 
@@ -66,8 +66,8 @@ Pake로 빌드되는 네이티브 웹앱:
 ├── Commands/
 │   ├── command.sh # 커스텀 함수
 │   └── alias      # alias 정의
-├── .kube/config   # Kubernetes 설정 (1Password Document)
-├── .aws/credentials # AWS 자격증명 (1Password Document)
+├── .kube/config   # Kubernetes 설정 (최초 1회 다운로드, 이후 로컬 관리)
+├── .aws/credentials # AWS 자격증명 (최초 1회 다운로드, 이후 로컬 관리)
 └── .secrets.zsh   # 시크릿 (1Password에서 자동 로드)
 ```
 
@@ -77,20 +77,33 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 
 ### 최초 설정
 
-1. `chezmoi apply` 실행 (1password-cli 설치 및 빈 아이템 생성)
+1. 1Password "Secrets" vault에 아이템 생성:
+   - **Login 아이템**: Docker Hub, GitHub Token, AWS meshdev, AWS meshlabs
+   - **Document**: Kubeconfig, AWS Credentials, BetterTouchTool License
 2. 1Password CLI 인증:
    ```bash
    eval $(op signin)
    ```
-3. 1Password "Secrets" vault에 아이템 설정:
-   - **Login 아이템**: Docker Hub, GitHub Token (앱에서 직접 입력)
-   - **Document**: 기존 config 파일이 있으면 자동 업로드됨
-     ```bash
-     # 또는 수동 업로드
-     op document create ~/.kube/config --vault "Secrets" --title "Kubeconfig"
-     op document create ~/.aws/credentials --vault "Secrets" --title "AWS Credentials"
-     ```
-4. `chezmoi apply` 재실행
+3. `chezmoi apply` 실행 (1Password에서 자동 다운로드)
+
+### 자격증명 갱신
+
+**1Password → 로컬 다운로드** (새 머신 설정, 1Password 내용 변경 시):
+```bash
+op document get "Kubeconfig" --vault "Secrets" > ~/.kube/config
+op document get "AWS Credentials" --vault "Secrets" > ~/.aws/credentials
+```
+
+**로컬 → 1Password 업로드** (로컬에서 수정 후 다른 머신에 반영 시):
+```bash
+# 최초 업로드
+op document create ~/.kube/config --vault "Secrets" --title "Kubeconfig"
+op document create ~/.aws/credentials --vault "Secrets" --title "AWS Credentials"
+
+# 기존 문서 업데이트
+op document edit "Kubeconfig" ~/.kube/config --vault "Secrets"
+op document edit "AWS Credentials" ~/.aws/credentials --vault "Secrets"
+```
 
 ### 관리되는 시크릿
 

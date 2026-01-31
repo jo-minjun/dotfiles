@@ -1,0 +1,79 @@
+#!/bin/bash
+set -e
+
+# Homebrew PATH 설정
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# settings.json hash: {{ include "dot_claude/private_settings.json" | sha256sum }}
+
+# Claude CLI 확인
+if ! command -v claude &>/dev/null; then
+    echo "Claude Code CLI not found. Skipping plugin installation."
+    exit 0
+fi
+
+SETTINGS_FILE="{{ .chezmoi.homeDir }}/.claude/settings.json"
+
+if [[ ! -f "$SETTINGS_FILE" ]]; then
+    echo "Claude settings.json not found. Skipping."
+    exit 0
+fi
+
+echo "=== Claude Code Plugin Installation ==="
+
+# 마켓플레이스 저장소 조회 함수
+get_marketplace_repo() {
+    case "$1" in
+        claude-dashboard) echo "uppinote20/claude-dashboard" ;;
+        anthropic-agent-skills) echo "anthropics/skills" ;;
+        *) echo "" ;;
+    esac
+}
+
+# enabledPlugins에서 플러그인 목록 추출
+PLUGINS=$(jq -r '.enabledPlugins | keys[]' "$SETTINGS_FILE" 2>/dev/null || echo "")
+
+if [[ -z "$PLUGINS" ]]; then
+    echo "No plugins found in settings.json"
+    exit 0
+fi
+
+# 현재 설치된 마켓플레이스 확인
+INSTALLED_MARKETPLACES=$(claude plugin marketplace list 2>/dev/null || echo "")
+
+# 필요한 마켓플레이스 추가
+echo "Checking marketplaces..."
+for plugin in $PLUGINS; do
+    marketplace="${plugin#*@}"
+
+    # 기본 마켓플레이스는 스킵
+    [[ "$marketplace" == "claude-plugins-official" ]] && continue
+
+    # 이미 설치되어 있으면 스킵
+    if echo "$INSTALLED_MARKETPLACES" | grep -q "$marketplace"; then
+        echo "  [OK] $marketplace"
+        continue
+    fi
+
+    # 매핑된 저장소가 있으면 추가
+    repo=$(get_marketplace_repo "$marketplace")
+    if [[ -n "$repo" ]]; then
+        echo "  [+] Adding marketplace: $marketplace"
+        claude plugin marketplace add "$repo" || \
+            echo "  [!] Warning: Failed to add $marketplace"
+    fi
+done
+
+# 플러그인 설치
+echo ""
+echo "Installing plugins..."
+for plugin in $PLUGINS; do
+    echo "  [+] $plugin"
+    claude plugin install "$plugin" 2>/dev/null || \
+        echo "  [!] Warning: Failed to install $plugin"
+done
+
+echo ""
+echo "=== Plugin installation complete ==="
