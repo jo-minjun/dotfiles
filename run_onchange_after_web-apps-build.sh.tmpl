@@ -24,7 +24,7 @@ for entry in "${WEB_APPS[@]}"; do
   fi
 
   echo "Building $name..."
-  pake "$url" --name "$name" --icon "$icon"
+  pake "$url" --name "$name" --icon "$icon" --new-window
 
   # Extract .app from the generated .dmg
   dmg_file="$name.dmg"

@@ -1,0 +1,8 @@
+alias clauded='claude --dangerously-skip-permissions'
+alias cd_dot='cd ~/.local/share/chezmoi'
+alias aws_profiles='aws configure list-profiles'
+alias git_fix='git add . && git commit --amend --no-edit'
+alias git_reset='git add . && git reset --hard'
+alias add_quot="pbpaste | sed \"s/.*/'&',/\" | sed '\$s/.\$//' | pbcopy"
+alias add_dquot='pbpaste | sed '\''s/.*/"&",/'\'' | sed '\''$s/.$//'\'' | pbcopy'
+alias pretty_json='pbpaste | jq . | pbcopy'

@@ -35,7 +35,7 @@ chezmoi를 사용하여 macOS 개발 환경을 자동화하는 dotfiles 프로�
 ├── dot_Brewfile                     # Homebrew 패키지 목록
 │
 ├── Command/
-│   ├── command.sh
+│   ├── commands.sh
 │   └── alias
 │
 ├── Project/

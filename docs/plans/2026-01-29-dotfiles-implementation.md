@@ -267,7 +267,7 @@ chezmoi add ~/.zshrc --template
 
 **Step 2: 시크릿 로드 코드 추가**
 
-`dot_zshrc.tmpl` 파일에서 `source ~/Command/command.sh` 다음에 추가:
+`dot_zshrc.tmpl` 파일에서 `source ~/Shell/commands.sh` 다음에 추가:
 
 ```bash
 # 시크릿 로드 (파일이 있을 때만)
@@ -278,7 +278,7 @@ chezmoi add ~/.zshrc --template
 
 Run:
 ```bash
-grep -A2 "source ~/Command/command.sh" ~/.local/share/chezmoi/dot_zshrc.tmpl
+grep -A2 "source ~/Shell/commands.sh" ~/.local/share/chezmoi/dot_zshrc.tmpl
 ```
 
 Expected: 시크릿 로드 코드가 보임
@@ -347,7 +347,7 @@ cd ~/.local/share/chezmoi && git add dot_gitconfig.tmpl && git commit -m "feat: 
 ### Task 11: Command 폴더 추가
 
 **Files:**
-- Create: `~/.local/share/chezmoi/Command/command.sh`
+- Create: `~/.local/share/chezmoi/Shell/commands.sh`
 - Create: `~/.local/share/chezmoi/Command/alias`
 
 **Step 1: Command 폴더를 chezmoi에 추가**
@@ -357,9 +357,9 @@ Run:
 chezmoi add ~/Command
 ```
 
-**Step 2: command.sh에서 하드코딩된 시크릿 제거**
+**Step 2: commands.sh에서 하드코딩된 시크릿 제거**
 
-`~/.local/share/chezmoi/Command/command.sh` 파일에서 민감한 정보를 환경변수로 교체:
+`~/.local/share/chezmoi/Shell/commands.sh` 파일에서 민감한 정보를 환경변수로 교체:
 
 - 52행: `Iliu@ods07132` → `$DOCKER_HUB_PASSWORD`
 - 90행: AWS profile은 그대로 유지 (이미 --profile 사용 중)
