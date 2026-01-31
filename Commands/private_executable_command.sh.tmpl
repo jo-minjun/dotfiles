@@ -23,7 +23,7 @@ docker_image_build_uaa() {
 }
 
 ecr_login() {
-  aws ecr get-login-password --region ap-northeast-2 | \
+  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | \
     docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
 }
 

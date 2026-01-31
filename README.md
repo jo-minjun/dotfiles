@@ -78,7 +78,7 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 ### 최초 설정
 
 1. 1Password "Secrets" vault에 아이템 생성:
-   - **Login 아이템**: Docker Hub, GitHub Token, AWS meshdev, AWS meshlabs
+   - **Login 아이템**: Docker Hub, GitHub Token
    - **Document**: Kubeconfig, AWS Credentials, BetterTouchTool License
 2. 1Password CLI 인증:
    ```bash
