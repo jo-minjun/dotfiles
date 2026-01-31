@@ -1,0 +1,15 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -e
+
+echo "Configuring macOS system defaults..."
+
+# 키보드 반복 속도 (낮을수록 빠름, 기본값 6)
+defaults write -g KeyRepeat -int 1
+
+# 키보드 반복 시작 지연 (낮을수록 빠름, 기본값 25)
+defaults write -g InitialKeyRepeat -int 10
+
+echo "macOS system defaults configured."
+echo "Note: Some changes may require logout/restart to take effect."
+{{- end }}

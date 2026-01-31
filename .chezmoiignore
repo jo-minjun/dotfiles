@@ -1,13 +1,15 @@
 # 시크릿 파일 (기존 파일 덮어쓰지 않음)
 .secrets.zsh
 
-# BetterTouchTool 라이센스 및 런타임 파일
-Library/Application Support/BetterTouchTool/*.bttlicense
+# BetterTouchTool 런타임 파일 (라이센스는 1Password 템플릿으로 관리)
 Library/Application Support/BetterTouchTool/*-shm
 Library/Application Support/BetterTouchTool/*-wal
 
 # BetterTouchTool 클립보드 (자주 변경됨)
 Library/Application Support/BetterTouchTool/BTTClipboardManager*
+
+# BetterTouchTool 버전별 데이터베이스 (버전 호환성 문제)
+Library/Application Support/BetterTouchTool/btt_data_store.version_*
 
 # AWS 캐시
 .aws/cli/
