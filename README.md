@@ -63,8 +63,8 @@ Pake로 빌드되는 네이티브 웹앱:
 ├── Projects/
 │   ├── work/      # 회사 프로젝트 (회사 이메일 자동 적용)
 │   └── me/        # 개인 프로젝트
-├── Commands/
-│   ├── command.sh # 커스텀 함수
+├── Shell/
+│   ├── commands.sh # 커스텀 함수
 │   └── alias      # alias 정의
 ├── .kube/config   # Kubernetes 설정 (최초 1회 다운로드, 이후 로컬 관리)
 ├── .aws/credentials # AWS 자격증명 (최초 1회 다운로드, 이후 로컬 관리)
