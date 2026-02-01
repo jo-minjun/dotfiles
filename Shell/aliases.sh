@@ -1,5 +1,5 @@
 alias clauded='claude --dangerously-skip-permissions'
-alias cd_dot='cd ~/.local/share/chezmoi'
+alias cd_dot='chezmoi cd'
 alias aws_profiles='aws configure list-profiles'
 alias git_fix='git add . && git commit --amend --no-edit'
 alias git_reset='git add . && git reset --hard'
@@ -10,3 +10,5 @@ alias url_enc='pbpaste | python3 -c "import sys, urllib.parse; print(urllib.pars
 alias url_dec='pbpaste | python3 -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))" | pbcopy'
 alias base64_enc='pbpaste | base64 | pbcopy'
 alias base64_dec='pbpaste | base64 -d | pbcopy'
+alias extract='ouch decompress'
+alias compress='ouch compress'

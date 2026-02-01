@@ -19,7 +19,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, kafkactl, docker-desktop |
 | DB | libpq, mysql-client |
 | AI | aichat, claude-squad, opencode |
-| 유틸리티 | chezmoi, gh, tmux, tree, rustup-init, 1password-cli |
+| 유틸리티 | chezmoi, gh, tmux, tree, ouch, rustup-init, 1password-cli |
 
 ### 앱
 
@@ -65,7 +65,8 @@ Pake로 빌드되는 네이티브 웹앱:
 │   └── me/        # 개인 프로젝트
 ├── Shell/
 │   ├── commands.sh # 커스텀 함수
-│   └── alias      # alias 정의
+│   ├── aliases.sh  # alias 정의
+│   └── exports.sh  # 환경변수 정의
 ├── .kube/config   # Kubernetes 설정 (최초 1회 다운로드, 이후 로컬 관리)
 ├── .aws/credentials # AWS 자격증명 (최초 1회 다운로드, 이후 로컬 관리)
 └── .secrets.zsh   # 시크릿 (1Password에서 자동 로드)
