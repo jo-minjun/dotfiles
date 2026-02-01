@@ -23,6 +23,13 @@ chezmoi_sync() {
   print_bold "chezmoi 변경사항을 동기화합니다"
   echo ""
 
+  if command -v op &>/dev/null && op account list &>/dev/null 2>&1; then
+    echo "1Password Documents 업데이트 중..."
+    [[ -f ~/.kube/config ]] && op document edit "Kubeconfig" ~/.kube/config --vault "Secrets" 2>/dev/null && echo "  - Kubeconfig"
+    [[ -f ~/.aws/credentials ]] && op document edit "AWS Credentials" ~/.aws/credentials --vault "Secrets" 2>/dev/null && echo "  - AWS Credentials"
+    echo ""
+  fi
+
   chezmoi re-add
   cd ~/.local/share/chezmoi || return 1
 

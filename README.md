@@ -2,6 +2,17 @@
 
 chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설정 완료.
 
+## 사전 요구사항
+
+1Password 계정이 필요합니다. 시크릿과 라이선스가 1Password에서 자동으로 로드됩니다.
+
+chezmoi가 자동으로 설치하지만, 1Password 로그인은 수동으로 해야 합니다:
+
+1. `chezmoi apply` 실행 (1Password 앱/CLI 자동 설치)
+2. 1Password 앱 실행 → 로그인
+3. 설정 > 개발자 > "CLI와의 생체 인증 잠금 해제" 활성화
+4. `chezmoi apply` 다시 실행
+
 ## 설치
 
 ```bash
