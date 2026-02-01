@@ -12,7 +12,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Custom commands and aliases
 source ~/Shell/commands.sh
-source ~/Shell/aliases
+source ~/Shell/aliases.sh
+source ~/Shell/exports.sh
 [[ -f ~/.secrets.zsh ]] && source ~/.secrets.zsh
 
 # Powerlevel10k theme
@@ -21,20 +22,6 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # Runtime version manager
 eval "$(mise activate zsh)"
-
-# PATH additions
-export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
-# Claude Code configuration
-export CLAUDE_BIN_PATH=/opt/homebrew/bin/claude
-export OPENCODE_EXPERIMENTAL_LSP_TOOL=true
-export ENABLE_LSP_TOOL=1
 
 # zsh-syntax-highlighting (must be at end of .zshrc)
 source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

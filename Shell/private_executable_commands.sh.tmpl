@@ -16,7 +16,7 @@ ls_shell() {
   echo ""
   print_green "Aliases"
   echo "----------"
-  grep -E "^alias " ~/Shell/aliases | sed 's/alias \([^=]*\)=.*/\1/'
+  grep -E "^alias " ~/Shell/aliases.sh | sed 's/alias \([^=]*\)=.*/\1/'
 }
 
 chezmoi_sync() {
@@ -206,4 +206,34 @@ git_tag() {
     print_green "깃허브 태그 생성 중..."
     git push origin "$tag_name"
   fi
+}
+
+git_web() {
+  local remote_url=$(git remote get-url origin 2>/dev/null)
+  if [[ -z "$remote_url" ]]; then
+    print_red "Not a git repository or no remote configured"
+    return 1
+  fi
+
+  local web_url=$(echo "$remote_url" | sed -E 's#git@([^:]+):#https://\1/#' | sed 's#\.git$##')
+
+  local branch=$(git branch --show-current 2>/dev/null)
+  if [[ -n "$branch" && "$branch" != "main" && "$branch" != "master" ]]; then
+    web_url="$web_url/tree/$branch"
+  fi
+
+  print_green "Opening: $web_url"
+  open "$web_url"
+}
+
+mkd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+my_ip() {
+  print_bold "Local IP:"
+  ipconfig getifaddr en0 2>/dev/null || echo "Not connected"
+  print_bold "Public IP:"
+  curl -s ifconfig.me
+  echo
 }
