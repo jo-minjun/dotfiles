@@ -2,7 +2,8 @@
   "env": {
     "ENABLE_TOOL_SEARCH": "true",
     "CLAUDE_CODE_DEBUG": "true",
-    "CLAUDE_CODE_VERBOSE_LOGGING": "true"
+    "CLAUDE_CODE_VERBOSE_LOGGING": "true",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
     "allow": [
@@ -48,20 +49,20 @@
       "Edit(//Users/minjun.jo/.claude/claude-devkit/**)"
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.5.0/dist/index.js"
-  },
   "enabledPlugins": {
     "jdtls-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "php-lsp@claude-plugins-official": true,
-    "claude-dashboard@claude-dashboard": true,
     "kotlin-lsp@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "claude-dashboard@claude-dashboard": true
+  },
+   "statusLine": {
+    "type": "command",
+    "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.8.1/dist/index.js"
   },
   "language": "Korean",
   "spinnerVerbs": {
