@@ -30,7 +30,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, kafkactl, docker-desktop |
 | DB | libpq, mysql-client |
 | AI | aichat, claude-squad, opencode |
-| 유틸리티 | chezmoi, gh, tmux, tree, ouch, rustup-init, 1password-cli |
+| 유틸리티 | chezmoi, gh, tmux, tree, ouch, rustup-init, yazi, fd, fzf, zoxide, 1password-cli |
+| 파일 미리보기 | ffmpeg, imagemagick, poppler, resvg, sevenzip |
 
 ### 앱
 
