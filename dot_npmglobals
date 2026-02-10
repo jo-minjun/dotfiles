@@ -3,3 +3,6 @@
 
 # LSP Servers
 intelephense
+
+# MCP Tools
+@modelcontextprotocol/inspector
