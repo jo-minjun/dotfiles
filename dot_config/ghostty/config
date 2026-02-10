@@ -5,4 +5,4 @@ theme = Idea
 font-family = JetBrains Mono
 font-size = 16
 confirm-close-surface = false
-scrollback-limit = 100000
+scrollback-limit = 10000000
