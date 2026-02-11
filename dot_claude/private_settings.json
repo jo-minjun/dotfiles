@@ -64,6 +64,19 @@
     "type": "command",
     "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.8.1/dist/index.js"
   },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/minjun.jo/.claude/hooks/notify-on-stop.sh",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
   "language": "Korean",
   "spinnerVerbs": {
     "mode": "replace",
