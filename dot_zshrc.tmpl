@@ -23,5 +23,8 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # Runtime version manager
 eval "$(mise activate zsh)"
 
+# Smart directory jumper
+eval "$(zoxide init zsh)"
+
 # zsh-syntax-highlighting (must be at end of .zshrc)
 source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
