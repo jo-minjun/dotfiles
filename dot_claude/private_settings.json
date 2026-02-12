@@ -1,10 +1,35 @@
 {
-  "env": {
-    "ENABLE_TOOL_SEARCH": "true",
-    "CLAUDE_CODE_DEBUG": "true",
-    "CLAUDE_CODE_VERBOSE_LOGGING": "true",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  "enabledPlugins": {
+    "claude-dashboard@claude-dashboard": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "document-skills@anthropic-agent-skills": true,
+    "jdtls-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "php-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
+  "env": {
+    "CLAUDE_CODE_DEBUG": "true",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_VERBOSE_LOGGING": "true",
+    "ENABLE_TOOL_SEARCH": "true"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "bash /Users/minjun.jo/.claude/hooks/notify-on-stop.sh",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "language": "Korean",
   "permissions": {
     "allow": [
       "Glob",
@@ -49,35 +74,6 @@
       "Edit(//Users/minjun.jo/.claude/claude-devkit/**)"
     ]
   },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash /Users/minjun.jo/.claude/hooks/notify-on-stop.sh",
-            "async": true
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.8.1/dist/index.js"
-  },
-  "enabledPlugins": {
-    "jdtls-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "php-lsp@claude-plugins-official": true,
-    "kotlin-lsp@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "document-skills@anthropic-agent-skills": true,
-    "superpowers@claude-plugins-official": true,
-    "claude-dashboard@claude-dashboard": true
-  },
-  "language": "Korean",
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -88,5 +84,9 @@
       "테스트 통과 기도 중",
       "완벽한 한 줄을 찾는 중"
     ]
+  },
+  "statusLine": {
+    "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.8.1/dist/index.js",
+    "type": "command"
   }
 }
