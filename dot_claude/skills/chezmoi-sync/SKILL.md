@@ -23,7 +23,15 @@ chezmoi diff
 
 변경이 없으면 "변경사항 없음"을 알리고 종료.
 
-### 2. 소스 반영
+### 2. JSON 정규화
+
+`chezmoi re-add` 전에 JSON 파일의 키를 정렬하여 불필요한 키 순서 diff를 방지:
+
+```bash
+bash ~/.claude/skills/chezmoi-sync/scripts/normalize-json.sh
+```
+
+### 3. 소스 반영
 
 변경된 모든 파일을 한번에 반영:
 
@@ -37,7 +45,7 @@ chezmoi re-add
 chezmoi diff
 ```
 
-### 3. 커밋
+### 4. 커밋
 
 chezmoi 소스 리포에서 git 작업 수행. 모든 git 명령에 `-C ~/.local/share/chezmoi` 사용.
 
@@ -60,12 +68,12 @@ git -C ~/.local/share/chezmoi add <changed-files>
 git -C ~/.local/share/chezmoi commit -m "<type>: <subject>"
 ```
 
-### 4. 푸시
+### 5. 푸시
 
 ```bash
 git -C ~/.local/share/chezmoi push
 ```
 
-### 5. 완료 보고
+### 6. 완료 보고
 
 변경된 파일 목록과 커밋 메시지를 요약하여 보고.
