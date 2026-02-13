@@ -59,7 +59,7 @@
 - type: feat, fix, refactor, docs, test, chore
 - 다중 파일 변경 시 squash 워크플로우를 따르라
   1. 구현 중에는 논리 단위마다 개별 커밋하라
-  2. 완료 후 `git reset --soft main && git commit`으로 단일 커밋으로 합쳐라
+  2. 완료 후 squash 하여 단일 커밋으로 합쳐라
 
 ---
 
