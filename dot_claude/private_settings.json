@@ -73,6 +73,7 @@
       "Edit(//Users/minjun.jo/.claude/claude-devkit/**)"
     ]
   },
+  "skipDangerousModePermissionPrompt": true,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
