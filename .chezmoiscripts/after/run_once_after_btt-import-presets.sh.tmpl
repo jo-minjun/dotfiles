@@ -3,15 +3,23 @@
 set -e
 
 PRESET_BUNDLES="$HOME/Library/Application Support/BetterTouchTool/PresetBundles"
+BTT_CLI="/Applications/BetterTouchTool.app/Contents/SharedSupport/bin/bttcli"
 
-command -v bttcli &>/dev/null || { echo "BetterTouchTool CLI not found. Skipping."; exit 0; }
+if [[ -x "$BTT_CLI" ]]; then
+  BTTCLI="$BTT_CLI"
+elif command -v bttcli &>/dev/null; then
+  BTTCLI="bttcli"
+else
+  echo "BetterTouchTool CLI not found. Skipping."; exit 0
+fi
+
 [[ -d "$PRESET_BUNDLES" ]] || { echo "No PresetBundles directory found. Skipping."; exit 0; }
 pgrep -x "BetterTouchTool" &>/dev/null || { echo "BetterTouchTool not running. Start BTT and run chezmoi apply again."; exit 0; }
 
 echo "Importing BetterTouchTool presets..."
 find "$PRESET_BUNDLES" -name "*.bttpreset" -type f | while read -r preset; do
   echo "Importing: $(basename "$preset")"
-  bttcli import_preset path="$preset" replaceExisting=true || true
+  "$BTTCLI" import_preset path="$preset" replaceExisting=true || true
 done
 echo "BTT preset import completed."
 {{- end }}
