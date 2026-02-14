@@ -14,8 +14,13 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
 killall Dock
 
-# Disable auto-brightness on battery
-sudo pmset -b lessbright 0
+# sudo 인증 캐시 확보 (비대화형 환경에서는 스킵)
+if sudo -v 2>/dev/null; then
+  # Disable auto-brightness on battery
+  sudo pmset -b lessbright 0
+else
+  echo "sudo 인증 불가. 'sudo pmset -b lessbright 0'을 직접 실행하세요."
+fi
 
 echo "macOS system defaults configured. Restart may be required."
 {{- end }}
