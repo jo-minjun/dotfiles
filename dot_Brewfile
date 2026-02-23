@@ -71,8 +71,6 @@ cask "notion"
 # Applications - Development
 cask "claude"
 cask "claude-code"
-cask "cursor"
-cask "cursor-cli"
 cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
@@ -84,3 +82,6 @@ cask "slack"
 
 # Applications - Browser
 cask "naver-whale"
+
+# Applications - Networking
+cask "tailscale"
