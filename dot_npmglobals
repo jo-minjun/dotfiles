@@ -6,3 +6,6 @@ intelephense
 
 # MCP Tools
 @modelcontextprotocol/inspector
+
+# Deployment
+vercel
