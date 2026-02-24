@@ -71,7 +71,6 @@ cask "plaud"
 
 # Applications - Development
 cask "claude"
-cask "claude-code"
 cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
@@ -85,4 +84,5 @@ cask "slack"
 cask "naver-whale"
 
 # Applications - Networking
-cask "tailscale"
+cask "tailscale-app"
+brew "tailscale"
