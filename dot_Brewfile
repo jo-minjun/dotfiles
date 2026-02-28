@@ -67,6 +67,7 @@ cask "1password-cli"
 cask "bettertouchtool"
 cask "google-drive"
 cask "notion"
+cask "jordanbaird-ice"
 cask "plaud"
 
 # Applications - Development
