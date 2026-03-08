@@ -16,19 +16,6 @@
     "CLAUDE_CODE_VERBOSE_LOGGING": "true",
     "ENABLE_TOOL_SEARCH": "true"
   },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "bash /Users/minjun.jo/.claude/hooks/notify-on-stop.sh",
-            "type": "command"
-          }
-        ]
-      }
-    ]
-  },
   "language": "Korean",
   "permissions": {
     "allow": [
