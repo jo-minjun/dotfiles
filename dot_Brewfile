@@ -86,4 +86,5 @@ cask "slack"
 cask "naver-whale"
 
 # Applications - Networking
-cask "tailscale"
+brew "tailscale"
+cask "tailscale-app"
