@@ -26,5 +26,10 @@ eval "$(mise activate zsh)"
 # Smart directory jumper
 eval "$(zoxide init zsh)"
 
+# SSH 환경에서 Ghostty 터미널 호환성 설정
+if [[ -n "$SSH_CONNECTION" && "$TERM" == "xterm-ghostty" ]]; then
+  export TERM=xterm-256color
+fi
+
 # zsh-syntax-highlighting (must be at end of .zshrc)
 source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
