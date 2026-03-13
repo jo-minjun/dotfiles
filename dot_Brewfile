@@ -52,7 +52,6 @@ brew "typescript-language-server"
 
 # AI Tools
 brew "aichat"
-brew "claude-squad"
 cask "codex"
 brew "opencode"
 
