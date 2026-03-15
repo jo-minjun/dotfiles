@@ -1,4 +1,5 @@
 {
+  "effortLevel": "high",
   "enabledPlugins": {
     "claude-dashboard@claude-dashboard": true,
     "code-review@claude-plugins-official": true,
