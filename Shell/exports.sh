@@ -8,6 +8,10 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
+# Editor
+export EDITOR="nvim"
+export VISUAL="nvim"
+
 # Claude Code configuration
 export CLAUDE_BIN_PATH="$HOME/.local/bin/claude"
 export OPENCODE_EXPERIMENTAL_LSP_TOOL=true
