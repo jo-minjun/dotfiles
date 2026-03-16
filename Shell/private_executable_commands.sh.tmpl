@@ -9,6 +9,14 @@ print_green() { [[ -n "$1" ]] && echo -e "${GREEN}${1}${NC}"; }
 print_yellow() { [[ -n "$1" ]] && echo -e "${YELLOW}${1}${NC}"; }
 print_red() { [[ -n "$1" ]] && echo -e "${RED}${1}${NC}"; }
 
+# Clear screen and scrollback with Ctrl+K (Cmd+K via Ghostty)
+clear-screen-and-scrollback() {
+  printf '\x1b[2J\x1b[3J\x1b[H'
+  zle reset-prompt
+}
+zle -N clear-screen-and-scrollback
+bindkey '^k' clear-screen-and-scrollback
+
 ls_shell() {
   print_green "Functions"
   echo "----------"
@@ -271,6 +279,7 @@ ws() {
   tmux new-session -d -s "$session_name" -c "$PWD"
   tmux split-window -h -p 40 -t "$session_name:1.1" -c "$PWD"
   tmux split-window -v -p 40 -t "$session_name:1.2" -c "$PWD"
+  tmux set-option -p -t "$session_name:1.2" allow-passthrough on
   tmux send-keys -t "$session_name:1.2" 'yazi' C-m
   tmux send-keys -t "$session_name:1.1" 'clauded' C-m
   tmux select-pane -t "$session_name:1.1"
