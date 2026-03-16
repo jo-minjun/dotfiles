@@ -1,0 +1,73 @@
+<h2>tmux 워크스페이스 레이아웃</h2>
+<p class="subtitle">요청하신 레이아웃을 시각화했습니다. 비율과 구성을 확인해주세요.</p>
+
+<div class="mockup">
+  <div class="mockup-header">tmux 워크스페이스 — 기본 레이아웃</div>
+  <div class="mockup-body" style="padding: 0; height: 400px; display: flex; gap: 2px; background: #313244;">
+    <!-- Left pane: Claude Code -->
+    <div style="flex: 1; background: #1e1e2e; display: flex; flex-direction: column; overflow: hidden;">
+      <div style="background: #45475a; padding: 4px 12px; font-size: 12px; color: #a6adc8;">claude code</div>
+      <div style="flex: 1; padding: 16px; font-family: monospace; font-size: 13px; color: #cdd6f4;">
+        <div style="color: #a6e3a1;">$ clauded</div>
+        <div style="margin-top: 8px; color: #89b4fa;">╭─────────────────────────╮</div>
+        <div style="color: #89b4fa;">│  Claude Code            │</div>
+        <div style="color: #89b4fa;">│                         │</div>
+        <div style="color: #89b4fa;">│  ❯ _                    │</div>
+        <div style="color: #89b4fa;">╰─────────────────────────╯</div>
+      </div>
+    </div>
+    <!-- Right panes -->
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+      <!-- Right top: yazi -->
+      <div style="flex: 1; background: #1e1e2e; display: flex; flex-direction: column; overflow: hidden;">
+        <div style="background: #45475a; padding: 4px 12px; font-size: 12px; color: #a6adc8;">yazi</div>
+        <div style="flex: 1; padding: 12px; font-family: monospace; font-size: 12px; color: #cdd6f4;">
+          <div style="display: flex; gap: 16px;">
+            <div style="color: #89b4fa;">📁 .chezmoiscripts/</div>
+          </div>
+          <div><span style="color: #89b4fa;">📁 Shell/</span></div>
+          <div><span style="color: #89b4fa;">📁 dot_config/</span></div>
+          <div><span style="color: #a6e3a1;">📄 dot_tmux.conf</span></div>
+          <div><span style="color: #a6e3a1;">📄 dot_zshrc.tmpl</span></div>
+        </div>
+      </div>
+      <!-- Right bottom: terminal -->
+      <div style="flex: 1; background: #1e1e2e; display: flex; flex-direction: column; overflow: hidden;">
+        <div style="background: #45475a; padding: 4px 12px; font-size: 12px; color: #a6adc8;">terminal</div>
+        <div style="flex: 1; padding: 12px; font-family: monospace; font-size: 12px; color: #cdd6f4;">
+          <div style="color: #a6e3a1;">~/Projects/work $</div>
+          <div style="margin-top: 4px;">git status</div>
+          <div style="color: #f9e2af;">On branch main</div>
+          <div style="color: #a6e3a1;">nothing to commit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 32px;">좌우 비율을 어떻게 할까요?</h3>
+<p class="subtitle">Claude Code가 메인 작업 공간이므로 좌측을 더 넓게 하는 게 일반적입니다</p>
+
+<div class="options">
+  <div class="option" data-choice="50-50" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>50:50</h3>
+      <p>좌우 동일한 비율</p>
+    </div>
+  </div>
+  <div class="option" data-choice="60-40" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>60:40 (추천)</h3>
+      <p>Claude Code에 더 넓은 공간, yazi/터미널은 보조 역할</p>
+    </div>
+  </div>
+  <div class="option" data-choice="70-30" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>70:30</h3>
+      <p>Claude Code 중심, 우측은 최소한의 참고용</p>
+    </div>
+  </div>
+</div>

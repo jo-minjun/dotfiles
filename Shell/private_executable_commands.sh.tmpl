@@ -253,3 +253,31 @@ yazicd() {
   fi
   rm -f -- "$tmp"
 }
+
+ws() {
+  local session_name="${1:-$(basename "$PWD")}"
+  session_name=$(echo "$session_name" | sed 's/[^a-zA-Z0-9_-]/-/g')
+  [[ -z "${session_name//-/}" ]] && session_name="workspace"
+
+  if tmux has-session -t "=$session_name" 2>/dev/null; then
+    if [[ -n "$TMUX" ]]; then
+      tmux switch-client -t "=$session_name"
+    else
+      tmux attach-session -t "=$session_name"
+    fi
+    return 0
+  fi
+
+  tmux new-session -d -s "$session_name" -c "$PWD"
+  tmux split-window -h -p 40 -t "$session_name:1.1" -c "$PWD"
+  tmux split-window -v -p 40 -t "$session_name:1.2" -c "$PWD"
+  tmux send-keys -t "$session_name:1.2" 'yazi' C-m
+  tmux send-keys -t "$session_name:1.1" 'clauded' C-m
+  tmux select-pane -t "$session_name:1.1"
+
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "=$session_name"
+  else
+    tmux attach-session -t "=$session_name"
+  fi
+}

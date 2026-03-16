@@ -1,0 +1,82 @@
+<h2>ws() 함수 설계</h2>
+<p class="subtitle">tmux 워크스페이스 레이아웃 명령어</p>
+
+<div class="section">
+  <h3>사용법</h3>
+  <div class="mockup">
+    <div class="mockup-header">Usage</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 14px; color: #cdd6f4; background: #1e1e2e;">
+      <div style="color: #a6adc8;"># 세션 이름 지정</div>
+      <div>$ <span style="color: #a6e3a1;">ws</span> my-app</div>
+      <div style="margin-top: 12px; color: #a6adc8;"># 세션 이름 생략 → 현재 디렉토리 이름 사용</div>
+      <div>$ <span style="color: #a6e3a1;">ws</span></div>
+      <div style="margin-top: 12px; color: #a6adc8;"># 이미 존재하는 세션이면 attach</div>
+      <div>$ <span style="color: #a6e3a1;">ws</span> my-app  <span style="color: #a6adc8;"># → tmux attach</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>레이아웃 (60:40 / 우측 60:40)</h3>
+  <div class="mockup">
+    <div class="mockup-header">tmux workspace</div>
+    <div class="mockup-body" style="padding: 0; height: 350px; display: flex; gap: 2px; background: #313244;">
+      <!-- Left 60% -->
+      <div style="flex: 6; background: #1e1e2e; display: flex; flex-direction: column;">
+        <div style="background: #45475a; padding: 4px 12px; font-size: 11px; color: #a6adc8; display: flex; justify-content: space-between;">
+          <span>pane 0 — clauded</span><span style="color: #89b4fa;">60%</span>
+        </div>
+        <div style="flex: 1; padding: 16px; font-family: monospace; font-size: 13px; color: #cdd6f4; display: flex; align-items: center; justify-content: center;">
+          <div style="text-align: center;">
+            <div style="color: #89b4fa; font-size: 18px;">Claude Code</div>
+            <div style="color: #a6adc8; margin-top: 4px;">clauded</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right 40% -->
+      <div style="flex: 4; display: flex; flex-direction: column; gap: 2px;">
+        <!-- Top 60% -->
+        <div style="flex: 6; background: #1e1e2e; display: flex; flex-direction: column;">
+          <div style="background: #45475a; padding: 4px 12px; font-size: 11px; color: #a6adc8; display: flex; justify-content: space-between;">
+            <span>pane 1 — yazi</span><span style="color: #f9e2af;">60%</span>
+          </div>
+          <div style="flex: 1; padding: 12px; font-family: monospace; font-size: 12px; color: #cdd6f4; display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center;">
+              <div style="color: #f9e2af; font-size: 16px;">yazi</div>
+              <div style="color: #a6adc8; margin-top: 4px;">파일 탐색기</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom 40% -->
+        <div style="flex: 4; background: #1e1e2e; display: flex; flex-direction: column;">
+          <div style="background: #45475a; padding: 4px 12px; font-size: 11px; color: #a6adc8; display: flex; justify-content: space-between;">
+            <span>pane 2 — shell</span><span style="color: #a6e3a1;">40%</span>
+          </div>
+          <div style="flex: 1; padding: 12px; font-family: monospace; font-size: 12px; color: #cdd6f4; display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center;">
+              <div style="color: #a6e3a1; font-size: 16px;">Terminal</div>
+              <div style="color: #a6adc8; margin-top: 4px;">일반 쉘</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>동작 흐름</h3>
+  <div class="mockup">
+    <div class="mockup-header">Flow</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; color: #cdd6f4; background: #1e1e2e; line-height: 1.8;">
+      <div><span style="color: #f9e2af;">1.</span> 세션 이름 결정 (인자 or 현재 디렉토리명)</div>
+      <div><span style="color: #f9e2af;">2.</span> 동명 세션 존재 확인</div>
+      <div style="padding-left: 20px; color: #a6adc8;">→ 존재하면 attach 후 종료</div>
+      <div><span style="color: #f9e2af;">3.</span> 새 세션 생성 (detached)</div>
+      <div><span style="color: #f9e2af;">4.</span> 우측 분할 (40%) → yazi 실행</div>
+      <div><span style="color: #f9e2af;">5. </span> 우측 하단 분할 (40%) → 빈 쉘</div>
+      <div><span style="color: #f9e2af;">6.</span> 좌측 pane 선택 → clauded 실행</div>
+      <div><span style="color: #f9e2af;">7.</span> 세션 attach</div>
+    </div>
+  </div>
+</div>
