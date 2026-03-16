@@ -4,6 +4,7 @@ tap "oven-sh/bun"
 # CLI Tools
 brew "bat"
 brew "chezmoi"
+brew "delta"
 brew "fd"
 brew "fzf"
 brew "gh"
