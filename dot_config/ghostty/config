@@ -9,3 +9,7 @@ scrollback-limit = 10000000
 
 # Map Cmd+K to Ctrl+K (for tmux clear screen)
 keybind = super+k=text:\x0b
+
+# Map Cmd+[ / Cmd+] to pane navigation (tmux user-keys)
+keybind = super+left_bracket=text:\x1b[91;9u
+keybind = super+right_bracket=text:\x1b[93;9u
