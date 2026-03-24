@@ -4,8 +4,21 @@
 theme = Idea
 font-family = JetBrains Mono
 font-size = 16
+font-thicken = true
 confirm-close-surface = false
 scrollback-limit = 10000000
+
+# 한글 폰트
+font-codepoint-map = "U+1100-U+11FF=Noto Serif CJK KR"
+font-codepoint-map = "U+3130-U+318F=Noto Serif CJK KR"
+font-codepoint-map = "U+A960-U+A97F=Noto Serif CJK KR"
+font-codepoint-map = "U+AC00-U+D7AF=Noto Serif CJK KR"
+font-codepoint-map = "U+D7B0-U+D7FF=Noto Serif CJK KR"
+
+# CJK 기호 및 전각 문자
+font-codepoint-map = "U+3000-U+303F=Noto Serif CJK KR"
+font-codepoint-map = "U+FE30-U+FE4F=Noto Serif CJK KR"
+font-codepoint-map = "U+FF00-U+FFEF=Noto Serif CJK KR"
 
 # Map Cmd+K to Ctrl+K (for tmux clear screen)
 keybind = super+k=text:\x0b
