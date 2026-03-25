@@ -14,9 +14,13 @@ fi
 
 if gh auth status &>/dev/null 2>&1; then
   echo "GitHub CLI already authenticated."
+  gh auth setup-git
+  echo "GitHub CLI credential helper configured for git."
   exit 0
 fi
 
 echo "GitHub CLI not authenticated. Starting login..."
 gh auth login
+gh auth setup-git
+echo "GitHub CLI credential helper configured for git."
 {{- end }}
