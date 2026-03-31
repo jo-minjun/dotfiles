@@ -3,11 +3,13 @@
   "enabledPlugins": {
     "claude-dashboard@claude-dashboard": true,
     "code-review@claude-plugins-official": true,
+    "codex@openai-codex": true,
     "document-skills@anthropic-agent-skills": true,
     "frontend-design@claude-plugins-official": true,
     "jdtls-lsp@claude-plugins-official": true,
     "kotlin-lsp@claude-plugins-official": true,
     "php-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
   },
@@ -16,6 +18,14 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus",
     "CLAUDE_CODE_VERBOSE_LOGGING": "true"
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "repo": "openai/codex-plugin-cc",
+        "source": "github"
+      }
+    }
   },
   "language": "Korean",
   "permissions": {
