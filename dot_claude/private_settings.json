@@ -1,6 +1,7 @@
 {
   "effortLevel": "high",
   "enabledPlugins": {
+    "caveman@caveman": true,
     "claude-dashboard@claude-dashboard": true,
     "code-review@claude-plugins-official": true,
     "codex@openai-codex": true,
@@ -20,6 +21,12 @@
     "CLAUDE_CODE_VERBOSE_LOGGING": "true"
   },
   "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "repo": "JuliusBrussee/caveman",
+        "source": "github"
+      }
+    },
     "openai-codex": {
       "source": {
         "repo": "openai/codex-plugin-cc",
