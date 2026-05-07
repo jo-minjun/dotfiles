@@ -1,4 +1,5 @@
 alias clauded='claude --dangerously-skip-permissions'
+alias codexd='codex --dangerously-bypass-approvals-and-sandbox'
 alias cd_dot='chezmoi cd'
 alias aws_profiles='aws configure list-profiles'
 alias git_fix='git add . && git commit --amend --no-edit'

@@ -21,6 +21,12 @@ fi
 echo "=== Claude Code Plugin Installation ==="
 
 get_marketplace_repo() {
+  local from_settings
+  from_settings=$(jq -r --arg name "$1" '.extraKnownMarketplaces[$name].source.repo // empty' "$SETTINGS_FILE" 2>/dev/null)
+  if [[ -n "$from_settings" ]]; then
+    echo "$from_settings"
+    return
+  fi
   case "$1" in
     claude-dashboard) echo "uppinote20/claude-dashboard" ;;
     anthropic-agent-skills) echo "anthropics/skills" ;;
