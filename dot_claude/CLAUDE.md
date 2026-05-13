@@ -125,4 +125,4 @@
 ---
 
 # PKM
-- Obsidian PKM 관련 작업 시 `~/.claude/PKM.md`를 읽고 규칙을 따르라
+- Obsidian PKM 관련 작업 시 `~/.agents/PKM.md`를 읽고 규칙을 따르라
