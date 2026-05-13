@@ -1,0 +1,10 @@
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+[projects."/Users/minjun.jo/Projects/work/vroong-os"]
+trust_level = "trusted"
+
+[projects."/Users/minjun.jo/Projects/work/vroong-osmind"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"

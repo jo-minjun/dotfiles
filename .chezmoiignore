@@ -18,6 +18,9 @@ Library/Application Support/BetterTouchTool/btt_data_store.version_*
 .DS_Store
 **/.DS_Store
 
+# Codex 시스템 스킬 (codex CLI가 자동 관리)
+.codex/skills/.system/
+
 # 저장소 문서 (홈에 배포 불필요)
 README.md
 docs/

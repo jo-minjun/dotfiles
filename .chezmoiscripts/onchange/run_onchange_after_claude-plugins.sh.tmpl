@@ -68,4 +68,21 @@ for plugin in $PLUGINS; do
 done
 
 echo ""
+echo "Removing plugins not listed in enabledPlugins..."
+INSTALLED_PLUGINS=$(claude plugin list 2>/dev/null | awk '/^  ❯/ {print $2}' || echo "")
+DESIRED_SORTED=$(echo "$PLUGINS" | sort)
+INSTALLED_SORTED=$(echo "$INSTALLED_PLUGINS" | sort)
+TO_REMOVE=$(comm -23 <(echo "$INSTALLED_SORTED") <(echo "$DESIRED_SORTED"))
+
+if [[ -z "$TO_REMOVE" ]]; then
+  echo "  [OK] Nothing to remove"
+else
+  for plugin in $TO_REMOVE; do
+    [[ -z "$plugin" ]] && continue
+    echo "  [-] $plugin"
+    claude plugin uninstall "$plugin" 2>/dev/null || echo "  [!] Warning: Failed to uninstall $plugin"
+  done
+fi
+
+echo ""
 echo "=== Plugin installation complete ==="
