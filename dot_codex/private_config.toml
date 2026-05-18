@@ -1,10 +1,87 @@
-model = "gpt-5.4"
+model = "gpt-5.5"
 model_reasoning_effort = "xhigh"
-[projects."/Users/minjun.jo/Projects/work/vroong-os"]
-trust_level = "trusted"
+sandbox_mode = 'danger-full-access'
 
-[projects."/Users/minjun.jo/Projects/work/vroong-osmind"]
-trust_level = "trusted"
+[mcp_servers]
+[mcp_servers.MCP_DOCKER]
+command = 'docker'
+args = ['mcp', 'gateway', 'run']
 
+[mcp_servers.MCP_DOCKER.tools.mcp-find]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.mcp-add]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.jira_transition_issue]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.jira_add_comment]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.jira_edit_comment]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.notion-update-page]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.jira_create_issue]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.jira_update_issue]
+approval_mode = "approve"
+
+[mcp_servers.MCP_DOCKER.tools.jira_create_remote_issue_link]
+approval_mode = "approve"
+
+[notice]
 [notice.model_migrations]
-"gpt-5.3-codex" = "gpt-5.4"
+'gpt-5.3-codex' = 'gpt-5.4'
+
+[plugins]
+[plugins.'github@openai-curated']
+enabled = true
+
+[plugins.'gmail@openai-curated']
+enabled = true
+
+[plugins.'google-calendar@openai-curated']
+enabled = true
+
+[plugins.'superpowers@openai-curated']
+enabled = true
+
+[projects]
+[projects.'/Users/minjun.jo/Projects/work/vroong-hectofinancial-epm']
+trust_level = 'trusted'
+
+[projects.'/Users/minjun.jo/Projects/work/vroong-os']
+trust_level = 'trusted'
+
+[projects.'/Users/minjun.jo/Projects/work/vroong-osmind']
+trust_level = 'trusted'
+
+[projects."/Users/minjun.jo/Projects/work"]
+trust_level = "trusted"
+
+[projects."/Users/minjun.jo/Projects/work/vroong-pricingpolicy"]
+trust_level = "trusted"
+
+[projects."/Users/minjun.jo/Projects/work/prime-main-server"]
+trust_level = "trusted"
+
+[projects."/Users/minjun.jo/.local/share/chezmoi"]
+trust_level = "trusted"
+
+[tui]
+[tui.model_availability_nux]
+'gpt-5.5' = 4
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_merge_pull_request]
+approval_mode = "approve"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_create_pull_request]
+approval_mode = "approve"
+
+[features]
+goals = true
