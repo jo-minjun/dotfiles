@@ -1,4 +1,6 @@
 # Taps
+tap "chattymin/tap"
+tap "hashicorp/tap"
 tap "oven-sh/bun"
 
 # CLI Tools
@@ -31,6 +33,10 @@ brew "k9s"
 brew "kafkactl"
 brew "kubernetes-cli"
 brew "kubectx"
+brew "hashicorp/tap/terraform"
+brew "helm"
+brew "lazygit"
+brew "mermaid-cli"
 
 # Languages & Runtimes
 brew "mise"
@@ -40,7 +46,7 @@ brew "jenv"
 brew "maven"
 brew "oven-sh/bun/bun"
 brew "pnpm"
-brew "rustup-init"
+brew "rustup"
 
 # Databases
 brew "libpq"
@@ -68,8 +74,13 @@ cask "font-symbols-only-nerd-font"
 cask "1password"
 cask "1password-cli"
 cask "bettertouchtool"
+cask "discord"
+cask "font-noto-serif-cjk-kr"
 cask "google-drive"
+cask "iina"
 cask "notion"
+cask "obsidian"
+cask "orca"
 cask "jordanbaird-ice"
 cask "plaud"
 

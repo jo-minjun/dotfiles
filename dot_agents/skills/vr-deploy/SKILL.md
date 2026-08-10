@@ -32,17 +32,19 @@ git tag → git push origin <tag>
   - `argocd` (ArgoCD CLI) — `argocd login` 완료 상태
 - `curl`, `python3`(json 파싱), `jq`(선택) 사용 가능
 
+Jenkins CLI는 항상 HTTP transport로 호출한다. 기본 WebSocket transport는 사내 Jenkins reverse proxy에서 `Unexpected request origin` / `CLI handshake failed with status code 403`로 실패할 수 있으므로, 모든 Jenkins CLI 명령은 `jenkins-cli -http ...` 형태를 사용한다.
+
 ## 워크플로우
 
 ### Phase 0: 사전 점검
 
 **사용하는 명령어**
-- `jenkins-cli who-am-i` — Jenkins 인증 상태 확인
+- `jenkins-cli -http who-am-i` — Jenkins 인증 상태 확인
 - `argocd account get-user-info` — ArgoCD 인증 상태 확인
 
 ```bash
 # Jenkins 인증 확인
-jenkins-cli who-am-i
+jenkins-cli -http who-am-i
 # → "Authenticated as: <user>"가 아닌 "anonymous"면 중단.
 #   ~/.secrets.zsh 에 JENKINS_USER_ID / JENKINS_API_TOKEN 이 정의돼 있는지 확인.
 
@@ -86,7 +88,7 @@ argocd account get-user-info
 ### Phase 2: Jenkins 빌드 진행 및 입력 게이트 처리
 
 **사용하는 명령어 (서브섹션별)**
-- 2-0: `git remote get-url origin`, `jenkins-cli list-jobs`
+- 2-0: `git remote get-url origin`, `jenkins-cli -http list-jobs`
 - 2-1: `curl ${JENKINS_URL}/job/<repo>/job/<tag>/api/json` — 빌드 번호/상태
 - 2-2, 2-6: `curl ${JENKINS_URL}/job/<repo>/job/<tag>/<build>/wfapi/describe` — 스테이지 상태
 - 2-3: `curl ${JENKINS_URL}/job/<repo>/job/<tag>/<build>/input/` — 입력 폼 HTML
@@ -123,7 +125,7 @@ REPO_RAW=$(git remote get-url origin | sed -E 's|.*[:/][^/]+/([^/.]+)(\.git)?$|\
 KEYWORD="${REPO_RAW#vroong-}"
 
 # Jenkins 루트 잡 목록에서 검색
-MATCHES=$(jenkins-cli list-jobs | grep -iF "$KEYWORD")
+MATCHES=$(jenkins-cli -http list-jobs | grep -iF "$KEYWORD")
 COUNT=$(echo "$MATCHES" | grep -c .)
 
 echo "keyword: $KEYWORD"
@@ -420,7 +422,7 @@ argocd app wait "$APP" --health --timeout 300
 ### `HTTP 403 Forbidden` on input submit
 
 - CSRF crumb 누락 또는 만료. crumb을 다시 받아 재시도.
-- 인증 토큰 권한 부족. `jenkins-cli who-am-i`로 권한 그룹 확인.
+- 인증 토큰 권한 부족. `jenkins-cli -http who-am-i`로 권한 그룹 확인.
 
 ### ArgoCD `OutOfSync` 지속
 

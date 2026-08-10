@@ -1,39 +1,10 @@
 {
-  "effortLevel": "high",
-  "enabledPlugins": {
-    "caveman@caveman": true,
-    "claude-dashboard@claude-dashboard": true,
-    "code-review@claude-plugins-official": true,
-    "codex@openai-codex": true,
-    "document-skills@anthropic-agent-skills": true,
-    "frontend-design@claude-plugins-official": true,
-    "jdtls-lsp@claude-plugins-official": true,
-    "kotlin-lsp@claude-plugins-official": true,
-    "php-lsp@claude-plugins-official": true,
-    "slack@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
-  },
   "env": {
     "CLAUDE_CODE_DEBUG": "true",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus",
     "CLAUDE_CODE_VERBOSE_LOGGING": "true"
   },
-  "extraKnownMarketplaces": {
-    "caveman": {
-      "source": {
-        "repo": "JuliusBrussee/caveman",
-        "source": "github"
-      }
-    },
-    "openai-codex": {
-      "source": {
-        "repo": "openai/codex-plugin-cc",
-        "source": "github"
-      }
-    }
-  },
-  "language": "Korean",
   "permissions": {
     "allow": [
       "Glob",
@@ -73,7 +44,40 @@
       "Edit(//Users/minjun.jo/.claude/claude-devkit/**)"
     ]
   },
-  "skipDangerousModePermissionPrompt": true,
+  "model": "claude-fable-5",
+  "statusLine": {
+    "type": "command",
+    "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.8.1/dist/index.js"
+  },
+  "enabledPlugins": {
+    "caveman@caveman": true,
+    "claude-dashboard@claude-dashboard": true,
+    "code-review@claude-plugins-official": true,
+    "codex@openai-codex": true,
+    "document-skills@anthropic-agent-skills": true,
+    "frontend-design@claude-plugins-official": true,
+    "jdtls-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "php-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "language": "Korean",
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -85,8 +89,187 @@
       "완벽한 한 줄을 찾는 중"
     ]
   },
-  "statusLine": {
-    "command": "node /Users/minjun.jo/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.8.1/dist/index.js",
-    "type": "command"
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$PASEO_TERMINAL_ID\" ]; then \"${PASEO_HOOK_CLI:-paseo}\" hooks claude UserPromptSubmit; fi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$PASEO_TERMINAL_ID\" ]; then \"${PASEO_HOOK_CLI:-paseo}\" hooks claude Stop; fi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$PASEO_TERMINAL_ID\" ]; then \"${PASEO_HOOK_CLI:-paseo}\" hooks claude StopFailure; fi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$PASEO_TERMINAL_ID\" ]; then \"${PASEO_HOOK_CLI:-paseo}\" hooks claude SessionEnd; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$PASEO_TERMINAL_ID\" ]; then \"${PASEO_HOOK_CLI:-paseo}\" hooks claude Notification; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/minjun.jo/.orca/agent-hooks/claude-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
