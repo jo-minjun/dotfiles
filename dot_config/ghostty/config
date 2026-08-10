@@ -6,7 +6,7 @@ font-family = JetBrains Mono
 font-size = 16
 font-thicken = true
 confirm-close-surface = false
-scrollback-limit = 10000000
+scrollback-limit = 100000000
 
 # 한글 폰트
 font-codepoint-map = "U+1100-U+11FF=Noto Serif CJK KR"

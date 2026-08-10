@@ -1,23 +1,5 @@
 {
-  "dismissed": {
-    "findSkillsPrompt": true
-  },
-  "lastSelectedAgents": [
-    "amp",
-    "antigravity",
-    "cline",
-    "codex",
-    "cursor",
-    "deepagents",
-    "dexto",
-    "firebender",
-    "gemini-cli",
-    "github-copilot",
-    "kimi-cli",
-    "opencode",
-    "warp",
-    "claude-code"
-  ],
+  "version": 3,
   "skills": {
     "vr-create-branch": {
       "source": "meshkorea/internal-fintech-skills",
@@ -47,13 +29,13 @@
       "updatedAt": "2026-03-25T09:40:53.333Z"
     },
     "find-skills": {
-      "installedAt": "2026-05-13T13:14:19.509Z",
-      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
-      "skillPath": "skills/find-skills/SKILL.md",
       "source": "vercel-labs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
-      "updatedAt": "2026-05-13T13:14:19.509Z"
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-03-24T08:46:03.634Z",
+      "updatedAt": "2026-03-24T08:46:03.634Z"
     },
     "vr-deploy-plan": {
       "source": "meshkorea/internal-fintech-skills",
@@ -69,136 +51,218 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/meshkorea/internal-fintech-skills.git",
       "skillPath": "vr-deploy/SKILL.md",
-      "skillFolderHash": "9c47db6f2d3c55809ff23b592c0b1628e6323080",
+      "skillFolderHash": "5cf07004ac78458a577d1b4616f23524b1d7eb6a",
       "installedAt": "2026-04-17T07:56:08.526Z",
-      "updatedAt": "2026-04-17T07:56:08.526Z"
+      "updatedAt": "2026-05-29T07:11:16.000Z"
     },
     "doc-coauthoring": {
-      "installedAt": "2026-05-13T13:17:50.937Z",
-      "skillFolderHash": "eb57c7860492c9d90a3fe44129599e7abdd6bbc9",
-      "skillPath": "skills/doc-coauthoring/SKILL.md",
       "source": "sickn33/antigravity-awesome-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
-      "updatedAt": "2026-05-13T13:17:50.937Z"
+      "skillPath": "skills/doc-coauthoring/SKILL.md",
+      "skillFolderHash": "eb57c7860492c9d90a3fe44129599e7abdd6bbc9",
+      "installedAt": "2026-05-08T01:25:42.512Z",
+      "updatedAt": "2026-05-08T01:25:42.512Z"
+    },
+    "vr-log-tail-monitor": {
+      "source": "meshkorea/internal-fintech-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/meshkorea/internal-fintech-skills.git",
+      "skillPath": "vr-log-tail-monitor/SKILL.md",
+      "skillFolderHash": "91342fca9fe17a26454ed0076118d890bff14f0e8a82fbc14d1f6992684dc544",
+      "installedAt": "2026-05-29T08:29:24.238Z",
+      "updatedAt": "2026-05-29T09:42:35.124Z"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "pluginName": "example-skills",
+      "installedAt": "2026-06-01T09:33:24.299Z",
+      "updatedAt": "2026-06-01T09:33:24.299Z"
     },
     "brainstorming": {
-      "installedAt": "2026-05-13T13:14:16.356Z",
-      "skillFolderHash": "f260c775073816860fef8a37c032ac77e2ff5821",
-      "skillPath": "skills/brainstorming/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.356Z"
+      "skillPath": "skills/brainstorming/SKILL.md",
+      "skillFolderHash": "b14f49a55a8387cfa12ac89794ab79698d7fddbb",
+      "installedAt": "2026-07-09T08:21:32.916Z",
+      "updatedAt": "2026-07-09T08:21:32.916Z"
     },
     "dispatching-parallel-agents": {
-      "installedAt": "2026-05-13T13:14:16.358Z",
-      "skillFolderHash": "ebd0490e6b0bccfdb9f9c0cc9dd6a066036c8d89",
-      "skillPath": "skills/dispatching-parallel-agents/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.358Z"
+      "skillPath": "skills/dispatching-parallel-agents/SKILL.md",
+      "skillFolderHash": "adc9175fe3545914d5a07e5475bc0e82d5aaed6f",
+      "installedAt": "2026-07-09T08:21:32.920Z",
+      "updatedAt": "2026-07-09T08:21:32.920Z"
     },
     "executing-plans": {
-      "installedAt": "2026-05-13T13:14:16.358Z",
-      "skillFolderHash": "7c20d2bd7ff7b166ea3064e21b1e5f0455750878",
-      "skillPath": "skills/executing-plans/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.358Z"
+      "skillPath": "skills/executing-plans/SKILL.md",
+      "skillFolderHash": "d10ac40a0b6c12e46fd642eb88a6f2bda6deb1e5",
+      "installedAt": "2026-07-09T08:21:32.921Z",
+      "updatedAt": "2026-07-09T08:21:32.921Z"
     },
     "finishing-a-development-branch": {
-      "installedAt": "2026-05-13T13:14:16.359Z",
-      "skillFolderHash": "782e09faa5dcf7e9a7a173bd14b5622e35b80169",
-      "skillPath": "skills/finishing-a-development-branch/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.359Z"
+      "skillPath": "skills/finishing-a-development-branch/SKILL.md",
+      "skillFolderHash": "97f521c5001a8b979aa297a69c4257ce8b6a0939",
+      "installedAt": "2026-07-09T08:21:32.923Z",
+      "updatedAt": "2026-07-09T08:21:32.923Z"
     },
     "receiving-code-review": {
-      "installedAt": "2026-05-13T13:14:16.359Z",
-      "skillFolderHash": "7750c56fddb8b2f1cbdb1550a6e3e40d2eeac5f1",
-      "skillPath": "skills/receiving-code-review/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.359Z"
+      "skillPath": "skills/receiving-code-review/SKILL.md",
+      "skillFolderHash": "f54c765d64eedccc17aa099b4947e64231f4b698",
+      "installedAt": "2026-07-09T08:21:32.924Z",
+      "updatedAt": "2026-07-09T08:21:32.924Z"
     },
     "requesting-code-review": {
-      "installedAt": "2026-05-13T13:14:16.360Z",
-      "skillFolderHash": "ff419ec159bdf5ff2f2d83c7e544c586bcde69bb",
-      "skillPath": "skills/requesting-code-review/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.360Z"
+      "skillPath": "skills/requesting-code-review/SKILL.md",
+      "skillFolderHash": "c9144401a26cbe2549a0020c65c478a6a0bdfaee",
+      "installedAt": "2026-07-09T08:21:32.925Z",
+      "updatedAt": "2026-07-09T08:21:32.925Z"
     },
     "subagent-driven-development": {
-      "installedAt": "2026-05-13T13:14:16.360Z",
-      "skillFolderHash": "73b43347c1bdc10f6ab81a5cdb036dd1c8098cc0",
-      "skillPath": "skills/subagent-driven-development/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.360Z"
+      "skillPath": "skills/subagent-driven-development/SKILL.md",
+      "skillFolderHash": "c2c349084c2bd52da9af12e4d65fc94181f284bb",
+      "installedAt": "2026-07-09T08:21:32.926Z",
+      "updatedAt": "2026-07-09T08:21:32.926Z"
     },
     "systematic-debugging": {
-      "installedAt": "2026-05-13T13:14:16.361Z",
-      "skillFolderHash": "e96f5f2620c17069d668be1880d5492e34c84ceb",
-      "skillPath": "skills/systematic-debugging/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.361Z"
+      "skillPath": "skills/systematic-debugging/SKILL.md",
+      "skillFolderHash": "5702624a1f0e5ad478234442ce5cde038a525465",
+      "installedAt": "2026-07-09T08:21:32.927Z",
+      "updatedAt": "2026-07-09T08:21:32.927Z"
     },
     "test-driven-development": {
-      "installedAt": "2026-05-13T13:14:16.362Z",
-      "skillFolderHash": "98904a7d8e0e04b9bd46220b9b17298f45fe0b72",
-      "skillPath": "skills/test-driven-development/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.362Z"
+      "skillPath": "skills/test-driven-development/SKILL.md",
+      "skillFolderHash": "61939b456845d75979423c855829d05cbf2c304d",
+      "installedAt": "2026-07-09T08:21:32.927Z",
+      "updatedAt": "2026-07-09T08:21:32.927Z"
     },
     "using-git-worktrees": {
-      "installedAt": "2026-05-13T13:14:16.362Z",
-      "skillFolderHash": "13a9643fb9e4b236173f7d4b56b15dac10394f1b",
-      "skillPath": "skills/using-git-worktrees/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.362Z"
+      "skillPath": "skills/using-git-worktrees/SKILL.md",
+      "skillFolderHash": "069a24665c6ce34ca78da57727c84e3c05e65c76",
+      "installedAt": "2026-07-09T08:21:32.929Z",
+      "updatedAt": "2026-07-09T08:21:32.929Z"
     },
     "using-superpowers": {
-      "installedAt": "2026-05-13T13:14:16.363Z",
-      "skillFolderHash": "225dd70596c396940ff158335a954a64d93ece40",
-      "skillPath": "skills/using-superpowers/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.363Z"
+      "skillPath": "skills/using-superpowers/SKILL.md",
+      "skillFolderHash": "8528440d6778e041cb1b9a0ada13f9f3cecda663",
+      "installedAt": "2026-07-09T08:21:32.930Z",
+      "updatedAt": "2026-07-09T08:21:32.930Z"
     },
     "verification-before-completion": {
-      "installedAt": "2026-05-13T13:14:16.364Z",
-      "skillFolderHash": "ceb2f1f67f4cadb29b32a06e54d3d0be832071f5",
-      "skillPath": "skills/verification-before-completion/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.364Z"
+      "skillPath": "skills/verification-before-completion/SKILL.md",
+      "skillFolderHash": "ceb2f1f67f4cadb29b32a06e54d3d0be832071f5",
+      "installedAt": "2026-07-09T08:21:32.931Z",
+      "updatedAt": "2026-07-09T08:21:32.931Z"
     },
     "writing-plans": {
-      "installedAt": "2026-05-13T13:14:16.365Z",
-      "skillFolderHash": "8fe8e8b6ee9e5cbe53cb172a36f0dc31f9875847",
-      "skillPath": "skills/writing-plans/SKILL.md",
       "source": "obra/superpowers",
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-05-13T13:14:16.365Z"
+      "skillPath": "skills/writing-plans/SKILL.md",
+      "skillFolderHash": "ab2adb78b24572c2a80c18158ad699ab065c73df",
+      "installedAt": "2026-07-09T08:21:32.932Z",
+      "updatedAt": "2026-07-09T08:21:32.932Z"
+    },
+    "writing-skills": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git",
+      "skillPath": "skills/writing-skills/SKILL.md",
+      "skillFolderHash": "69e051f84da949c75eaa1f94a1f5acc4c3e402b6",
+      "installedAt": "2026-07-09T08:21:32.932Z",
+      "updatedAt": "2026-07-09T08:21:32.932Z"
+    },
+    "orchestration": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/orchestration/SKILL.md",
+      "skillFolderHash": "9aa26fde93c0592e5983cdca1ccd33b402802255",
+      "installedAt": "2026-07-28T08:24:15.858Z",
+      "updatedAt": "2026-07-28T08:32:34.299Z"
+    },
+    "computer-use": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/computer-use/SKILL.md",
+      "skillFolderHash": "2072384f53670cb61d93f4f6264ad2d8f6b5239c",
+      "installedAt": "2026-07-28T08:25:09.033Z",
+      "updatedAt": "2026-07-28T08:32:34.297Z"
+    },
+    "orca-cli": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/orca-cli/SKILL.md",
+      "skillFolderHash": "97f6596bb43a56c6e81246f077c35144c9025343",
+      "installedAt": "2026-07-28T08:31:49.617Z",
+      "updatedAt": "2026-07-28T08:32:34.299Z"
+    },
+    "vr-weekly-work-share": {
+      "source": "meshkorea/internal-fintech-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/meshkorea/internal-fintech-skills.git",
+      "skillPath": "vr-weekly-work-share/SKILL.md",
+      "skillFolderHash": "67d07a75b2865d14e6f6dc524dfadad41fc86065",
+      "installedAt": "2026-08-06T06:57:40.076Z",
+      "updatedAt": "2026-08-06T06:57:40.076Z"
     }
   },
-  "version": 3
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "antigravity-cli",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
 }
