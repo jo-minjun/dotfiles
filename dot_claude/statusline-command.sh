@@ -5,6 +5,20 @@ input=$(cat)
 model=$(printf '%s' "$input" | jq -r '.model.display_name // empty' 2>/dev/null)
 dir=$(printf '%s' "$input" | jq -r '.workspace.current_dir // .cwd // empty' 2>/dev/null)
 used=$(printf '%s' "$input" | jq -r '.context_window.used_percentage // empty' 2>/dev/null)
+ctx_size=$(printf '%s' "$input" | jq -r '.context_window.context_window_size // empty' 2>/dev/null)
+effort=$(printf '%s' "$input" | jq -r '.effort.level // empty' 2>/dev/null)
+
+format_tokens() {
+  local n="$1"
+  case "$n" in ''|*[!0-9]*) return ;; esac
+  if [ "$n" -ge 1000000 ]; then
+    awk -v n="$n" 'BEGIN { v = n / 1000000; if (v == int(v)) printf "%dM", v; else printf "%.1fM", v }'
+  elif [ "$n" -ge 1000 ]; then
+    awk -v n="$n" 'BEGIN { printf "%dK", n / 1000 }'
+  else
+    printf '%s' "$n"
+  fi
+}
 
 [ -z "$dir" ] && dir=$(pwd)
 
@@ -21,6 +35,7 @@ out=""
 
 if [ -n "$model" ]; then
   out="${CYAN}${model}${RESET}"
+  [ -n "$effort" ] && out="${out} ${YELLOW}(${effort})${RESET}"
 fi
 
 if [ -n "$dir" ]; then
@@ -46,7 +61,10 @@ if [ -n "$used" ]; then
       color="$GREEN"
     fi
     [ -n "$out" ] && out="${out}${SEP}"
-    out="${out}${color}ctx ${pct}%${RESET}"
+    size_label=$(format_tokens "$ctx_size")
+    ctx_text="ctx ${pct}%"
+    [ -n "$size_label" ] && ctx_text="${ctx_text} / ${size_label}"
+    out="${out}${color}${ctx_text}${RESET}"
   fi
 fi
 
