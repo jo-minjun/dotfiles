@@ -33,16 +33,16 @@ bash ~/.claude/skills/chezmoi-sync/scripts/normalize-json.sh
 
 ### 3. 소스 반영
 
-변경된 모든 파일을 한번에 반영:
+`chezmoi diff`에 나온 파일 중 이번에 반영할 파일만 지정해 반영한다. 소스는 여러 기기가 공유하므로, 다른 기기 경로(`/Users/<다른 사용자>`)나 이번 작업과 무관한 변경이 섞여 있으면 반영 범위를 사용자에게 확인한다.
 
 ```bash
-chezmoi re-add
+chezmoi re-add <target>...
 ```
 
-반영 후 diff가 비어있는지 확인:
+반영 후 대상 파일의 diff가 비어있는지 확인:
 
 ```bash
-chezmoi diff
+chezmoi diff <target>...
 ```
 
 ### 4. 커밋
