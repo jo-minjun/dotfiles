@@ -9,3 +9,5 @@ Shell/aliases
 .claude/agent-memory/codebase-researcher
 .claude/agents/systematic-debugger.md
 .claude/agent-memory/systematic-debugger
+.claude/agents/triple-lens-code-reviewer.md
+.claude/agent-memory/triple-lens-code-reviewer
