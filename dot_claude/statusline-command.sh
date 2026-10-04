@@ -1,5 +1,5 @@
 #!/bin/bash
-# Claude Code status line: model | directory | git branch | context usage
+# Claude Code status line: model | directory | git branch | context usage | 5h/7d rate limits
 input=$(cat)
 
 model=$(printf '%s' "$input" | jq -r '.model.display_name // empty' 2>/dev/null)
@@ -49,5 +49,29 @@ if [ -n "$used" ]; then
     out="${out}${color}ctx ${pct}%${RESET}"
   fi
 fi
+
+usage_segment() {
+  local label="$1" value="$2" p c
+  [ -z "$value" ] && return
+  p=$(printf '%.0f' "$value" 2>/dev/null) || return
+  if [ "$p" -ge 80 ]; then
+    c="$RED"
+  elif [ "$p" -ge 50 ]; then
+    c="$YELLOW"
+  else
+    c="$GREEN"
+  fi
+  printf '%s%s %s%%%s' "$c" "$label" "$p" "$RESET"
+}
+
+five=$(printf '%s' "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty' 2>/dev/null)
+week=$(printf '%s' "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty' 2>/dev/null)
+
+for seg in "$(usage_segment "5h" "$five")" "$(usage_segment "7d" "$week")"; do
+  if [ -n "$seg" ]; then
+    [ -n "$out" ] && out="${out}${SEP}"
+    out="${out}${seg}"
+  fi
+done
 
 printf '%s\n' "$out"
