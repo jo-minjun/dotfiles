@@ -2,3 +2,6 @@ Shell/aliases
 .agents/skills/vr-*
 .claude/skills/vr-*
 .codex/skills/vr-*
+.agents/skills/vroong-db-review
+.claude/skills/vroong-db-review
+.codex/skills/vroong-db-review
