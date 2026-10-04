@@ -1,7 +1,10 @@
-model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model = "gpt-6-astra"
+model_reasoning_effort = "medium"
 sandbox_mode = 'danger-full-access'
 service_tier = "default"
+
+[agents]
+max_concurrent_threads_per_session = 10
 
 [mcp_servers]
 [mcp_servers.MCP_DOCKER]
@@ -161,10 +164,12 @@ trust_level = "trusted"
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "pull-request-number", "branch-changes", "context-used", "fast-mode"]
 status_line_use_colors = true
+screen_reader_detection_done = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 4
+"gpt-6.1-sol" = 4
 
 [apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_merge_pull_request]
 approval_mode = "approve"
@@ -186,10 +191,6 @@ trusted_hash = "sha256:bd86828e0f8bfed48aceb70e4f1f7938b6c75e1c9aacd5a81aaf985c2
 [hooks.state."/Users/minjun.jo/Projects/work/vroong-sales/.codex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:caeb852c318521de82590d9a1e7a2fa90591eb5627a92575cd0b19c8bccb06da"
 
-[mcp_servers.plaud]
-command = "/Users/minjun.jo/.local/share/mise/installs/node/24.13.0/bin/npx"
-args = ["-y", "@plaud-ai/mcp@latest"]
-
 [hooks.state."/Users/minjun.jo/.codex/hooks.json:pre_tool_use:0:0"]
 enabled = true
 trusted_hash = "sha256:e87180aa7a845a4e8671c742154d02f3336ff1693cd84353786950676a35b646"
@@ -209,3 +210,28 @@ trusted_hash = "sha256:1bbf80a578a86f31ebe527dd23122c0325a86924605bc751ce7afdc4f
 [hooks.state."/Users/minjun.jo/.codex/hooks.json:stop:0:0"]
 enabled = true
 trusted_hash = "sha256:8fa5975ee559d019faf357e2e7880255e6b26a108505ece97171c4988eef96e9"
+
+[mcp_servers.plaud]
+command = "/opt/homebrew/opt/node@24/bin/npx"
+args = ["-y", "@plaud-ai/mcp@latest"]
+
+[projects."/Users/jo-minjun/Projects/me/imweb-backend"]
+trust_level = "trusted"
+
+[projects."/Users/jo-minjun/Projects/work/vroong-contract-server"]
+trust_level = "trusted"
+
+[projects."/Users/jo-minjun"]
+trust_level = "trusted"
+
+[projects."/Users/jo-minjun/Projects/work/vroong-database-guide"]
+trust_level = "trusted"
+
+[projects."/Users/jo-minjun/Library/Application Support/orca/rate-limit-pty-cwd"]
+trust_level = "trusted"
+
+[projects."/Users/jo-minjun/Projects/me/petrify"]
+trust_level = "trusted"
+
+[projects."/Users/jo-minjun/Projects/me/honey-bloom"]
+trust_level = "trusted"
