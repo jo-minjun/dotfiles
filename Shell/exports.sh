@@ -16,3 +16,6 @@ export VISUAL="nvim"
 export CLAUDE_BIN_PATH="$HOME/.local/bin/claude"
 export OPENCODE_EXPERIMENTAL_LSP_TOOL=true
 export ENABLE_LSP_TOOL=1
+
+# 기기별 설정은 chezmoi 관리 밖의 local.sh에 둔다
+[ -f "$HOME/Shell/local.sh" ] && source "$HOME/Shell/local.sh"
