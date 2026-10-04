@@ -80,7 +80,6 @@ cask "google-drive"
 cask "iina"
 cask "notion"
 cask "obsidian"
-cask "orca"
 cask "jordanbaird-ice"
 cask "plaud"
 
