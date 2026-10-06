@@ -94,9 +94,6 @@ cask "visual-studio-code"
 # Applications - Communication
 cask "slack"
 
-# Applications - Browser
-cask "naver-whale"
-
 # Applications - Networking
 brew "tailscale"
 cask "tailscale-app"
