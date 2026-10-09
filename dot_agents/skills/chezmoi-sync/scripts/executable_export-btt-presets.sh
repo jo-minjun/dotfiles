@@ -3,6 +3,18 @@
 set -euo pipefail
 
 BTT_CLI="/Applications/BetterTouchTool.app/Contents/SharedSupport/bin/bttcli"
+EXPORT_WAIT_SECONDS=5
+POLL_INTERVAL_SECONDS=0.1
+
+# bttcli는 파일 쓰기를 끝내기 전에 반환하는 경우가 있어, 내보낸 파일에서 프리셋 이름이 읽힐 때까지 기다린다
+wait_for_export() {
+  local file="$1" name="$2"
+  local deadline=$((SECONDS + EXPORT_WAIT_SECONDS))
+  until [[ "$(jq -r '.BTTPresetName' "$file" 2>/dev/null)" == "$name" ]]; do
+    ((SECONDS < deadline)) || return 1
+    sleep "$POLL_INTERVAL_SECONDS"
+  done
+}
 
 [[ -x "$BTT_CLI" ]] || { echo "BetterTouchTool CLI 없음. 건너뜀."; exit 0; }
 pgrep -x BetterTouchTool >/dev/null || { echo "BetterTouchTool 미실행. 건너뜀."; exit 0; }
@@ -20,7 +32,7 @@ while IFS= read -r managed_path; do
 
   "$BTT_CLI" export_preset name="$name" outputPath="$exported" compress=false includeSettings=true >/dev/null
 
-  if [[ "$(jq -r '.BTTPresetName' "$exported" 2>/dev/null)" != "$name" ]]; then
+  if ! wait_for_export "$exported" "$name"; then
     echo "  [!] $name 내보내기 실패. 기존 파일 유지."
     rm -f "$exported" "$normalized"
     continue
