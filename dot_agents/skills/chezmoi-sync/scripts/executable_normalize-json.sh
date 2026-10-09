@@ -7,7 +7,8 @@ normalize() {
   if [[ -f "$file" ]] && jq empty "$file" 2>/dev/null; then
     local tmp
     tmp=$(mktemp)
-    jq --sort-keys '.' "$file" > "$tmp" && mv "$tmp" "$file"
+    # mv는 mktemp의 600 권한으로 원본을 덮어써 chezmoi re-add가 private_ 속성을 붙이므로, 내용만 덮어써 원본 권한을 유지한다
+    jq --sort-keys '.' "$file" > "$tmp" && cat "$tmp" > "$file" && rm "$tmp"
     echo "  [OK] $(basename "$file")"
   fi
 }
