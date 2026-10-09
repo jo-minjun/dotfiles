@@ -60,9 +60,7 @@ brew "tree-sitter-cli"
 brew "typescript-language-server"
 
 # AI Tools
-brew "aichat"
 cask "codex"
-brew "opencode"
 
 # Shell
 brew "powerlevel10k"
@@ -76,7 +74,6 @@ cask "1password-cli"
 cask "bettertouchtool"
 cask "discord"
 cask "font-noto-serif-cjk-kr"
-cask "google-drive"
 cask "iina"
 cask "notion"
 cask "obsidian"
@@ -89,7 +86,6 @@ cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
 cask "postman"
-cask "visual-studio-code"
 
 # Applications - Communication
 cask "slack"
