@@ -15,7 +15,15 @@ chezmoi 관리 파일의 변경사항을 소스 리포에 반영, 커밋, 푸시
 
 ## 워크플로우
 
-### 1. 변경 감지
+### 1. BTT 프리셋 내보내기
+
+BTT 설정은 앱 내부 DB에 저장되고 `.bttpreset` 파일은 내보내야만 갱신되므로, 변경 감지 전에 현재 설정으로 다시 내보낸다:
+
+```bash
+bash ~/.claude/skills/chezmoi-sync/scripts/export-btt-presets.sh
+```
+
+### 2. 변경 감지
 
 ```bash
 chezmoi diff
@@ -23,7 +31,7 @@ chezmoi diff
 
 변경이 없으면 "변경사항 없음"을 알리고 종료.
 
-### 2. JSON 정규화
+### 3. JSON 정규화
 
 `chezmoi re-add` 전에 JSON 파일의 키를 정렬하여 불필요한 키 순서 diff를 방지:
 
@@ -31,7 +39,7 @@ chezmoi diff
 bash ~/.claude/skills/chezmoi-sync/scripts/normalize-json.sh
 ```
 
-### 3. 소스 반영
+### 4. 소스 반영
 
 `chezmoi diff`에 나온 파일 중 이번에 반영할 파일만 지정해 반영한다. 소스는 여러 기기가 공유하므로, 다른 기기 경로(`/Users/<다른 사용자>`)나 이번 작업과 무관한 변경이 섞여 있으면 반영 범위를 사용자에게 확인한다.
 
@@ -45,7 +53,7 @@ chezmoi re-add <target>...
 chezmoi diff <target>...
 ```
 
-### 4. 커밋
+### 5. 커밋
 
 chezmoi 소스 리포에서 git 작업 수행. 모든 git 명령에 `-C ~/.local/share/chezmoi` 사용.
 
@@ -68,12 +76,12 @@ git -C ~/.local/share/chezmoi add <changed-files>
 git -C ~/.local/share/chezmoi commit -m "<type>: <subject>"
 ```
 
-### 5. 푸시
+### 6. 푸시
 
 ```bash
 git -C ~/.local/share/chezmoi push
 ```
 
-### 6. 완료 보고
+### 7. 완료 보고
 
 변경된 파일 목록과 커밋 메시지를 요약하여 보고.
