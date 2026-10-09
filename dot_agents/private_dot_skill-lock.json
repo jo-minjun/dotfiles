@@ -13,9 +13,11 @@
     "kilo",
     "kimi-code-cli",
     "opencode",
+    "pi",
     "warp",
     "zed",
-    "claude-code"
+    "claude-code",
+    "hermes-agent"
   ],
   "skills": {
     "brainstorming": {
@@ -99,6 +101,15 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "updatedAt": "2026-06-01T09:33:24.299Z"
+    },
+    "frontend-slides": {
+      "installedAt": "2026-10-09T16:34:36.730Z",
+      "skillFolderHash": "9906a34d640d2111f724544cbc50f7f130569ae1",
+      "skillPath": "SKILL.md",
+      "source": "zarazhangrui/frontend-slides",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/zarazhangrui/frontend-slides.git",
+      "updatedAt": "2026-10-09T16:34:36.730Z"
     },
     "orca-cli": {
       "installedAt": "2026-07-28T08:31:49.617Z",
