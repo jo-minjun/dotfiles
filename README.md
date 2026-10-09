@@ -44,7 +44,6 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Docker Desktop | 컨테이너 |
 | Ghostty | 터미널 |
 | JetBrains Toolbox | IDE 관리 |
-| Naver Whale | 브라우저 |
 | Notion | 노트 |
 | Postman | API 테스트 |
 | Slack | 메신저 |
