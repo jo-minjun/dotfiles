@@ -206,7 +206,6 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "claude-dashboard@claude-dashboard": true,
     "code-review@claude-plugins-official": true,
     "codex@openai-codex": true,
     "document-skills@anthropic-agent-skills": true,
