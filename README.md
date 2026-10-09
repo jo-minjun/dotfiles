@@ -50,11 +50,6 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Slack | 메신저 |
 | Google Drive | 클라우드 스토리지 |
 
-### 웹앱 (Pake)
-
-Pake로 빌드되는 네이티브 웹앱:
-- Google Gemini
-
 ## 설정되는 것들
 
 | 항목 | 내용 |
