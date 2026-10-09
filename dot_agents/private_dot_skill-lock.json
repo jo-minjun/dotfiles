@@ -210,15 +210,6 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
       "updatedAt": "2026-10-09T12:54:52.049Z"
-    },
-    "writing-skills": {
-      "installedAt": "2026-07-09T08:21:32.932Z",
-      "skillFolderHash": "f761162236b19330da62b22ad0da20f5dac7c6ab",
-      "skillPath": "skills/writing-skills/SKILL.md",
-      "source": "obra/superpowers",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/obra/superpowers.git",
-      "updatedAt": "2026-10-09T12:54:53.965Z"
     }
   },
   "version": 3
