@@ -29,7 +29,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server |
 | 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, kafkactl, docker-desktop |
 | DB | libpq, mysql-client |
-| AI | aichat, claude-squad, opencode |
+| AI | claude-squad |
 | 유틸리티 | chezmoi, gh, tmux, tree, ouch, rustup-init, yazi, fd, fzf, zoxide, 1password-cli |
 | 파일 미리보기 | ffmpeg, imagemagick, poppler, resvg, sevenzip |
 
@@ -47,7 +47,6 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Notion | 노트 |
 | Postman | API 테스트 |
 | Slack | 메신저 |
-| Google Drive | 클라우드 스토리지 |
 
 ## 설정되는 것들
 
