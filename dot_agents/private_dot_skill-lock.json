@@ -58,12 +58,13 @@
     },
     "doc-coauthoring": {
       "installedAt": "2026-05-08T01:25:42.512Z",
-      "skillFolderHash": "eb57c7860492c9d90a3fe44129599e7abdd6bbc9",
+      "pluginName": "example-skills",
+      "skillFolderHash": "d9df960e61fe2bafe9183e37de6f9f6b73b74087",
       "skillPath": "skills/doc-coauthoring/SKILL.md",
-      "source": "sickn33/antigravity-awesome-skills",
+      "source": "anthropics/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
-      "updatedAt": "2026-05-08T01:25:42.512Z"
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "updatedAt": "2026-10-09T16:40:12.298Z"
     },
     "executing-plans": {
       "installedAt": "2026-07-09T08:21:32.921Z",
@@ -95,12 +96,12 @@
     "frontend-design": {
       "installedAt": "2026-06-01T09:33:24.299Z",
       "pluginName": "example-skills",
-      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "skillFolderHash": "d79e2a5bb4df4a386c2adcdd9ab8709bba28c3f6",
       "skillPath": "skills/frontend-design/SKILL.md",
       "source": "anthropics/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
-      "updatedAt": "2026-06-01T09:33:24.299Z"
+      "updatedAt": "2026-10-09T16:41:58.874Z"
     },
     "frontend-slides": {
       "installedAt": "2026-10-09T16:34:36.730Z",
