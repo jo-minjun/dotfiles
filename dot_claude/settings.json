@@ -237,5 +237,6 @@
     "command": "bash ~/.claude/statusline-command.sh",
     "type": "command"
   },
+  "syncClaudeAiSkills": false,
   "tui": "fullscreen"
 }
