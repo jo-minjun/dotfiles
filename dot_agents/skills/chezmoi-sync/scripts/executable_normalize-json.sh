@@ -17,6 +17,8 @@ echo "=== JSON 키 정렬 ==="
 
 # chezmoi 관리 대상 중 JSON 파일 정규화
 while IFS= read -r managed_path; do
+  # 외부에서 설치한 스킬 파일은 원본 그대로 유지해야 하므로 정렬하지 않는다
+  [[ "$managed_path" == .agents/skills/* ]] && continue
   full_path="$HOME/$managed_path"
   if [[ "$full_path" == *.json && -f "$full_path" ]]; then
     normalize "$full_path"
