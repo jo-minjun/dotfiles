@@ -1,24 +1,17 @@
 {
   "env": {
-    "CLAUDE_CODE_DEBUG": "true",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "opus",
-    "CLAUDE_CODE_VERBOSE_LOGGING": "true"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
   "permissions": {
     "allow": [
-      "Glob",
-      "Grep",
-      "Read",
       "WebSearch",
       "WebFetch",
-      "Task",
-      "Bash(ls:*)",
+      "Agent",
       "Bash(git:*)",
       "Bash(mkdir:*)",
       "Bash(./gradlew:*)",
       "Bash(javac:*)",
-      "Bash(wc:*)",
       "Bash(wget:*)",
       "Bash(curl:*)",
       "Bash(java:*)",
@@ -30,9 +23,7 @@
       "Bash(gh:*)",
       "Bash(ping:*)",
       "Bash(lsof:*)",
-      "Bash(pwd:*)",
       "Bash(ln:*)",
-      "Bash(which:*)",
       "Bash(xargs:*)",
       "Bash(tee:*)",
       "Bash(date:*)",
