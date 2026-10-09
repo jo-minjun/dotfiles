@@ -66,6 +66,16 @@
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "updatedAt": "2026-10-09T16:40:12.298Z"
     },
+    "docx": {
+      "installedAt": "2026-10-09T16:59:02.892Z",
+      "pluginName": "document-skills",
+      "skillFolderHash": "6e6f5b95c1de6e803cc07b214f5059b074d64e0c",
+      "skillPath": "skills/docx/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "updatedAt": "2026-10-09T16:59:02.892Z"
+    },
     "executing-plans": {
       "installedAt": "2026-07-09T08:21:32.921Z",
       "skillFolderHash": "899ffeab92be3de6cd9ed0078b32737b18b8c135",
@@ -129,6 +139,26 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/stablyai/orca.git",
       "updatedAt": "2026-09-29T13:50:47.840Z"
+    },
+    "pdf": {
+      "installedAt": "2026-10-09T16:59:02.893Z",
+      "pluginName": "document-skills",
+      "skillFolderHash": "6369f4649de69bd6857c9bc3b058a77206009238",
+      "skillPath": "skills/pdf/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "updatedAt": "2026-10-09T16:59:02.893Z"
+    },
+    "pptx": {
+      "installedAt": "2026-10-09T16:59:02.893Z",
+      "pluginName": "document-skills",
+      "skillFolderHash": "64529c8b3f35fe632b7256bd2f6d46e4b40160ce",
+      "skillPath": "skills/pptx/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "updatedAt": "2026-10-09T16:59:02.893Z"
     },
     "receiving-code-review": {
       "installedAt": "2026-07-09T08:21:32.924Z",
@@ -220,6 +250,16 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
       "updatedAt": "2026-10-09T12:54:52.049Z"
+    },
+    "xlsx": {
+      "installedAt": "2026-10-09T16:59:02.893Z",
+      "pluginName": "document-skills",
+      "skillFolderHash": "fe6471cc9b5b97aae0b576ccb92ffd9b0207589d",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "updatedAt": "2026-10-09T16:59:02.893Z"
     }
   },
   "version": 3
