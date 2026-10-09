@@ -1,7 +1,8 @@
 #!/bin/bash
-# Claude Code status line: model | directory | git branch | context usage | 5h/7d rate limits
+# Claude Code status line: session name | model | directory | git branch | context usage | 5h/7d rate limits
 input=$(cat)
 
+session_name=$(printf '%s' "$input" | jq -r '.session_name // empty' 2>/dev/null)
 model=$(printf '%s' "$input" | jq -r '.model.display_name // empty' 2>/dev/null)
 dir=$(printf '%s' "$input" | jq -r '.workspace.current_dir // .cwd // empty' 2>/dev/null)
 used=$(printf '%s' "$input" | jq -r '.context_window.used_percentage // empty' 2>/dev/null)
@@ -23,6 +24,7 @@ format_tokens() {
 [ -z "$dir" ] && dir=$(pwd)
 
 RESET=$'\033[0m'
+BOLD=$'\033[1m'
 CYAN=$'\033[36m'
 BLUE=$'\033[34m'
 MAGENTA=$'\033[35m'
@@ -33,8 +35,11 @@ SEP=" ${RESET}|${RESET} "
 
 out=""
 
+[ -n "$session_name" ] && out="${BOLD}${session_name}${RESET}"
+
 if [ -n "$model" ]; then
-  out="${CYAN}${model}${RESET}"
+  [ -n "$out" ] && out="${out}${SEP}"
+  out="${out}${CYAN}${model}${RESET}"
   [ -n "$effort" ] && out="${out} ${YELLOW}(${effort})${RESET}"
 fi
 
