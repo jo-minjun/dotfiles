@@ -21,19 +21,4 @@ require("lazy").setup({
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		lazy = false,
-		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter").setup({
-				ensure_installed = { "python", "lua", "javascript", "typescript", "json", "yaml", "markdown", "bash", "php", "java", "kotlin", "c", "cpp", "c_sharp" },
-			})
-			vim.api.nvim_create_autocmd("FileType", {
-				callback = function()
-					pcall(vim.treesitter.start)
-				end,
-			})
-		end,
-	},
 })

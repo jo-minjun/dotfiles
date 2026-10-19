@@ -26,7 +26,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | 카테고리 | 패키지 |
 |----------|--------|
 | 개발 | node, bun, pnpm, maven, mise, jenv, rustup |
-| 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server, tree-sitter-cli, intelephense (npm) |
+| 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server, intelephense (npm) |
 | 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, helm, kafkactl, terraform |
 | API | bruno-cli, @modelcontextprotocol/inspector (npm) |
 | DB | libpq, mysql-client |
