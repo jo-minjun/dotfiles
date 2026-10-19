@@ -6,8 +6,5 @@ Shell/aliases
 .claude/skills/vroong-db-review
 .codex/skills/vroong-db-review
 .claude/agents/codebase-researcher.md
-.claude/agent-memory/codebase-researcher
 .claude/agents/systematic-debugger.md
-.claude/agent-memory/systematic-debugger
 .claude/agents/triple-lens-code-reviewer.md
-.claude/agent-memory/triple-lens-code-reviewer
