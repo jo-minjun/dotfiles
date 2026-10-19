@@ -1,0 +1,28 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Install ego lite with the official installer (one-time only)
+
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/citrolabs/ego-lite/main/skills/ego-browser/scripts/install.sh"
+
+# 공식 스크립트는 이미 설치된 경우에도 앱을 실행하므로 먼저 건너뛴다
+if [[ -d "/Applications/ego lite.app" || -d "$HOME/Applications/ego lite.app" ]]; then
+  echo "ego lite already installed."
+  exit 0
+fi
+
+tmp_script=$(mktemp "${TMPDIR:-/tmp}/ego-lite-install.XXXXXX")
+trap 'rm -f "$tmp_script"' EXIT
+
+echo "Downloading ego lite installer..."
+if ! curl -fsSL --retry 3 --output "$tmp_script" "$INSTALL_SCRIPT_URL"; then
+  echo "Failed to download ego lite installer. Install manually from https://lite.ego.app/"
+  exit 0
+fi
+
+if ! sh "$tmp_script"; then
+  echo "ego lite install failed. Install manually from https://lite.ego.app/"
+  exit 0
+fi
+
+echo "Complete onboarding in ego lite to register the ego-browser command in ~/.local/bin."
+{{- end }}

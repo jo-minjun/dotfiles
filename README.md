@@ -42,6 +42,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Claude, Claude Code | AI 어시스턴트 |
 | Cursor | AI 코드 에디터 |
 | Docker Desktop | 컨테이너 |
+| ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
 | Ghostty | 터미널 |
 | JetBrains Toolbox | IDE 관리 |
 | Notion | 노트 |
