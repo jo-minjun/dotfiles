@@ -46,6 +46,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Ghostty | 터미널 |
 | JetBrains Toolbox | IDE 관리 |
 | Notion | 노트 |
+| Bruno | API 테스트 (CLI `bru` 포함) |
 | Postman | API 테스트 |
 | Slack | 메신저 |
 

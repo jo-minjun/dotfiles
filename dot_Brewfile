@@ -37,6 +37,7 @@ brew "hashicorp/tap/terraform"
 brew "helm"
 brew "lazygit"
 brew "mermaid-cli"
+brew "bruno-cli"
 
 # Languages & Runtimes
 brew "mise"
@@ -85,6 +86,7 @@ cask "claude"
 cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
+cask "bruno"
 cask "postman"
 
 # Applications - Communication
