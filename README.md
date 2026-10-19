@@ -25,12 +25,15 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 
 | 카테고리 | 패키지 |
 |----------|--------|
-| 개발 | node, node@24, bun, pnpm, maven, mise, jenv |
-| 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server |
-| 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, kafkactl, docker-desktop |
+| 개발 | node, node@24, bun, pnpm, maven, mise, jenv, rustup |
+| 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server, tree-sitter-cli, intelephense (npm) |
+| 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, helm, kafkactl, terraform |
+| API | bruno-cli, @modelcontextprotocol/inspector (npm) |
 | DB | libpq, mysql-client |
-| AI | claude-squad |
-| 유틸리티 | chezmoi, gh, tmux, tree, ouch, rustup-init, yazi, fd, fzf, zoxide, 1password-cli |
+| AI | Claude Code (설치 스크립트), codex |
+| 배포 | vercel (npm) |
+| 네트워크 | tailscale |
+| 유틸리티 | chezmoi, gh, jq, bat, delta, ripgrep, fd, fzf, zoxide, neovim, tmux, tree, ouch, yazi, lazygit, mermaid-cli, 1password-cli |
 | 파일 미리보기 | ffmpeg, imagemagick, poppler, resvg, sevenzip |
 
 ### 앱
@@ -39,16 +42,21 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 |----|------|
 | 1Password | 패스워드 관리 |
 | BetterTouchTool | 제스처/단축키 |
-| Claude, Claude Code | AI 어시스턴트 |
-| Cursor | AI 코드 에디터 |
+| Bruno | API 테스트 |
+| Claude | AI 어시스턴트 |
+| Discord | 메신저 |
 | Docker Desktop | 컨테이너 |
 | ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
 | Ghostty | 터미널 |
+| Ice | 메뉴 막대 정리 |
+| IINA | 동영상 플레이어 |
 | JetBrains Toolbox | IDE 관리 |
 | Notion | 노트 |
-| Bruno | API 테스트 (CLI `bru` 포함) |
+| Obsidian | 노트 |
+| Plaud | 회의 녹음·요약 |
 | Postman | API 테스트 |
 | Slack | 메신저 |
+| Tailscale | VPN |
 
 ## 설정되는 것들
 
@@ -58,7 +66,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | oh-my-zsh + Powerlevel10k | 쉘 테마 |
 | Git 이메일 분리 | `~/Projects/work/` → 회사 이메일, 그 외 → 개인 이메일 |
 | Ghostty | JetBrains Mono, Idea 테마 |
-| Claude Code | LSP, statusline, 권한 설정 |
+| Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬 |
+| mise | 기본 도구(node lts, java corretto-21, python 3.12), `~/Projects`·`~/orca/workspaces` 하위 설정 자동 신뢰 |
 | 1Password 시크릿 | Docker Hub |
 | BetterTouchTool | 라이선스 자동 설치 |
 
@@ -115,4 +124,7 @@ chezmoi cd
 
 # 변경사항 커밋
 git add . && git commit -m "Update dotfiles" && git push
+
+# 로컬 변경 re-add 후 커밋·푸시 (커밋 메시지 입력)
+chezmoi_sync
 ```
