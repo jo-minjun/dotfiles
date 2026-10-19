@@ -57,8 +57,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Git 이메일 분리 | `~/Projects/work/` → 회사 이메일, 그 외 → 개인 이메일 |
 | Ghostty | JetBrains Mono, Idea 테마 |
 | Claude Code | LSP, statusline, 권한 설정 |
-| AWS/Kube 설정 | 1Password Document에서 최초 1회 다운로드 |
-| 1Password 시크릿 | Docker Hub, AWS credentials, Kubeconfig |
+| 1Password 시크릿 | Docker Hub |
 | BetterTouchTool | 라이선스 자동 설치 |
 
 ### 디렉토리 구조
@@ -72,8 +71,6 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 │   ├── commands.sh # 커스텀 함수
 │   ├── aliases.sh  # alias 정의
 │   └── exports.sh  # 환경변수 정의
-├── .kube/config   # Kubernetes 설정 (최초 1회 다운로드, 이후 로컬 관리)
-├── .aws/credentials # AWS 자격증명 (최초 1회 다운로드, 이후 로컬 관리)
 └── .secrets.zsh   # 시크릿 (1Password에서 자동 로드)
 ```
 
@@ -85,40 +82,19 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 
 1. 1Password "Secrets" vault에 아이템 생성:
    - **Login 아이템**: Docker Hub, GitHub Token
-   - **Document**: Kubeconfig, AWS Credentials, BetterTouchTool License
+   - **Secure Note**: BetterTouchTool License
 2. 1Password CLI 인증:
    ```bash
    eval $(op signin)
    ```
-3. `chezmoi apply` 실행 (1Password에서 자동 다운로드)
-
-### 자격증명 갱신
-
-**1Password → 로컬 다운로드** (새 머신 설정, 1Password 내용 변경 시):
-```bash
-op document get "Kubeconfig" --vault "Secrets" > ~/.kube/config
-op document get "AWS Credentials" --vault "Secrets" > ~/.aws/credentials
-```
-
-**로컬 → 1Password 업로드** (로컬에서 수정 후 다른 머신에 반영 시):
-```bash
-# 최초 업로드
-op document create ~/.kube/config --vault "Secrets" --title "Kubeconfig"
-op document create ~/.aws/credentials --vault "Secrets" --title "AWS Credentials"
-
-# 기존 문서 업데이트
-op document edit "Kubeconfig" ~/.kube/config --vault "Secrets"
-op document edit "AWS Credentials" ~/.aws/credentials --vault "Secrets"
-```
+3. `chezmoi apply` 실행
 
 ### 관리되는 시크릿
 
 | 타입 | 아이템 | 용도 |
 |------|--------|------|
 | Login | Docker Hub | Docker 이미지 푸시 |
-| Document | Kubeconfig | Kubernetes 클러스터 설정 |
-| Document | AWS Credentials | AWS 프로필 (meshdev, meshlabs 등) |
-| Document | BetterTouchTool License | BTT 라이선스 자동 설치 |
+| Secure Note | BetterTouchTool License | BTT 라이선스 자동 설치 |
 
 ## 일상 사용
 
