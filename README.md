@@ -67,7 +67,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Git 이메일 분리 | `~/Projects/work/` → 회사 이메일, 그 외 → 개인 이메일 |
 | Ghostty | JetBrains Mono, Idea 테마 |
 | Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬 |
-| mise | 기본 도구(node lts, java corretto-25, python 3.15), `~/Projects`·`~/orca/workspaces` 하위 설정 자동 신뢰 |
+| mise | 기본 도구(node lts, java corretto-25, python 3.15, kotlin 2.4), `~/Projects`·`~/orca/workspaces` 하위 설정 자동 신뢰 |
 | 1Password 시크릿 | Docker Hub |
 | BetterTouchTool | 라이선스 자동 설치 |
 
