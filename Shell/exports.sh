@@ -1,6 +1,5 @@
 # PATH additions
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 

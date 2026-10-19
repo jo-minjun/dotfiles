@@ -212,7 +212,7 @@ enabled = true
 trusted_hash = "sha256:8fa5975ee559d019faf357e2e7880255e6b26a108505ece97171c4988eef96e9"
 
 [mcp_servers.plaud]
-command = "/opt/homebrew/opt/node@24/bin/npx"
+command = "npx"
 args = ["-y", "@plaud-ai/mcp@latest"]
 
 [projects."/Users/jo-minjun/Projects/me/imweb-backend"]
