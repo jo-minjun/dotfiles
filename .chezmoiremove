@@ -9,3 +9,4 @@ Shell/aliases
 .claude/agents/systematic-debugger.md
 .claude/agents/triple-lens-code-reviewer.md
 .config/nvim
+.tmux.conf
