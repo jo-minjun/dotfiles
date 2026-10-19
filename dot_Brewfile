@@ -41,7 +41,6 @@ brew "bruno-cli"
 # Languages & Runtimes
 brew "mise"
 brew "node"
-brew "node@24"
 brew "jenv"
 brew "maven"
 brew "oven-sh/bun/bun"
