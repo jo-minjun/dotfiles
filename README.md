@@ -33,7 +33,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | AI | Claude Code (설치 스크립트), codex |
 | 배포 | vercel (npm) |
 | 네트워크 | tailscale |
-| 유틸리티 | chezmoi, gh, jq, bat, delta, ripgrep, fd, fzf, zoxide, neovim, tmux, tree, ouch, yazi, lazygit, mermaid-cli, 1password-cli |
+| 유틸리티 | chezmoi, gh, jq, bat, delta, ripgrep, fd, fzf, zoxide, tmux, tree, ouch, yazi, lazygit, mermaid-cli, 1password-cli |
 | 파일 미리보기 | ffmpeg, imagemagick, poppler, resvg, sevenzip |
 
 ### 앱
