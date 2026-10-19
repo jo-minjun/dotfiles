@@ -8,3 +8,4 @@ Shell/aliases
 .claude/agents/codebase-researcher.md
 .claude/agents/systematic-debugger.md
 .claude/agents/triple-lens-code-reviewer.md
+.config/nvim
