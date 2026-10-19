@@ -1,5 +1,4 @@
 # Taps
-tap "chattymin/tap"
 tap "hashicorp/tap"
 tap "oven-sh/bun"
 
