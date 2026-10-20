@@ -69,7 +69,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬 |
 | mise | 기본 도구(node lts, java corretto-25, python 3.15, kotlin 2.4), `~/Projects`·`~/orca/workspaces` 하위 설정 자동 신뢰 |
 | 1Password 시크릿 | Docker Hub |
-| BetterTouchTool | 라이선스 자동 설치, 프리셋 임포트 (BTT 확인 창에서 확인 클릭 필요) |
+| BetterTouchTool | 라이선스 자동 설치, 프리셋 자동 임포트 (확인 창이 뜨면 확인 클릭) |
 
 ### 디렉토리 구조
 

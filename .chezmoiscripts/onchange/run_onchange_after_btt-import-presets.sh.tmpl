@@ -12,6 +12,9 @@ PRESET_NAME="minjun's preset"
 PRESET_PATH="$BTT_SUPPORT/PresetBundles/3036E1CE-E39F-4AC3-BC9F-FA4B17E03BC7$PRESET_NAME/$PRESET_NAME.bttpreset"
 READY_TIMEOUT_SECONDS=30
 CONFIRM_TIMEOUT_SECONDS=300
+EXPORT_TIMEOUT_SECONDS=5
+# 프리셋 내용 비교 기준: 단축키가 실제로 실행하는 앱 경로와 셸 스크립트
+ACTIONS_FILTER='[.BTTPresetContent[].BTTTriggers | .. | objects | (.BTTShellTaskActionScript?, .BTTLaunchPath?) | strings] | sort'
 
 # 건너뛰고 exit 0으로 끝나면 chezmoi가 실행 완료로 기록해 프리셋이 바뀔 때까지 재시도하지 않으므로 실패로 끝낸다
 fail() { echo "$1 Run chezmoi apply again." >&2; exit 1; }
@@ -37,18 +40,42 @@ until "$BTT_CLI" get_string_variable variable_name=BTTActiveAppBundleIdentifier 
   sleep 1
 done
 
+work_dir=$(mktemp -d "${TMPDIR:-/tmp}/btt-import.XXXXXX")
+trap 'rm -rf "$work_dir"' EXIT
+
+# PresetBundles 안의 파일을 임포트하면 BTT가 확인 창을 띄우고 기존 트리거 내용을 유지하므로 임시 복사본을 임포트한다
+import_path="$work_dir/$PRESET_NAME.bttpreset"
+cp "$PRESET_PATH" "$import_path"
+
 log_file=$(ls -t "$BTT_SUPPORT/Logs/"*.log | head -1)
 log_start_line=$(wc -l < "$log_file")
 
 echo "Importing BetterTouchTool preset: $PRESET_NAME"
-# BTT는 임포트 확인 창이 닫히기 전에 30초 타임아웃으로 응답하므로 성공 여부는 BTT 로그로 판단한다
-"$BTT_CLI" import_preset path="$PRESET_PATH" replaceExisting=true &>/dev/null || true
-echo ">>> Click the import confirmation in the BetterTouchTool window (waiting up to ${CONFIRM_TIMEOUT_SECONDS}s)."
+# 확인 창이 뜨면 BTT가 응답 전에 30초 타임아웃을 반환하므로 임포트 완료 여부는 BTT 로그로 판단한다
+"$BTT_CLI" import_preset path="$import_path" replaceExisting=true &>/dev/null || true
 
 confirm_deadline=$((SECONDS + CONFIRM_TIMEOUT_SECONDS))
+prompted=false
 until grep -qF "btt_preset_imported_$PRESET_NAME" < <(tail -n +"$((log_start_line + 1))" "$log_file"); do
   (( SECONDS < confirm_deadline )) || fail "Preset import was not confirmed."
+  if [[ "$prompted" == false ]]; then
+    echo ">>> If BetterTouchTool shows an import confirmation, click it (waiting up to ${CONFIRM_TIMEOUT_SECONDS}s)."
+    prompted=true
+  fi
   sleep 2
 done
+
+# 임포트가 완료돼도 기존 내용이 남는 경우가 있어, BTT에서 다시 내보낸 결과를 원본과 비교한다
+exported_path="$work_dir/exported.bttpreset"
+"$BTT_CLI" export_preset name="$PRESET_NAME" outputPath="$exported_path" compress=false includeSettings=true &>/dev/null || true
+export_deadline=$((SECONDS + EXPORT_TIMEOUT_SECONDS))
+until [[ "$(jq -r '.BTTPresetName' "$exported_path" 2>/dev/null)" == "$PRESET_NAME" ]]; do
+  (( SECONDS < export_deadline )) || fail "Failed to export preset for verification."
+  sleep 0.1
+done
+
+if [[ "$(jq -c "$ACTIONS_FILTER" "$PRESET_PATH")" != "$(jq -c "$ACTIONS_FILTER" "$exported_path")" ]]; then
+  fail "BetterTouchTool kept old preset actions after import."
+fi
 echo "BTT preset import completed."
 {{- end }}
