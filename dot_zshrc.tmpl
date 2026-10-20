@@ -26,6 +26,24 @@ eval "$(mise activate zsh)"
 # Smart directory jumper
 eval "$(zoxide init zsh)"
 
+# gh는 활성 계정 하나만 쓰므로, 셸마다 디렉터리에 맞는 계정 토큰을 GH_TOKEN으로 지정한다
+_gh_account_for_dir() {
+  local account=jo-minjun
+  [[ "${PWD:l}/" == "${HOME:l}/projects/work/"* ]] && account=***WORK_GH_ACCOUNT***
+  [[ "$account" == "$_GH_ACCOUNT" ]] && return
+  _GH_ACCOUNT=$account
+  local token
+  token="$(gh auth token --user "$account" 2>/dev/null)"
+  if [[ -n "$token" ]]; then
+    export GH_TOKEN="$token"
+  else
+    unset GH_TOKEN
+  fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _gh_account_for_dir
+_gh_account_for_dir
+
 # SSH 환경에서 Ghostty 터미널 호환성 설정
 if [[ -n "$SSH_CONNECTION" && "$TERM" == "xterm-ghostty" ]]; then
   export TERM=xterm-256color
