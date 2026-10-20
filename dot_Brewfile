@@ -1,6 +1,7 @@
 # Taps
-tap "hashicorp/tap"
-tap "oven-sh/bun"
+tap "hashicorp/tap", trusted: true
+tap "oven-sh/bun", trusted: true
+tap "stablyai/orca"
 
 # CLI Tools
 brew "bat"
@@ -30,7 +31,7 @@ brew "k9s"
 brew "kafkactl"
 brew "kubernetes-cli"
 brew "kubectx"
-brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform", trusted: true
 brew "helm"
 brew "lazygit"
 brew "mermaid-cli"
@@ -41,7 +42,7 @@ brew "mise"
 brew "node"
 brew "jenv"
 brew "maven"
-brew "oven-sh/bun/bun"
+brew "oven-sh/bun/bun", trusted: true
 brew "pnpm"
 brew "rustup"
 
@@ -57,6 +58,7 @@ brew "typescript-language-server"
 
 # AI Tools
 cask "codex"
+cask "stablyai/orca/orca", trusted: true
 
 # Shell
 brew "powerlevel10k"
