@@ -22,14 +22,21 @@ fail() { echo "$1 Run chezmoi apply again." >&2; exit 1; }
 [[ -x "$BTT_CLI" ]] || fail "BetterTouchTool CLI not found."
 [[ -f "$PRESET_PATH" ]] || fail "Preset not found: $PRESET_PATH"
 
-# bttcli는 Socket Server가 켜져 있어야 동작하고, 설정 변경은 BTT 재시작 후 적용된다
-if [[ "$(defaults read "$BTT_DEFAULTS_DOMAIN" BTTSocketServerEnabled 2>/dev/null || echo 0)" != "1" ]]; then
-  echo "Enabling BetterTouchTool socket server..."
+# bttcli는 Socket Server가 켜져 있어야 동작하고, 스크립트 임포트 확인 창을 끄지 않으면 사람이 누를 때까지 멈춘다
+# 설정 변경은 BTT 재시작 후 적용된다
+missing_settings=()
+for key in BTTSocketServerEnabled BTTScriptAlwaysImportPresets; do
+  [[ "$(defaults read "$BTT_DEFAULTS_DOMAIN" "$key" 2>/dev/null || echo 0)" == "1" ]] || missing_settings+=("$key")
+done
+if (( ${#missing_settings[@]} > 0 )); then
+  echo "Enabling BetterTouchTool settings: ${missing_settings[*]}"
   if pgrep -x BetterTouchTool &>/dev/null; then
     osascript -e 'quit app "BetterTouchTool"'
     while pgrep -x BetterTouchTool &>/dev/null; do sleep 1; done
   fi
-  defaults write "$BTT_DEFAULTS_DOMAIN" BTTSocketServerEnabled -bool true
+  for key in "${missing_settings[@]}"; do
+    defaults write "$BTT_DEFAULTS_DOMAIN" "$key" -bool true
+  done
 fi
 
 pgrep -x BetterTouchTool &>/dev/null || open -a "$BTT_APP"
@@ -77,5 +84,8 @@ done
 if [[ "$(jq -c "$ACTIONS_FILTER" "$PRESET_PATH")" != "$(jq -c "$ACTIONS_FILTER" "$exported_path")" ]]; then
   fail "BetterTouchTool kept old preset actions after import."
 fi
+
+# BTT가 임포트할 때마다 빈 프리셋 번들 디렉토리를 새로 만들어 남긴다
+find "$BTT_SUPPORT/PresetBundles" -mindepth 1 -maxdepth 1 -type d -name "*$PRESET_NAME" -empty -delete
 echo "BTT preset import completed."
 {{- end }}
