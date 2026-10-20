@@ -1,0 +1,54 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# preset hash: {{ include "private_Library/private_Application Support/BetterTouchTool/PresetBundles/3036E1CE-E39F-4AC3-BC9F-FA4B17E03BC7minjun's preset/minjun's preset.bttpreset" | sha256sum }}
+
+BTT_APP="/Applications/BetterTouchTool.app"
+BTT_CLI="$BTT_APP/Contents/SharedSupport/bin/bttcli"
+BTT_DEFAULTS_DOMAIN="com.hegenberg.BetterTouchTool"
+BTT_SUPPORT="$HOME/Library/Application Support/BetterTouchTool"
+PRESET_NAME="minjun's preset"
+PRESET_PATH="$BTT_SUPPORT/PresetBundles/3036E1CE-E39F-4AC3-BC9F-FA4B17E03BC7$PRESET_NAME/$PRESET_NAME.bttpreset"
+READY_TIMEOUT_SECONDS=30
+CONFIRM_TIMEOUT_SECONDS=300
+
+# 건너뛰고 exit 0으로 끝나면 chezmoi가 실행 완료로 기록해 프리셋이 바뀔 때까지 재시도하지 않으므로 실패로 끝낸다
+fail() { echo "$1 Run chezmoi apply again." >&2; exit 1; }
+
+[[ -x "$BTT_CLI" ]] || fail "BetterTouchTool CLI not found."
+[[ -f "$PRESET_PATH" ]] || fail "Preset not found: $PRESET_PATH"
+
+# bttcli는 Socket Server가 켜져 있어야 동작하고, 설정 변경은 BTT 재시작 후 적용된다
+if [[ "$(defaults read "$BTT_DEFAULTS_DOMAIN" BTTSocketServerEnabled 2>/dev/null || echo 0)" != "1" ]]; then
+  echo "Enabling BetterTouchTool socket server..."
+  if pgrep -x BetterTouchTool &>/dev/null; then
+    osascript -e 'quit app "BetterTouchTool"'
+    while pgrep -x BetterTouchTool &>/dev/null; do sleep 1; done
+  fi
+  defaults write "$BTT_DEFAULTS_DOMAIN" BTTSocketServerEnabled -bool true
+fi
+
+pgrep -x BetterTouchTool &>/dev/null || open -a "$BTT_APP"
+
+ready_deadline=$((SECONDS + READY_TIMEOUT_SECONDS))
+until "$BTT_CLI" get_string_variable variable_name=BTTActiveAppBundleIdentifier &>/dev/null; do
+  (( SECONDS < ready_deadline )) || fail "BetterTouchTool did not respond to bttcli."
+  sleep 1
+done
+
+log_file=$(ls -t "$BTT_SUPPORT/Logs/"*.log | head -1)
+log_start_line=$(wc -l < "$log_file")
+
+echo "Importing BetterTouchTool preset: $PRESET_NAME"
+# BTT는 임포트 확인 창이 닫히기 전에 30초 타임아웃으로 응답하므로 성공 여부는 BTT 로그로 판단한다
+"$BTT_CLI" import_preset path="$PRESET_PATH" replaceExisting=true &>/dev/null || true
+echo ">>> Click the import confirmation in the BetterTouchTool window (waiting up to ${CONFIRM_TIMEOUT_SECONDS}s)."
+
+confirm_deadline=$((SECONDS + CONFIRM_TIMEOUT_SECONDS))
+until grep -qF "btt_preset_imported_$PRESET_NAME" < <(tail -n +"$((log_start_line + 1))" "$log_file"); do
+  (( SECONDS < confirm_deadline )) || fail "Preset import was not confirmed."
+  sleep 2
+done
+echo "BTT preset import completed."
+{{- end }}
