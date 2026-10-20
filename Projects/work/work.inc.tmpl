@@ -1,3 +1,7 @@
 [user]
 	name = {{ .name }}
 	email = {{ .workEmail }}
+
+[credential "https://github.com"]
+	helper = 
+	helper = "!f() { test \"$1\" = get && echo username=minjun-jo-imweb-me && echo \"password=$(/opt/homebrew/bin/gh auth token --user minjun-jo-imweb-me)\"; }; f"

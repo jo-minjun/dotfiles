@@ -2,9 +2,6 @@
 	name = {{ .name }}
 	email = {{ .email }}
 
-[includeIf "gitdir:~/Projects/work/"]
-	path = ~/Projects/work/work.inc
-
 [core]
 	pager = delta
 
@@ -21,10 +18,15 @@
 [merge]
 	conflictStyle = zdiff3
 
+# gh auth git-credential은 활성 계정 토큰만 반환하므로, 계정을 지정해 토큰을 받는다
 [credential "https://github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = "!f() { test \"$1\" = get && echo username=jo-minjun && echo \"password=$(/opt/homebrew/bin/gh auth token --user jo-minjun)\"; }; f"
 
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# 업무 디렉터리 설정이 위 기본값을 덮어쓰도록 마지막에 둔다
+[includeIf "gitdir/i:~/Projects/work/"]
+	path = ~/Projects/work/work.inc
