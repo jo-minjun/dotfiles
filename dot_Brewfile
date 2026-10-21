@@ -80,6 +80,7 @@ cask "plaud"
 
 # Applications - Development
 cask "claude"
+cask "dbeaver-community"
 cask "docker-desktop"
 cask "ghostty"
 cask "jetbrains-toolbox"
