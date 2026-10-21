@@ -1,0 +1,75 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Install dbvr Community (DBeaver CLI) from GitHub releases (one-time only)
+# Homebrew의 dbvr cask는 유료 PRO판이라 Community는 GitHub 릴리스에서 받는다
+
+RELEASE_API_URL="https://api.github.com/repos/dbeaver/dbvr/releases/latest"
+APP_PATH="/Applications/dbvr.app"
+CLI_PATH="$HOME/.local/bin/dbvr"
+
+# 심볼릭 링크로 실행하면 런처가 설치 경로를 찾지 못해 멈추므로 실제 경로로 exec하는 래퍼를 둔다
+install_cli_wrapper() {
+  mkdir -p "$(dirname "$CLI_PATH")"
+  rm -f "$CLI_PATH"
+  cat > "$CLI_PATH" <<EOF
+#!/bin/bash
+exec "$APP_PATH/Contents/MacOS/dbvr" "\$@"
+EOF
+  chmod +x "$CLI_PATH"
+}
+
+if [[ -d "$APP_PATH" ]]; then
+  echo "dbvr already installed."
+  install_cli_wrapper
+  exit 0
+fi
+
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+case "$(uname -m)" in
+  arm64) arch="aarch64" ;;
+  *) arch="x86_64" ;;
+esac
+
+if ! release_json=$(curl -fsSL --retry 3 "$RELEASE_API_URL"); then
+  echo "Failed to fetch dbvr release info. Install manually from https://github.com/dbeaver/dbvr/releases"
+  exit 0
+fi
+
+asset=$(jq -r --arg arch "$arch" \
+  '.assets[] | select(.name | test("^dbvr-ce-.*-macos-" + $arch + "\\.dmg$")) | "\(.browser_download_url) \(.digest)"' \
+  <<<"$release_json" | head -n 1)
+read -r asset_url asset_digest <<<"$asset"
+
+if [[ -z "$asset_url" ]]; then
+  echo "No dbvr macOS $arch dmg found in latest release. Install manually from https://github.com/dbeaver/dbvr/releases"
+  exit 0
+fi
+
+work_dir=$(mktemp -d "${TMPDIR:-/tmp}/dbvr-install.XXXXXX")
+mount_point="$work_dir/mnt"
+dmg_path="$work_dir/dbvr.dmg"
+trap 'hdiutil detach "$mount_point" -quiet 2>/dev/null; rm -rf "$work_dir"' EXIT
+
+echo "Downloading $asset_url ..."
+# 릴리스 파일이 커서 중간에 끊기는 경우가 있어 이어받기로 재시도한다
+if ! curl -fL --retry 5 --retry-all-errors -C - --output "$dmg_path" "$asset_url"; then
+  echo "Failed to download dbvr. Install manually from https://github.com/dbeaver/dbvr/releases"
+  exit 0
+fi
+
+if [[ "$asset_digest" == sha256:* ]] && [[ "$(shasum -a 256 "$dmg_path" | awk '{print $1}')" != "${asset_digest#sha256:}" ]]; then
+  echo "dbvr checksum mismatch. Install manually from https://github.com/dbeaver/dbvr/releases"
+  exit 0
+fi
+
+mkdir -p "$mount_point"
+if ! hdiutil attach -nobrowse -readonly -quiet -mountpoint "$mount_point" "$dmg_path"; then
+  echo "Failed to mount dbvr dmg."
+  exit 0
+fi
+
+ditto "$mount_point/dbvr.app" "$APP_PATH"
+install_cli_wrapper
+echo "dbvr installed: $("$CLI_PATH" --version 2>/dev/null | head -n 1)"
+{{- end }}
