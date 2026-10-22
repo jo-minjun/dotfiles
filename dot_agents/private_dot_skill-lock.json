@@ -269,6 +269,33 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "updatedAt": "2026-10-09T16:59:02.893Z"
+    },
+    "databricks-core": {
+      "source": "databricks/databricks-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/databricks/databricks-agent-skills.git",
+      "skillPath": "skills/databricks-core/SKILL.md",
+      "skillFolderHash": "f43e284160deb63382b60f06286ab64cc9cc795c",
+      "installedAt": "2026-10-22T09:49:01.200Z",
+      "updatedAt": "2026-10-22T09:49:01.200Z"
+    },
+    "databricks-dbsql": {
+      "source": "databricks/databricks-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/databricks/databricks-agent-skills.git",
+      "skillPath": "skills/databricks-dbsql/SKILL.md",
+      "skillFolderHash": "83585c9d892121d72d964a71983c54aec1e81cbb",
+      "installedAt": "2026-10-22T09:49:03.349Z",
+      "updatedAt": "2026-10-22T09:49:03.349Z"
+    },
+    "databricks-jobs": {
+      "source": "databricks/databricks-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/databricks/databricks-agent-skills.git",
+      "skillPath": "skills/databricks-jobs/SKILL.md",
+      "skillFolderHash": "c3619c1942be28bcc9556f60c9acadd54ef31921",
+      "installedAt": "2026-10-22T09:49:05.734Z",
+      "updatedAt": "2026-10-22T09:49:05.734Z"
     }
   },
   "version": 3
