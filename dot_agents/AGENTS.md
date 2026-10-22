@@ -157,3 +157,8 @@
 
 # PKM
 - Obsidian PKM 관련 작업 시 `~/.agents/PKM.md`를 읽고 규칙을 따르라
+
+---
+
+# WORK
+- `~/Projects/work` 하위에서 작업하는 경우 `~/.agents/WORK.md`를 읽고 규칙을 따르라
