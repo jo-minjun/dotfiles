@@ -1,0 +1,34 @@
+{{- $prodAccountId := onepasswordRead "op://Secrets/AWS imweb/prod-account-id" -}}
+{{- $testAccountId := onepasswordRead "op://Secrets/AWS imweb/test-account-id" -}}
+[default]
+sso_session = imweb
+sso_account_id = {{ $prodAccountId }}
+sso_role_name = ReadOnlyAccess
+region = ap-northeast-2
+output = json
+
+[profile imweb-prod-readonly]
+sso_session = imweb
+sso_account_id = {{ $prodAccountId }}
+sso_role_name = ReadOnlyAccess
+region = ap-northeast-2
+output = json
+
+[profile imweb-prod-backend]
+sso_session = imweb
+sso_account_id = {{ $prodAccountId }}
+sso_role_name = BackendAccess
+region = ap-northeast-2
+output = json
+
+[profile imweb-test]
+sso_session = imweb
+sso_account_id = {{ $testAccountId }}
+sso_role_name = PowerUserAccess
+region = ap-northeast-2
+output = json
+
+[sso-session imweb]
+sso_start_url = {{ onepasswordRead "op://Secrets/AWS imweb/sso-start-url" }}
+sso_region = ap-northeast-2
+sso_registration_scopes = sso:account:access
