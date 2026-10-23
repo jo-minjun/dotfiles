@@ -235,3 +235,9 @@ trust_level = "trusted"
 
 [projects."/Users/jo-minjun/Projects/me/honey-bloom"]
 trust_level = "trusted"
+
+[mcp_servers.rea]
+command = "npx"
+args = [ "-y", "rea-agents@6.7.0", "mcp" ]
+startup_timeout_sec = 30
+tool_timeout_sec = 450
