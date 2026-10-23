@@ -162,3 +162,8 @@
 
 # WORK
 - `~/Projects/work` 하위에서 작업하는 경우 `~/.agents/WORK.md`를 읽고 규칙을 따르라
+
+---
+
+# SHELL
+- `~/.zshrc`, `~/Shell` 하위 셸 설정을 수정하는 경우 `~/.agents/SHELL.md`를 읽고 규칙을 따르라
