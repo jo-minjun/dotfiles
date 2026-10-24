@@ -71,7 +71,8 @@ echo ""
 echo "Removing plugins not listed in enabledPlugins..."
 INSTALLED_PLUGINS=$(claude plugin list 2>/dev/null | awk '/^  ❯/ {print $2}' || echo "")
 DESIRED_SORTED=$(echo "$PLUGINS" | sort)
-INSTALLED_SORTED=$(echo "$INSTALLED_PLUGINS" | sort)
+# project scope의 projectPath가 홈이면 같은 플러그인이 user/project로 중복 출력되므로 중복을 제거한다
+INSTALLED_SORTED=$(echo "$INSTALLED_PLUGINS" | sort -u)
 TO_REMOVE=$(comm -23 <(echo "$INSTALLED_SORTED") <(echo "$DESIRED_SORTED"))
 
 if [[ -z "$TO_REMOVE" ]]; then
