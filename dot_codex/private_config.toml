@@ -2,6 +2,7 @@ model = "gpt-6.1-sol"
 model_reasoning_effort = "medium"
 sandbox_mode = 'danger-full-access'
 service_tier = "default"
+notify = ["/Users/jo-minjun/.local/bin/lockpaw", "ping", "--agent", "codex"]
 
 [agents]
 max_concurrent_threads_per_session = 10
