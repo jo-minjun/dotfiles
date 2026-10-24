@@ -14,6 +14,9 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
 killall Dock
 
+# 잠금 화면 단축키를 Cmd+Ctrl+Q에서 Cmd+Ctrl+Opt+Shift+F12로 변경 (메뉴 항목명은 시스템 언어 기준)
+defaults write -g NSUserKeyEquivalents -dict-add "잠금 화면" '@^~$\Uf70f'
+
 # sudo 인증 캐시 확보 (비대화형 환경에서는 스킵)
 if sudo -v 2>/dev/null; then
   # Disable auto-brightness on battery

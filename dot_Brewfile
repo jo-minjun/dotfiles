@@ -61,6 +61,7 @@ brew "typescript-language-server"
 # AI Tools
 cask "codex"
 cask "stablyai/orca/orca", trusted: true
+cask "lockpaw"
 
 # Shell
 brew "powerlevel10k"
