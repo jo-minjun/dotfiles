@@ -1,7 +1,7 @@
 # Taps
 tap "hashicorp/tap", trusted: true
 tap "oven-sh/bun", trusted: true
-tap "databricks/tap"
+tap "databricks/tap", trusted: true
 tap "stablyai/orca"
 
 # CLI Tools
@@ -27,7 +27,7 @@ brew "sevenzip"
 
 # Cloud & DevOps
 brew "awscli"
-brew "databricks/tap/databricks"
+brew "databricks/tap/databricks", trusted: true
 brew "aws-iam-authenticator"
 brew "k9s"
 brew "kafkactl"
