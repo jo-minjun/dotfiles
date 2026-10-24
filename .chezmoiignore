@@ -23,6 +23,8 @@ Library/Application Support/BetterTouchTool/btt_data_store.version_*
 
 # 저장소 문서 (홈에 배포 불필요)
 README.md
+AGENTS.md
+CLAUDE.md
 docs/
 
 # 에이전트 메모리 (기기별 로컬 관리, 공개 저장소에 올리지 않음)
