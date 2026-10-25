@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+if ! command -v claude &>/dev/null; then
+  echo "Claude Code CLI not found. Skipping MCP registration."
+  exit 0
+fi
+
+# dot_codex/private_config.toml의 [mcp_servers.rea]와 같은 버전으로 맞춘다
+REA_VERSION="6.7.0"
+
+echo "=== Claude Code MCP Registration ==="
+
+# 버전 변경을 반영하려고 기존 등록을 지우고 다시 추가한다
+claude mcp remove -s user rea &>/dev/null || true
+echo "  [+] rea (rea-agents@${REA_VERSION})"
+claude mcp add -s user rea -- npx -y "rea-agents@${REA_VERSION}" mcp
+
+echo "=== MCP registration complete ==="
