@@ -6,6 +6,7 @@
     "datadog@claude-plugins-official": true,
     "jdtls-lsp@claude-plugins-official": true,
     "kotlin-lsp@claude-plugins-official": true,
+    "mermaid-view@claude-mermaid-view": true,
     "php-lsp@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
@@ -15,6 +16,12 @@
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
   "extraKnownMarketplaces": {
+    "claude-mermaid-view": {
+      "source": {
+        "repo": "jo-minjun/claude-mermaid-view",
+        "source": "github"
+      }
+    },
     "openai-codex": {
       "source": {
         "repo": "openai/codex-plugin-cc",
