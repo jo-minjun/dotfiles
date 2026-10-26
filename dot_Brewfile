@@ -3,6 +3,7 @@ tap "hashicorp/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "databricks/tap", trusted: true
 tap "stablyai/orca"
+tap "sorkila/lockpaw", trusted: true
 
 # CLI Tools
 brew "bat"
@@ -61,7 +62,7 @@ brew "typescript-language-server"
 # AI Tools
 cask "codex"
 cask "stablyai/orca/orca", trusted: true
-cask "lockpaw"
+cask "sorkila/lockpaw/lockpaw", trusted: true
 
 # Shell
 brew "powerlevel10k"

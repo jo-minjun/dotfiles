@@ -8,4 +8,8 @@ set -e
 
 echo "Running brew bundle..."
 brew bundle --file="{{ .chezmoi.homeDir }}/.Brewfile"
+
+# Lockpaw hook이 ~/.local/bin/lockpaw를 경로로 호출하는데 cask는 앱만 설치하므로 CLI를 연결
+LOCKPAW_CLI="/Applications/Lockpaw.app/Contents/SharedSupport/lockpaw"
+[[ -x "$LOCKPAW_CLI" ]] && "$LOCKPAW_CLI" install-cli
 echo "Brew bundle completed"
