@@ -1,7 +1,10 @@
 #!/bin/bash
-# Claude Code status line: session name | model | directory | git branch | context usage | 5h/7d rate limits
+# Claude Code status line
+#   line 1: session name | model | directory | git branch
+#   line 2: session id | context usage | 5h/7d rate limits
 input=$(cat)
 
+session_id=$(printf '%s' "$input" | jq -r '.session_id // empty' 2>/dev/null)
 session_name=$(printf '%s' "$input" | jq -r '.session_name // empty' 2>/dev/null)
 model=$(printf '%s' "$input" | jq -r '.model.display_name // empty' 2>/dev/null)
 dir=$(printf '%s' "$input" | jq -r '.workspace.current_dir // .cwd // empty' 2>/dev/null)
@@ -31,9 +34,11 @@ MAGENTA=$'\033[35m'
 GREEN=$'\033[32m'
 YELLOW=$'\033[33m'
 RED=$'\033[31m'
+DIM=$'\033[2m'
 SEP=" ${RESET}|${RESET} "
 
 out=""
+line2=""
 
 [ -n "$session_name" ] && out="${BOLD}${session_name}${RESET}"
 
@@ -55,6 +60,8 @@ if [ -n "$dir" ]; then
   fi
 fi
 
+[ -n "$session_id" ] && line2="${DIM}${session_id}${RESET}"
+
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used" 2>/dev/null)
   if [ -n "$pct" ]; then
@@ -65,11 +72,11 @@ if [ -n "$used" ]; then
     else
       color="$GREEN"
     fi
-    [ -n "$out" ] && out="${out}${SEP}"
+    [ -n "$line2" ] && line2="${line2}${SEP}"
     size_label=$(format_tokens "$ctx_size")
     ctx_text="ctx ${pct}%"
     [ -n "$size_label" ] && ctx_text="${ctx_text} / ${size_label}"
-    out="${out}${color}${ctx_text}${RESET}"
+    line2="${line2}${color}${ctx_text}${RESET}"
   fi
 fi
 
@@ -92,9 +99,11 @@ week=$(printf '%s' "$input" | jq -r '.rate_limits.seven_day.used_percentage // e
 
 for seg in "$(usage_segment "5h" "$five")" "$(usage_segment "7d" "$week")"; do
   if [ -n "$seg" ]; then
-    [ -n "$out" ] && out="${out}${SEP}"
-    out="${out}${seg}"
+    [ -n "$line2" ] && line2="${line2}${SEP}"
+    line2="${line2}${seg}"
   fi
 done
 
-printf '%s\n' "$out"
+[ -n "$out" ] && printf '%s\n' "$out"
+[ -n "$line2" ] && printf '%s\n' "$line2"
+exit 0
