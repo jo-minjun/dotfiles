@@ -30,6 +30,7 @@ brew "sevenzip"
 brew "awscli"
 brew "databricks/tap/databricks", trusted: true
 brew "aws-iam-authenticator"
+brew "argocd"
 brew "k9s"
 brew "kafkactl"
 brew "kubernetes-cli"
