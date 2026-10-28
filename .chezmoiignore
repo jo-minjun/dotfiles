@@ -30,3 +30,7 @@ docs/
 # 에이전트 메모리 (기기별 로컬 관리, 공개 저장소에 올리지 않음)
 .claude/agent-memory/
 .claude/agent-memory-archive/
+
+# work-log 스킬 런타임 상태 (실행마다 바뀜)
+.agents/skills/work-log/state.json
+.agents/skills/work-log/**/__pycache__
