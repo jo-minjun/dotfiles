@@ -14,8 +14,6 @@
 
 # 답변 형식
 
-ASD-STE100 형식을 지향한다.
-
 질문에 답하거나 분석·조사·작업 결과를 보고할 때 적용하라. ASD-STE100(Simplified Technical English) 규칙을 한국어에 맞게 옮긴 것이다.
 
 ## 단어
