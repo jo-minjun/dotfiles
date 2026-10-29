@@ -31,6 +31,6 @@ docs/
 .claude/agent-memory/
 .claude/agent-memory-archive/
 
-# work-log 스킬 런타임 상태 (실행마다 바뀜)
-.agents/skills/work-log/state.json
-.agents/skills/work-log/**/__pycache__
+# work-log 스킬 (github work-log 저장소의 install.sh가 링크로 관리)
+.agents/skills/work-log
+.claude/skills/work-log
