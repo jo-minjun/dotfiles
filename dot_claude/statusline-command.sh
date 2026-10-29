@@ -3,6 +3,8 @@
 #   line 1: session name | model | directory | git branch
 #   line 2: session id | context usage | 5h/7d rate limits
 input=$(cat)
+# WorkLog: 사용량(rate_limits)을 저장한다. 출력이 없고 항상 0으로 끝나 상태 줄에 영향이 없다
+printf '%s' "$input" | ~/.claude/skills/work-log/scripts/save_rate_limits.sh
 
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty' 2>/dev/null)
 session_name=$(printf '%s' "$input" | jq -r '.session_name // empty' 2>/dev/null)
