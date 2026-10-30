@@ -2,7 +2,7 @@
 tap "hashicorp/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "databricks/tap", trusted: true
-tap "stablyai/orca"
+tap "stablyai/orca", trusted: true
 tap "sorkila/lockpaw", trusted: true
 
 # CLI Tools
@@ -61,38 +61,42 @@ brew "typescript-language-server"
 
 # AI Tools
 cask "codex"
-cask "stablyai/orca/orca", trusted: true
-cask "sorkila/lockpaw/lockpaw", trusted: true
 
 # Shell
 brew "powerlevel10k"
 
 # Fonts
 cask "font-symbols-only-nerd-font"
+cask "font-noto-serif-cjk-kr"
+
+# Applications - AI
+cask "claude"
+cask "stablyai/orca/orca", trusted: true
+
+# Applications - Development
+cask "ghostty"
+cask "jetbrains-toolbox"
+cask "docker-desktop"
+cask "dbeaver-community"
+cask "bruno"
+cask "postman"
 
 # Applications - Productivity
 cask "1password"
 cask "1password-cli"
 cask "bettertouchtool"
-cask "discord"
-cask "font-noto-serif-cjk-kr"
-cask "iina"
+cask "sorkila/lockpaw/lockpaw", trusted: true
+cask "jordanbaird-ice"
 cask "notion"
 cask "obsidian"
-cask "jordanbaird-ice"
 cask "plaud"
-
-# Applications - Development
-cask "claude"
-cask "dbeaver-community"
-cask "docker-desktop"
-cask "ghostty"
-cask "jetbrains-toolbox"
-cask "bruno"
-cask "postman"
 
 # Applications - Communication
 cask "slack"
+cask "discord"
+
+# Applications - Media
+cask "iina"
 
 # Applications - Networking
 brew "tailscale"
