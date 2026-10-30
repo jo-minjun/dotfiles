@@ -4,20 +4,30 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 
 ## 사전 요구사항
 
-1Password 계정이 필요합니다. 시크릿과 라이선스가 1Password에서 자동으로 로드됩니다.
-
-chezmoi가 자동으로 설치하지만, 1Password 로그인은 수동으로 해야 합니다:
-
-1. `chezmoi apply` 실행 (1Password 앱/CLI 자동 설치)
-2. 1Password 앱 실행 → 로그인
-3. 설정 > 개발자 > "CLI와의 생체 인증 잠금 해제" 활성화
-4. `chezmoi apply` 다시 실행
+- 1Password 계정: 시크릿과 라이선스를 1Password에서 자동으로 가져옵니다.
+- GitHub 개인 계정 `jo-minjun`: private 저장소인 업무 설정(dotfiles-work)을 이 계정 토큰으로 클론합니다.
+- GitHub 회사 계정: `~/Projects/work/` 하위 저장소에서 사용합니다.
 
 ## 설치
 
-```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
-```
+1. 설치 명령을 실행합니다. 이름, 개인 이메일, 회사 이메일을 입력합니다.
+   ```bash
+   sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
+   ```
+   1Password 앱과 CLI가 설치된 뒤 "1Password CLI에 로그인되지 않았습니다" 메시지와 함께 apply가 멈춥니다. 정상 동작입니다.
+2. 1Password 앱을 실행하고 로그인합니다.
+3. 1Password 설정 > 개발자 > "CLI와의 생체 인증 잠금 해제"를 활성화합니다.
+4. `chezmoi apply`를 다시 실행합니다. 다음 순서로 진행됩니다.
+   1. brew bundle로 CLI 도구와 앱 설치
+   2. `gh auth login` 실행: **개인 계정 `jo-minjun`으로 로그인**합니다
+   3. 외부 에이전트 스킬 설치
+   4. 업무 설정(dotfiles-work)을 `~/.local/share/chezmoi-work`에 클론하고 적용
+5. 회사 GitHub 계정을 추가로 로그인합니다. `~/Projects/work/` 하위에서 이 계정으로 자동 전환됩니다.
+   ```bash
+   gh auth login
+   ```
+
+> 4-2에서 회사 계정으로 먼저 로그인하면 업무 설정은 건너뜁니다. `gh auth login`으로 `jo-minjun`을 추가하고 `chezmoi apply`를 다시 실행합니다.
 
 ## 설치되는 것들
 
@@ -116,14 +126,17 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 ## 일상 사용
 
 ```bash
+# 원격 변경 받기 + 적용 (업무 설정도 함께 pull·적용)
+chezmoi update
+
+# 적용 (업무 설정도 함께 적용)
+chezmoi apply
+
 # 설정 파일 수정
 chezmoi edit ~/.zshrc
 
 # 변경사항 미리보기
 chezmoi diff
-
-# 적용
-chezmoi apply
 
 # 소스 디렉토리 이동
 chezmoi cd
@@ -131,13 +144,16 @@ chezmoi cd
 # 변경사항 커밋 (형식: <type>: <subject>, 예: feat: ghostty 테마 변경)
 git add . && git commit -m "feat: <변경 내용>" && git push
 
-# 업무 설정 (dotfiles-work 소스)
+# 업무 설정 파일 다루기 (dotfiles-work 소스)
+chezmoi_work edit ~/.aws/config
 chezmoi_work diff
 chezmoi_work apply
 
-# 로컬 변경 re-add 후 커밋·푸시 (커밋 메시지 입력)
+# 두 저장소의 로컬 변경 re-add 후 커밋·푸시 (커밋 메시지 입력)
 chezmoi_sync
 ```
+
+> `chezmoi diff`, `chezmoi edit`로는 업무 설정 파일(`~/.aws/config`, `~/.pgpass` 등)을 다룰 수 없습니다. 공개 소스가 관리하지 않기 때문입니다. 업무 설정 파일에는 `chezmoi_work`를 사용합니다.
 
 ## 업무 설정 (dotfiles-work)
 
