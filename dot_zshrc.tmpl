@@ -27,9 +27,10 @@ eval "$(mise activate zsh)"
 eval "$(zoxide init zsh)"
 
 # gh는 활성 계정 하나만 쓰므로, 셸마다 디렉터리에 맞는 계정 토큰을 GH_TOKEN으로 지정한다
+# 업무 계정 WORK_GH_ACCOUNT는 업무 dotfiles의 ~/Shell/work.sh에서 지정한다
 _gh_account_for_dir() {
   local account=jo-minjun
-  [[ "${PWD:l}/" == "${HOME:l}/projects/work/"* ]] && account=***WORK_GH_ACCOUNT***
+  [[ -n "$WORK_GH_ACCOUNT" && "${PWD:l}/" == "${HOME:l}/projects/work/"* ]] && account=$WORK_GH_ACCOUNT
   [[ "$account" == "$_GH_ACCOUNT" ]] && return
   _GH_ACCOUNT=$account
   local token

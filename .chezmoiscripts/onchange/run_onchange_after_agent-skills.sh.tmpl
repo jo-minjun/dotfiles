@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+
+# skill-lock hash: {{ include "dot_agents/private_dot_skill-lock.json" | sha256sum }}
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+if ! command -v npx &>/dev/null || ! command -v jq &>/dev/null; then
+  echo "npx or jq not found. Skipping agent skills installation."
+  exit 0
+fi
+
+LOCK_FILE="{{ .chezmoi.homeDir }}/.agents/.skill-lock.json"
+SKILLS_DIR="{{ .chezmoi.homeDir }}/.agents/skills"
+CLAUDE_SKILLS_DIR="{{ .chezmoi.homeDir }}/.claude/skills"
+
+echo "=== Agent Skills Installation ==="
+
+# 외부 스킬은 저장소에 담지 않고 lock 파일의 출처에서 설치한다. 이미 있는 스킬은 건드리지 않고, 업데이트는 `npx skills update -g`로 한다
+while IFS=$'\t' read -r name source_url; do
+  if [[ -f "$SKILLS_DIR/$name/SKILL.md" && -e "$CLAUDE_SKILLS_DIR/$name" ]]; then
+    echo "  [OK] $name"
+    continue
+  fi
+  echo "  [+] $name"
+  # Orca 같은 앱이 CLAUDE_CONFIG_DIR을 바꿔 두면 ~/.claude/skills 대신 그쪽에 복사본이 생기므로 해제한다
+  env -u CLAUDE_CONFIG_DIR npx -y skills add "$source_url" -g -s "$name" -a claude-code codex -y </dev/null >/dev/null \
+    || echo "  [!] Warning: Failed to install $name"
+done < <(jq -r '.skills | to_entries[] | "\(.key)\t\(.value.sourceUrl)"' "$LOCK_FILE")
+
+echo "=== Agent skills installation complete ==="

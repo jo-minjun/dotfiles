@@ -361,7 +361,7 @@ chezmoi add ~/Command
 
 `~/.local/share/chezmoi/Shell/commands.sh` 파일에서 민감한 정보를 환경변수로 교체:
 
-- 52행: `***REMOVED***` → `$DOCKER_HUB_PASSWORD`
+- 52행: `<REDACTED>` → `$DOCKER_HUB_PASSWORD`
 - 90행: AWS profile은 그대로 유지 (이미 --profile 사용 중)
 
 **Step 3: Commit**

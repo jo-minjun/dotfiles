@@ -9,8 +9,11 @@ chezmoi 관리 파일의 변경사항을 소스 리포에 반영, 커밋, 푸시
 
 ## 환경
 
-- chezmoi 소스: `~/.local/share/chezmoi`
-- 원격 리포: `origin/main`
+- chezmoi 소스: `~/.local/share/chezmoi` (공개 저장소 `jo-minjun/dotfiles`)
+- 업무 chezmoi 소스: `~/.local/share/chezmoi-work` (private 저장소 `jo-minjun/dotfiles-work`)
+  - 업무 소스의 chezmoi 명령은 `chezmoi --source ~/.local/share/chezmoi-work --persistent-state ~/.config/chezmoi/chezmoistate-work.boltdb <명령>`으로 실행한다. 아래에서 이를 `chezmoi-work`라고 쓴다
+  - 회사 계정, 인프라 정보, 업무 스킬처럼 공개하면 안 되는 파일은 업무 소스에만 둔다. 이런 내용이 공개 소스 변경에 섞여 있으면 반영하지 말고 사용자에게 알린다
+- 원격 리포: 각 소스의 `origin/main`
 - 커밋 메시지: 한글, `<type>: <subject>` 형식 (feat, fix, refactor, docs, chore)
 
 ## 워크플로우
@@ -29,7 +32,13 @@ bash ~/.claude/skills/chezmoi-sync/scripts/export-btt-presets.sh
 chezmoi diff
 ```
 
-변경이 없으면 "변경사항 없음"을 알리고 종료.
+```bash
+chezmoi-work diff
+```
+
+업무 소스가 없으면(`~/.local/share/chezmoi-work`가 없는 기기) 업무 소스 단계는 건너뛴다.
+두 소스 모두 변경이 없으면 "변경사항 없음"을 알리고 종료.
+이후 4~6단계는 변경이 있는 소스마다 진행한다. 업무 소스는 `chezmoi` 대신 `chezmoi-work`를, `-C ~/.local/share/chezmoi` 대신 `-C ~/.local/share/chezmoi-work`를 쓴다.
 
 ### 3. JSON 정규화
 

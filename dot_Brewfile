@@ -44,7 +44,6 @@ brew "bruno-cli"
 # Languages & Runtimes
 brew "mise"
 brew "node"
-brew "jenv"
 brew "maven"
 brew "oven-sh/bun/bun", trusted: true
 brew "pnpm"

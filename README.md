@@ -25,11 +25,11 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 
 | 카테고리 | 패키지 |
 |----------|--------|
-| 개발 | node, bun, pnpm, maven, mise, jenv, rustup |
+| 개발 | node, bun, pnpm, maven, mise, rustup |
 | 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server, intelephense (npm) |
-| 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, helm, kafkactl, terraform |
+| 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, helm, argocd, kafkactl, terraform, databricks |
 | API | bruno-cli, @modelcontextprotocol/inspector (npm) |
-| DB | libpq, mysql-client |
+| DB | libpq, mysql-client, dbvr (DBeaver Community CLI, GitHub 릴리스) |
 | AI | Claude Code (설치 스크립트), codex |
 | 배포 | vercel (npm) |
 | 네트워크 | tailscale |
@@ -44,6 +44,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | BetterTouchTool | 제스처/단축키 |
 | Bruno | API 테스트 |
 | Claude | AI 어시스턴트 |
+| DBeaver Community | DB 클라이언트 |
 | Discord | 메신저 |
 | Docker Desktop | 컨테이너 |
 | ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
@@ -51,8 +52,10 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 | Ice | 메뉴 막대 정리 |
 | IINA | 동영상 플레이어 |
 | JetBrains Toolbox | IDE 관리 |
+| Lockpaw | 화면 잠금 (BTT Cmd+Ctrl+Q, 에이전트 알림) |
 | Notion | 노트 |
 | Obsidian | 노트 |
+| Orca | AI 에이전트 워크트리 관리 |
 | Plaud | 회의 녹음·요약 |
 | Postman | API 테스트 |
 | Slack | 메신저 |
@@ -62,13 +65,14 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 
 | 항목 | 내용 |
 |------|------|
-| Touch ID sudo | 터미널에서 sudo 시 Touch ID 사용 |
+| Touch ID sudo | 터미널에서 sudo 시 Touch ID 사용 (`/etc/pam.d/sudo_local`, macOS 업데이트 후에도 유지) |
 | oh-my-zsh + Powerlevel10k | 쉘 테마 |
 | Git 이메일 분리 | `~/Projects/work/` → 회사 이메일, 그 외 → 개인 이메일 |
 | Ghostty | JetBrains Mono, Idea 테마 |
 | Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬 |
+| 에이전트 스킬 | 직접 만든 스킬만 저장소에 둔다. 외부 스킬은 `~/.agents/.skill-lock.json`의 출처에서 `npx skills`로 설치하고, 업데이트는 `npx skills update -g`로 한다 |
+| 업무 설정 | private 저장소 [dotfiles-work](https://github.com/jo-minjun/dotfiles-work)를 별도 chezmoi 소스로 적용 (아래 참고) |
 | mise | 기본 도구(node lts, java corretto-25, python 3.15, kotlin 2.4), `~/Projects`·`~/orca/workspaces` 하위 설정 자동 신뢰 |
-| 1Password 시크릿 | Docker Hub |
 | BetterTouchTool | 라이선스 자동 설치, 프리셋 자동 임포트 (bttcli Socket Server·스크립트 임포트 확인 생략 설정 활성화) |
 
 ### 디렉토리 구조
@@ -81,7 +85,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 ├── Shell/
 │   ├── commands.sh # 커스텀 함수
 │   ├── aliases.sh  # alias 정의
-│   └── exports.sh  # 환경변수 정의
+│   ├── exports.sh  # 환경변수 정의
+│   └── work.sh     # 업무 전용 설정 (dotfiles-work)
 └── .secrets.zsh   # 시크릿 (1Password에서 자동 로드)
 ```
 
@@ -92,19 +97,20 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 ### 최초 설정
 
 1. 1Password "Secrets" vault에 아이템 생성:
-   - **Login 아이템**: Docker Hub, GitHub Token
    - **Secure Note**: BetterTouchTool License
+   - 업무 설정에 필요한 아이템은 dotfiles-work README를 참고
 2. 1Password CLI 인증:
    ```bash
    eval $(op signin)
    ```
 3. `chezmoi apply` 실행
 
+셸 환경변수로 쓸 비밀값은 `dot_secrets.zsh.tmpl`에 `onepasswordRead`로 추가한다. `~/.secrets.zsh`는 apply 때마다 다시 생성되므로 직접 수정하지 않는다.
+
 ### 관리되는 시크릿
 
 | 타입 | 아이템 | 용도 |
 |------|--------|------|
-| Login | Docker Hub | Docker 이미지 푸시 |
 | Secure Note | BetterTouchTool License | BTT 라이선스 자동 설치 |
 
 ## 일상 사용
@@ -122,9 +128,21 @@ chezmoi apply
 # 소스 디렉토리 이동
 chezmoi cd
 
-# 변경사항 커밋
-git add . && git commit -m "Update dotfiles" && git push
+# 변경사항 커밋 (형식: <type>: <subject>, 예: feat: ghostty 테마 변경)
+git add . && git commit -m "feat: <변경 내용>" && git push
+
+# 업무 설정 (dotfiles-work 소스)
+chezmoi_work diff
+chezmoi_work apply
 
 # 로컬 변경 re-add 후 커밋·푸시 (커밋 메시지 입력)
 chezmoi_sync
 ```
+
+## 업무 설정 (dotfiles-work)
+
+회사 계정, 인프라 정보, 업무 스킬은 공개 저장소에 두지 않고 private 저장소 `jo-minjun/dotfiles-work`에 둔다.
+
+- `chezmoi apply`의 마지막 단계(`.chezmoiscripts/work/`)에서 `~/.local/share/chezmoi-work`에 클론(이후에는 `git pull --ff-only`)하고 별도 chezmoi 소스로 적용한다
+- 상태 파일은 `~/.config/chezmoi/chezmoistate-work.boltdb`로 분리하고, 설정 데이터(`chezmoi.toml`)는 공유한다
+- gh에 `jo-minjun` 계정이 로그인되어 있지 않거나 저장소 접근 권한이 없으면 건너뛴다

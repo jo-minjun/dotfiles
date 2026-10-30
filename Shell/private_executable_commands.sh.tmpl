@@ -27,36 +27,52 @@ ls_shell() {
   grep -E "^alias " ~/Shell/aliases.sh | sed 's/alias \([^=]*\)=.*/\1/'
 }
 
-chezmoi_sync() {
-  print_bold "chezmoi 변경사항을 동기화합니다"
-  echo ""
+chezmoi_work() {
+  if [[ -z "$1" ]]; then
+    print_bold "업무 dotfiles(chezmoi-work) 소스로 chezmoi를 실행합니다"
+    echo ""
+    echo "Usage: chezmoi_work <chezmoi 명령>"
+    echo "  e.g. chezmoi_work diff"
+    return 0
+  fi
+  chezmoi --source "$CHEZMOI_WORK_SOURCE" --persistent-state "$CHEZMOI_WORK_STATE" "$@"
+}
 
-  chezmoi re-add
-  cd ~/.local/share/chezmoi || return 1
+_chezmoi_sync_repo() {
+  local label="$1" source_dir="$2"
+  shift 2
 
-  if [[ -z $(git status --porcelain) ]]; then
+  print_bold "[$label] 변경사항을 반영합니다"
+  "$@" re-add
+  if [[ -z $(git -C "$source_dir" status --porcelain) ]]; then
     print_yellow "변경사항이 없습니다"
-    cd - > /dev/null
+    echo ""
     return 0
   fi
 
   print_green "변경된 파일:"
-  git status --short
+  git -C "$source_dir" status --short
   echo ""
 
-  print_bold "커밋 메시지를 입력하세요 (빈 입력시 취소): "
+  print_bold "커밋 메시지를 입력하세요 (빈 입력시 건너뜀): "
+  local message
   read -r message
-  if [[ -z "$message" ]]; then
-    cd - > /dev/null
-    return 0
-  fi
+  [[ -z "$message" ]] && return 0
 
-  git add -A
-  git commit -m "$message"
-  git push
+  git -C "$source_dir" add -A
+  git -C "$source_dir" commit -m "$message"
+  git -C "$source_dir" push
+  echo ""
+}
+
+chezmoi_sync() {
+  print_bold "chezmoi 변경사항을 동기화합니다"
+  echo ""
+
+  _chezmoi_sync_repo dotfiles ~/.local/share/chezmoi chezmoi
+  [[ -d "$CHEZMOI_WORK_SOURCE" ]] && _chezmoi_sync_repo dotfiles-work "$CHEZMOI_WORK_SOURCE" chezmoi_work
 
   print_bold "완료되었습니다"
-  cd - > /dev/null
 }
 
 port_kill() {
@@ -75,56 +91,6 @@ port_kill() {
   fi
   print_green "포트 $1 프로세스(PID: $pid)를 종료합니다"
   kill -9 $pid
-}
-
-ecr_login() {
-  local profile_opt=""
-  [[ -n "$1" ]] && profile_opt="--profile $1"
-  aws ecr get-login-password --region ap-northeast-2 $profile_opt | \
-    docker login --username AWS --password-stdin ***AWS_ACCOUNT_ID***.dkr.ecr.ap-northeast-2.amazonaws.com
-}
-
-sync_refiner() {
-  if [[ -z "$1" ]]; then
-    print_bold "neogeorefiner 이미지를 최신화합니다"
-    echo ""
-    echo "Usage: sync_refiner <tag_name>"
-    echo "  e.g. sync_refiner etpost-20220915030019"
-    return 0
-  fi
-
-  local container
-  container=$(docker inspect neogeorefiner --format "{{ "{{json .State.Status}}" }}" 2>/dev/null | xargs)
-  if [[ "$container" == "running" ]]; then
-    print_red "neogeorefiner docker container is running"
-    echo ""
-    print_yellow "cd vroong-neogeo && ./gradlew composeDown"
-    return 0
-  fi
-
-  print_bold "기존 이미지를 지울까요? [y/N]"
-  read -r response
-  if [[ "$response" =~ ^[yY]$ ]]; then
-    local candidate1 candidate2
-    candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
-    candidate2=$(docker image ls --filter=reference="***AWS_ACCOUNT_ID***.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
-    docker image rm $candidate1 $candidate2 --force
-  fi
-
-  print_green "ECR에 로그인합니다"
-  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | \
-    docker login --username AWS --password-stdin ***AWS_ACCOUNT_ID***.dkr.ecr.ap-northeast-2.amazonaws.com
-
-  echo ""
-  print_green "이미지를 내려받습니다"
-  docker pull "***AWS_ACCOUNT_ID***.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1"
-
-  echo ""
-  print_green "neogeorefiner:latest 태그를 부여합니다"
-  docker tag "***AWS_ACCOUNT_ID***.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1" neogeorefiner:latest
-
-  echo ""
-  print_bold "완료되었습니다"
 }
 
 clean_container() {

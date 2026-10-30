@@ -1,17 +1,33 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 # Touch ID for sudo (macOS only)
+# /etc/pam.d/sudo는 macOS 업데이트 때 기본값으로 돌아가므로, 업데이트 후에도 유지되는 sudo_local에 설정한다
+set -e
 
-PAM_FILE="/etc/pam.d/sudo"
+PAM_SUDO="/etc/pam.d/sudo"
+SUDO_LOCAL="/etc/pam.d/sudo_local"
+SUDO_LOCAL_TEMPLATE="/etc/pam.d/sudo_local.template"
+TID_PATTERN='^auth[[:space:]].*pam_tid\.so'
 
-if grep -q "pam_tid.so" "$PAM_FILE" 2>/dev/null; then
-  echo "Touch ID for sudo already configured."
+if [[ ! -f "$SUDO_LOCAL_TEMPLATE" ]]; then
+  echo "sudo_local.template not found (requires macOS 14+). Skipping Touch ID setup."
   exit 0
 fi
 
-echo "Adding Touch ID support to sudo..."
-sudo sed -i '' '1a\
-auth       sufficient     pam_tid.so
-' "$PAM_FILE"
+if ! grep -q "$TID_PATTERN" "$SUDO_LOCAL" 2>/dev/null; then
+  echo "Enabling Touch ID in $SUDO_LOCAL..."
+  if [[ -f "$SUDO_LOCAL" ]]; then
+    sudo sed -i '' 's/^#[[:space:]]*\(auth[[:space:]].*pam_tid\.so\)/\1/' "$SUDO_LOCAL"
+    grep -q "$TID_PATTERN" "$SUDO_LOCAL" || echo "auth       sufficient     pam_tid.so" | sudo tee -a "$SUDO_LOCAL" >/dev/null
+  else
+    sed 's/^#[[:space:]]*\(auth[[:space:]].*pam_tid\.so\)/\1/' "$SUDO_LOCAL_TEMPLATE" | sudo tee "$SUDO_LOCAL" >/dev/null
+  fi
+fi
+
+# 이전 방식으로 sudo에 직접 넣은 줄이 남아 있으면 Touch ID를 두 번 묻게 되므로 지운다
+if grep -q "$TID_PATTERN" "$SUDO_LOCAL" && grep -q 'pam_tid\.so' "$PAM_SUDO"; then
+  sudo sed -i '' '/pam_tid\.so/d' "$PAM_SUDO"
+fi
+
 echo "Touch ID for sudo enabled."
 {{- end }}

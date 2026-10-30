@@ -1,0 +1,30 @@
+#!/bin/bash
+set -e
+
+# 업무 설정은 private 저장소(dotfiles-work)에 두고 별도 chezmoi 소스로 적용한다
+# chezmoi external은 파일 적용 단계에서 클론하므로 새 기기에서 gh 설치·로그인보다 먼저 실행된다. 그래서 gh 로그인 스크립트 뒤(work/)에서 처리한다
+# 경로는 Shell/exports.sh의 CHEZMOI_WORK_SOURCE, CHEZMOI_WORK_STATE와 같게 둔다
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+WORK_REPO_URL="https://github.com/jo-minjun/dotfiles-work.git"
+WORK_SOURCE="{{ .chezmoi.homeDir }}/.local/share/chezmoi-work"
+WORK_STATE="{{ .chezmoi.homeDir }}/.config/chezmoi/chezmoistate-work.boltdb"
+
+if [[ ! -d "$WORK_SOURCE/.git" ]]; then
+  # private 저장소는 git credential helper가 개인 계정 토큰으로 받으므로 gh 로그인이 필요하다
+  if ! command -v gh &>/dev/null || ! gh auth token --user jo-minjun &>/dev/null; then
+    echo "gh is not logged in as jo-minjun. Skipping work dotfiles."
+    exit 0
+  fi
+  if ! git clone --quiet "$WORK_REPO_URL" "$WORK_SOURCE"; then
+    echo "Failed to clone work dotfiles. Skipping."
+    exit 0
+  fi
+else
+  git -C "$WORK_SOURCE" pull --ff-only --quiet || echo "Failed to update work dotfiles. Applying local copy."
+fi
+
+echo "=== Applying work dotfiles ==="
+chezmoi --source "$WORK_SOURCE" --persistent-state "$WORK_STATE" apply

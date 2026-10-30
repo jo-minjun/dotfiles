@@ -2,6 +2,7 @@
 
 ## 파일 구성
 - 셸 설정은 chezmoi로 관리한다. 소스는 `~/.local/share/chezmoi`다
+- 업무 설정은 private 저장소 소스 `~/.local/share/chezmoi-work`에 있다. 이 소스는 `chezmoi` 대신 `chezmoi_work`(셸 함수)로 다룬다. 에이전트는 `chezmoi --source "$CHEZMOI_WORK_SOURCE" --persistent-state "$CHEZMOI_WORK_STATE"`를 쓴다
 
 | 대상 | 소스 | 용도 |
 |---|---|---|
@@ -9,12 +10,13 @@
 | `~/Shell/commands.sh` | `Shell/private_executable_commands.sh.tmpl` | 함수 |
 | `~/Shell/aliases.sh` | `Shell/aliases.sh` | alias |
 | `~/Shell/exports.sh` | `Shell/exports.sh` | PATH, 환경변수 |
+| `~/Shell/work.sh` | `Shell/work.sh` (chezmoi-work) | 업무 전용 설정 |
 | `~/Shell/local.sh` | `Shell/create_local.sh` | 기기 전용 설정 |
 | `~/.secrets.zsh` | `dot_secrets.zsh.tmpl` | 비밀값 |
 
 ## alias·함수 추가
-- 위 표의 용도에 맞는 파일에 추가하라. 특정 기기에서만 쓰는 설정은 `local.sh`에 두어라
-- 토큰, 비밀번호 같은 비밀값은 `~/.secrets.zsh`에만 두고 다른 파일에 하드코딩하지 마라
+- 위 표의 용도에 맞는 파일에 추가하라. 특정 기기에서만 쓰는 설정은 `local.sh`에, 회사 계정·인프라처럼 공개하면 안 되는 설정은 `work.sh`에 두어라
+- 토큰, 비밀번호 같은 비밀값은 1Password Secrets vault에 두고 `dot_secrets.zsh.tmpl`에 `onepasswordRead`로 추가하라. `~/.secrets.zsh`는 apply 때 덮어써지므로 직접 수정하지 말고, 다른 파일에 하드코딩하지 마라
 - 추가하기 전에 `ls_shell`과 `type <name>`으로 이름이 겹치는지 확인하라. OMZ 플러그인(git, docker, kubectl 등)이 정의한 alias와도 겹치면 안 된다
 - `ls_shell`은 grep으로 목록을 뽑는다. 함수는 줄 맨 앞에 `name() {` 형식으로, alias는 줄 맨 앞에 `alias name=` 형식으로 정의하고, 이름에는 소문자와 `_`만 써라
 - 인자가 필요한 함수는 인자 없이 호출됐을 때 제목, `Usage`, 예시를 출력하고 `return 0` 하라
