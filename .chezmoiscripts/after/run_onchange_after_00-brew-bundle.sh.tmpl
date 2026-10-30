@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+# 다른 after 스크립트가 gh·jq·node 등을 쓰므로 가장 먼저 실행되도록 00을 붙인다
 # Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
 
 # Initialize Homebrew PATH (Apple Silicon)
