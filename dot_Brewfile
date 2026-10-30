@@ -75,7 +75,6 @@ cask "stablyai/orca/orca", trusted: true
 
 # Applications - Development
 cask "ghostty"
-cask "jetbrains-toolbox"
 cask "docker-desktop"
 cask "dbeaver-community"
 cask "bruno"

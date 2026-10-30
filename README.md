@@ -54,7 +54,6 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 |  | Orca | AI 에이전트 워크트리 관리 |
 |  | ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
 | 개발 | Ghostty | 터미널 |
-|  | JetBrains Toolbox | IDE 관리 |
 |  | Docker Desktop | 컨테이너 |
 |  | DBeaver Community | DB 클라이언트 |
 |  | Bruno | API 테스트 |
