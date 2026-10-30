@@ -9,3 +9,6 @@
 
 # chezmoi
 .chezmoiroot
+
+# superpowers 브레인스토밍 산출물 (로컬 경로·포트 포함)
+.superpowers/
