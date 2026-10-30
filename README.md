@@ -38,28 +38,28 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jo-minjun
 
 ### 앱
 
-| 앱 | 설명 |
-|----|------|
-| 1Password | 패스워드 관리 |
-| BetterTouchTool | 제스처/단축키 |
-| Bruno | API 테스트 |
-| Claude | AI 어시스턴트 |
-| DBeaver Community | DB 클라이언트 |
-| Discord | 메신저 |
-| Docker Desktop | 컨테이너 |
-| ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
-| Ghostty | 터미널 |
-| Ice | 메뉴 막대 정리 |
-| IINA | 동영상 플레이어 |
-| JetBrains Toolbox | IDE 관리 |
-| Lockpaw | 화면 잠금 (BTT Cmd+Ctrl+Q, 에이전트 알림) |
-| Notion | 노트 |
-| Obsidian | 노트 |
-| Orca | AI 에이전트 워크트리 관리 |
-| Plaud | 회의 녹음·요약 |
-| Postman | API 테스트 |
-| Slack | 메신저 |
-| Tailscale | VPN |
+| 카테고리 | 앱 | 설명 |
+|----------|----|------|
+| AI | Claude | AI 어시스턴트 |
+|  | Orca | AI 에이전트 워크트리 관리 |
+|  | ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
+| 개발 | Ghostty | 터미널 |
+|  | JetBrains Toolbox | IDE 관리 |
+|  | Docker Desktop | 컨테이너 |
+|  | DBeaver Community | DB 클라이언트 |
+|  | Bruno | API 테스트 |
+|  | Postman | API 테스트 |
+| 생산성 | 1Password | 패스워드 관리 |
+|  | BetterTouchTool | 제스처/단축키 |
+|  | Lockpaw | 화면 잠금 (BTT Cmd+Ctrl+Q, 에이전트 알림) |
+|  | Ice | 메뉴 막대 정리 |
+|  | Notion | 노트 |
+|  | Obsidian | 노트 |
+|  | Plaud | 회의 녹음·요약 |
+| 커뮤니케이션 | Slack | 메신저 |
+|  | Discord | 메신저 |
+| 미디어 | IINA | 동영상 플레이어 |
+| 네트워크 | Tailscale | VPN |
 
 ## 설정되는 것들
 
