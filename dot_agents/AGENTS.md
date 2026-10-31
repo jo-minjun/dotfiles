@@ -125,7 +125,7 @@
 
 ## Git & 멀티 세션 작업
 - 항상 `git fetch` 후 `origin/main` 기준으로 rebase/merge하라. 오래됐을 수 있는 로컬 main 기준으로 하지 마라.
-- 다른 Claude 세션(예: main-2, p38/p39)이 병렬 worktree에서 작업 중일 수 있다. 머지 전에 `git worktree list`와 최근 origin/main 커밋을 확인하고, main에 새로 들어온 규칙과의 충돌을 해결하라.
+- 다른 에이전트 세션이 병렬 worktree에서 작업 중일 수 있다. 머지 전에 `git worktree list`와 최근 origin/main 커밋을 확인하고, main에 새로 들어온 규칙과의 충돌을 해결하라.
 - main에 머지하기 전: 전체 테스트 스위트를 실행하고 모두 통과하는지 확인하라.
 
 ---
@@ -216,6 +216,7 @@
 ---
 
 # DOTFILES
-- ~/.claude, ~/.agents, AGENTS.md, statusline, skills, settings.json의 모든 파일은 chezmoi로 관리한다
+- ~/.claude, ~/.agents, ~/.codex 아래 파일 중 일부(지침 파일, agents, skills, settings.json, statusline)만 chezmoi로 관리한다. 관리 대상인지는 `chezmoi managed`로 확인하라
+- 관리 대상이 아닌 파일(예: `~/.claude/agent-memory/`, `~/.claude/keybindings.json`)은 chezmoi 소스에 추가하지 마라
 - 실제 파일을 수정한 뒤에는 `chezmoi-sync` 스킬로 chezmoi 소스를 갱신하고 커밋·푸시하라
 - 마지막에 동기화 상태를 보고하라

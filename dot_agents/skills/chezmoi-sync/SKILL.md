@@ -82,6 +82,12 @@ git -C ~/.local/share/chezmoi log --oneline -5
 
 ```bash
 git -C ~/.local/share/chezmoi add <changed-files>
+git -C ~/.local/share/chezmoi diff --staged
+```
+
+커밋하기 전에 스테이징된 diff를 `~/.local/share/chezmoi/AGENTS.md`의 "비밀값·회사 정보 금지" 기준으로 확인한다. 이 스킬은 소스 밖의 디렉터리에서도 실행되므로 그 파일이 자동으로 로드되지 않는다. 기준에 걸리는 내용이 있으면 커밋하지 말고 사용자에게 알린다.
+
+```bash
 git -C ~/.local/share/chezmoi commit -m "<type>: <subject>"
 ```
 
