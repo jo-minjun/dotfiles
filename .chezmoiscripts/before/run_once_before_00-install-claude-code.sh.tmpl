@@ -1,8 +1,8 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-if command -v claude &>/dev/null; then
-  echo "Claude Code already installed"
+if [[ -x "$HOME/.local/bin/claude" ]]; then
+  echo "Claude Code (native) already installed"
   exit 0
 fi
 
