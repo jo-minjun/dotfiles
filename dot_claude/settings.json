@@ -270,6 +270,13 @@
     ],
     "defaultMode": "auto"
   },
+  "pluginConfigs": {
+    "slack-pane@inline": {
+      "options": {
+        "mcpServer": "slack-demo"
+      }
+    }
+  },
   "skipDangerousModePermissionPrompt": true,
   "spinnerVerbs": {
     "mode": "replace",
