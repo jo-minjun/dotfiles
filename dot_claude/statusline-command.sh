@@ -1,7 +1,7 @@
 #!/bin/bash
 # Claude Code status line
 #   line 1: session name | model | directory | git branch
-#   line 2: session id | context usage | 5h/7d rate limits
+#   line 2: context usage | 5h/7d rate limits
 input=$(cat)
 # WorkLog: 사용량(rate_limits)을 저장한다. 출력이 없고 항상 0으로 끝나 상태 줄에 영향이 없다
 printf '%s' "$input" | ~/.claude/skills/work-log/scripts/save_rate_limits.sh
@@ -13,6 +13,15 @@ dir=$(printf '%s' "$input" | jq -r '.workspace.current_dir // .cwd // empty' 2>/
 used=$(printf '%s' "$input" | jq -r '.context_window.used_percentage // empty' 2>/dev/null)
 ctx_size=$(printf '%s' "$input" | jq -r '.context_window.context_window_size // empty' 2>/dev/null)
 effort=$(printf '%s' "$input" | jq -r '.effort.level // empty' 2>/dev/null)
+
+# SendMessage는 UUID가 아니라 세션 레지스트리의 이름으로 세션을 찾는다
+if [ -n "$session_id" ]; then
+  registry_file=$(grep -l "\"$session_id\"" ~/.claude/sessions/*.json 2>/dev/null | head -n 1)
+  if [ -n "$registry_file" ]; then
+    registry_name=$(jq -r '.name // empty' "$registry_file" 2>/dev/null)
+    [ -n "$registry_name" ] && session_name="$registry_name"
+  fi
+fi
 
 format_tokens() {
   local n="$1"
@@ -36,7 +45,6 @@ MAGENTA=$'\033[35m'
 GREEN=$'\033[32m'
 YELLOW=$'\033[33m'
 RED=$'\033[31m'
-DIM=$'\033[2m'
 SEP=" ${RESET}|${RESET} "
 
 out=""
@@ -61,8 +69,6 @@ if [ -n "$dir" ]; then
     out="${out}${SEP}${MAGENTA}${branch}${RESET}"
   fi
 fi
-
-[ -n "$session_id" ] && line2="${DIM}${session_id}${RESET}"
 
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used" 2>/dev/null)
