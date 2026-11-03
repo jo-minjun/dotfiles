@@ -1,6 +1,6 @@
 ---
 name: chezmoi-sync
-description: chezmoi로 관리하는 dotfiles 변경사항을 소스에 반영하고 커밋/푸시하는 워크플로우. /chezmoi-sync 슬래시 커맨드로 호출. 사용자가 chezmoi 관리 파일을 수정한 후 'chezmoi 반영', 'dotfiles 싱크', 'chezmoi 커밋' 등을 요청할 때 사용.
+description: chezmoi로 관리하는 dotfiles 변경사항을 소스(공개 소스 `~/.local/share/chezmoi`, 업무 소스 `~/.local/share/chezmoi-work`)에 반영하고 커밋/푸시하는 워크플로우. /chezmoi-sync 슬래시 커맨드로 호출. 사용자가 chezmoi 관리 파일을 수정한 후 'chezmoi 반영', 'dotfiles 싱크', 'chezmoi 커밋' 등을 요청할 때 사용.
 ---
 
 # chezmoi-sync
@@ -11,10 +11,22 @@ chezmoi 관리 파일의 변경사항을 소스 리포에 반영, 커밋, 푸시
 
 - chezmoi 소스: `~/.local/share/chezmoi` (공개 저장소 `jo-minjun/dotfiles`)
 - 업무 chezmoi 소스: `~/.local/share/chezmoi-work` (private 저장소 `jo-minjun/dotfiles-work`)
-  - 업무 소스의 chezmoi 명령은 `chezmoi --source ~/.local/share/chezmoi-work --persistent-state ~/.config/chezmoi/chezmoistate-work.boltdb <명령>`으로 실행한다. 아래에서 이를 `chezmoi-work`라고 쓴다
+  - 업무 소스의 chezmoi 명령은 셸 함수 `chezmoi_work <명령>`으로 실행한다(`~/Shell/commands.sh`). 함수가 없는 셸에서는 `chezmoi --source ~/.local/share/chezmoi-work --persistent-state ~/.config/chezmoi/chezmoistate-work.boltdb <명령>`으로 실행한다
+  - `chezmoi <명령>`은 공개 소스만 본다. 업무 소스 파일은 `chezmoi managed`·`chezmoi diff` 결과에 나오지 않으므로, 두 소스를 항상 함께 확인한다
   - 회사 계정, 인프라 정보, 업무 스킬처럼 공개하면 안 되는 파일은 업무 소스에만 둔다. 이런 내용이 공개 소스 변경에 섞여 있으면 반영하지 말고 사용자에게 알린다
 - 원격 리포: 각 소스의 `origin/main`
 - 커밋 메시지: 한글, `<type>: <subject>` 형식 (feat, fix, refactor, docs, chore)
+
+## 관리 대상 확인
+
+파일이 chezmoi 관리 대상인지 물으면 두 소스를 모두 확인한다. 한쪽에서만 찾고 "관리 대상 아님"이라고 판단하지 않는다.
+
+```bash
+chezmoi managed | grep <경로 일부>
+chezmoi_work managed | grep <경로 일부>
+```
+
+두 소스 모두에 없을 때만 관리 대상이 아니다. 업무 소스가 없는 기기(`~/.local/share/chezmoi-work`가 없음)에서는 공개 소스만 확인한다.
 
 ## 워크플로우
 
@@ -33,12 +45,12 @@ chezmoi diff
 ```
 
 ```bash
-chezmoi-work diff
+chezmoi_work diff
 ```
 
 업무 소스가 없으면(`~/.local/share/chezmoi-work`가 없는 기기) 업무 소스 단계는 건너뛴다.
 두 소스 모두 변경이 없으면 "변경사항 없음"을 알리고 종료.
-이후 4~6단계는 변경이 있는 소스마다 진행한다. 업무 소스는 `chezmoi` 대신 `chezmoi-work`를, `-C ~/.local/share/chezmoi` 대신 `-C ~/.local/share/chezmoi-work`를 쓴다.
+이후 4~6단계는 변경이 있는 소스마다 진행한다. 업무 소스는 `chezmoi` 대신 `chezmoi_work`를, `-C ~/.local/share/chezmoi` 대신 `-C ~/.local/share/chezmoi-work`를 쓴다.
 
 ### 3. JSON 정규화
 
@@ -86,6 +98,7 @@ git -C ~/.local/share/chezmoi diff --staged
 ```
 
 커밋하기 전에 스테이징된 diff를 `~/.local/share/chezmoi/AGENTS.md`의 "비밀값·회사 정보 금지" 기준으로 확인한다. 이 스킬은 소스 밖의 디렉터리에서도 실행되므로 그 파일이 자동으로 로드되지 않는다. 기준에 걸리는 내용이 있으면 커밋하지 말고 사용자에게 알린다.
+업무 소스는 private 저장소라 회사 정보를 담을 수 있지만, 비밀번호·토큰 같은 비밀값은 업무 소스에도 직접 커밋하지 않는다(1Password에서 읽는 템플릿을 쓴다).
 
 ```bash
 git -C ~/.local/share/chezmoi commit -m "<type>: <subject>"
@@ -99,4 +112,4 @@ git -C ~/.local/share/chezmoi push
 
 ### 7. 완료 보고
 
-변경된 파일 목록과 커밋 메시지를 요약하여 보고.
+소스(공개·업무)별로 변경된 파일 목록과 커밋 메시지를 요약하여 보고.
