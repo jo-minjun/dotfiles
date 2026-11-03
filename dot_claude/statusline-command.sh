@@ -1,8 +1,8 @@
 #!/bin/bash
 # Claude Code status line
 #   line 1: registry name | renamed session name
-#   line 2: directory | git branch
-#   line 3: model | context usage | 5h/7d rate limits
+#   line 2: model | context usage | 5h/7d rate limits
+#   line 3: directory | git branch
 input=$(cat)
 # WorkLog: 사용량(rate_limits)을 저장한다. 출력이 없고 항상 0으로 끝나 상태 줄에 영향이 없다
 printf '%s' "$input" | ~/.claude/skills/work-log/scripts/save_rate_limits.sh
@@ -48,8 +48,8 @@ RED=$'\033[31m'
 SEP=" ${RESET}|${RESET} "
 
 name_line=""
-dir_line=""
 usage_line=""
+dir_line=""
 
 if [ -n "$dir" ]; then
   case "$dir" in
@@ -121,6 +121,6 @@ for seg in "$(usage_segment "5h" "$five")" "$(usage_segment "7d" "$week")"; do
 done
 
 [ -n "$name_line" ] && printf '%s\n' "$name_line"
-[ -n "$dir_line" ] && printf '%s\n' "$dir_line"
 [ -n "$usage_line" ] && printf '%s\n' "$usage_line"
+[ -n "$dir_line" ] && printf '%s\n' "$dir_line"
 exit 0
