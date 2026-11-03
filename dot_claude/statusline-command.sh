@@ -1,7 +1,8 @@
 #!/bin/bash
 # Claude Code status line
-#   line 1: registry name | renamed session name
-#   line 2: model | directory | git branch | context usage | 5h/7d rate limits
+#   line 1: directory | git branch
+#   line 2: registry name | renamed session name
+#   line 3: model | context usage | 5h/7d rate limits
 input=$(cat)
 # WorkLog: 사용량(rate_limits)을 저장한다. 출력이 없고 항상 0으로 끝나 상태 줄에 영향이 없다
 printf '%s' "$input" | ~/.claude/skills/work-log/scripts/save_rate_limits.sh
@@ -46,31 +47,35 @@ YELLOW=$'\033[33m'
 RED=$'\033[31m'
 SEP=" ${RESET}|${RESET} "
 
-out=""
+line1=""
 line2=""
-
-[ -n "$registry_name" ] && out="${BOLD}${registry_name}${RESET}"
-
-if [ -n "$session_name" ] && [ "$session_name" != "$registry_name" ]; then
-  [ -n "$out" ] && out="${out}${SEP}"
-  out="${out}${BOLD}${session_name}${RESET}"
-fi
-
-if [ -n "$model" ]; then
-  line2="${CYAN}${model}${RESET}"
-  [ -n "$effort" ] && line2="${line2} ${YELLOW}(${effort})${RESET}"
-fi
+line3=""
 
 if [ -n "$dir" ]; then
-  base=$(basename "$dir")
-  [ -n "$line2" ] && line2="${line2}${SEP}"
-  line2="${line2}${BLUE}${base}${RESET}"
+  case "$dir" in
+    "$HOME") display_dir="~" ;;
+    "$HOME"/*) display_dir="~${dir#"$HOME"}" ;;
+    *) display_dir="$dir" ;;
+  esac
+  line1="${BLUE}${display_dir}${RESET}"
 
   branch=$(git --no-optional-locks -C "$dir" symbolic-ref --quiet --short HEAD 2>/dev/null \
     || git --no-optional-locks -C "$dir" rev-parse --short HEAD 2>/dev/null)
   if [ -n "$branch" ]; then
-    line2="${line2}${SEP}${MAGENTA}${branch}${RESET}"
+    line1="${line1}${SEP}${MAGENTA}${branch}${RESET}"
   fi
+fi
+
+[ -n "$registry_name" ] && line2="${BOLD}${registry_name}${RESET}"
+
+if [ -n "$session_name" ] && [ "$session_name" != "$registry_name" ]; then
+  [ -n "$line2" ] && line2="${line2}${SEP}"
+  line2="${line2}${BOLD}${session_name}${RESET}"
+fi
+
+if [ -n "$model" ]; then
+  line3="${CYAN}${model}${RESET}"
+  [ -n "$effort" ] && line3="${line3} ${YELLOW}(${effort})${RESET}"
 fi
 
 if [ -n "$used" ]; then
@@ -83,11 +88,11 @@ if [ -n "$used" ]; then
     else
       color="$GREEN"
     fi
-    [ -n "$line2" ] && line2="${line2}${SEP}"
+    [ -n "$line3" ] && line3="${line3}${SEP}"
     size_label=$(format_tokens "$ctx_size")
     ctx_text="ctx ${pct}%"
     [ -n "$size_label" ] && ctx_text="${ctx_text} / ${size_label}"
-    line2="${line2}${color}${ctx_text}${RESET}"
+    line3="${line3}${color}${ctx_text}${RESET}"
   fi
 fi
 
@@ -110,11 +115,12 @@ week=$(printf '%s' "$input" | jq -r '.rate_limits.seven_day.used_percentage // e
 
 for seg in "$(usage_segment "5h" "$five")" "$(usage_segment "7d" "$week")"; do
   if [ -n "$seg" ]; then
-    [ -n "$line2" ] && line2="${line2}${SEP}"
-    line2="${line2}${seg}"
+    [ -n "$line3" ] && line3="${line3}${SEP}"
+    line3="${line3}${seg}"
   fi
 done
 
-[ -n "$out" ] && printf '%s\n' "$out"
+[ -n "$line1" ] && printf '%s\n' "$line1"
 [ -n "$line2" ] && printf '%s\n' "$line2"
+[ -n "$line3" ] && printf '%s\n' "$line3"
 exit 0
