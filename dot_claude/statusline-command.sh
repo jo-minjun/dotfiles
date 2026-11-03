@@ -1,7 +1,7 @@
 #!/bin/bash
 # Claude Code status line
-#   line 1: session name | model | directory | git branch
-#   line 2: context usage | 5h/7d rate limits
+#   line 1: registry name | renamed session name
+#   line 2: model | directory | git branch | context usage | 5h/7d rate limits
 input=$(cat)
 # WorkLog: 사용량(rate_limits)을 저장한다. 출력이 없고 항상 0으로 끝나 상태 줄에 영향이 없다
 printf '%s' "$input" | ~/.claude/skills/work-log/scripts/save_rate_limits.sh
@@ -19,7 +19,6 @@ if [ -n "$session_id" ]; then
   registry_file=$(grep -l "\"$session_id\"" ~/.claude/sessions/*.json 2>/dev/null | head -n 1)
   if [ -n "$registry_file" ]; then
     registry_name=$(jq -r '.name // empty' "$registry_file" 2>/dev/null)
-    [ -n "$registry_name" ] && session_name="$registry_name"
   fi
 fi
 
@@ -50,23 +49,27 @@ SEP=" ${RESET}|${RESET} "
 out=""
 line2=""
 
-[ -n "$session_name" ] && out="${BOLD}${session_name}${RESET}"
+[ -n "$registry_name" ] && out="${BOLD}${registry_name}${RESET}"
+
+if [ -n "$session_name" ] && [ "$session_name" != "$registry_name" ]; then
+  [ -n "$out" ] && out="${out}${SEP}"
+  out="${out}${BOLD}${session_name}${RESET}"
+fi
 
 if [ -n "$model" ]; then
-  [ -n "$out" ] && out="${out}${SEP}"
-  out="${out}${CYAN}${model}${RESET}"
-  [ -n "$effort" ] && out="${out} ${YELLOW}(${effort})${RESET}"
+  line2="${CYAN}${model}${RESET}"
+  [ -n "$effort" ] && line2="${line2} ${YELLOW}(${effort})${RESET}"
 fi
 
 if [ -n "$dir" ]; then
   base=$(basename "$dir")
-  [ -n "$out" ] && out="${out}${SEP}"
-  out="${out}${BLUE}${base}${RESET}"
+  [ -n "$line2" ] && line2="${line2}${SEP}"
+  line2="${line2}${BLUE}${base}${RESET}"
 
   branch=$(git --no-optional-locks -C "$dir" symbolic-ref --quiet --short HEAD 2>/dev/null \
     || git --no-optional-locks -C "$dir" rev-parse --short HEAD 2>/dev/null)
   if [ -n "$branch" ]; then
-    out="${out}${SEP}${MAGENTA}${branch}${RESET}"
+    line2="${line2}${SEP}${MAGENTA}${branch}${RESET}"
   fi
 fi
 
