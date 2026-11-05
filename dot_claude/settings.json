@@ -293,6 +293,7 @@
     "command": "bash ~/.claude/statusline-command.sh",
     "type": "command"
   },
+  "switchModelsOnFlag": true,
   "syncClaudeAiSkills": false,
   "theme": "dark",
   "tui": "fullscreen"
