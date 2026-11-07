@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 버전을 올리면 이 스크립트가 다시 실행되어 CLI와 스킬이 함께 갱신된다
+GRAPHIFY_VERSION="0.9.103"
+GRAPHIFY_PYTHON="3.12"
+
+if ! command -v uv &>/dev/null; then
+  echo "uv not found. Skipping graphify installation."
+  exit 0
+fi
+
+echo "=== Graphify Installation ==="
+
+# PyPI 패키지 이름은 graphifyy(y 두 개)다. 다른 graphify* 패키지는 공식 패키지가 아니다
+uv tool install --python "$GRAPHIFY_PYTHON" --force "graphifyy==$GRAPHIFY_VERSION"
+GRAPHIFY="$(uv tool dir --bin)/graphify"
+
+# Orca 같은 앱이 CLAUDE_CONFIG_DIR을 바꿔 두면 ~/.claude 대신 그쪽에 설치되므로 해제한다
+# Claude 설치는 ~/.claude/CLAUDE.md에 등록 블록을 쓰는데, 같은 블록을 dot_agents/AGENTS.md에 두어 파일이 바뀌지 않게 한다
+env -u CLAUDE_CONFIG_DIR "$GRAPHIFY" install </dev/null
+env -u CLAUDE_CONFIG_DIR "$GRAPHIFY" install --platform codex </dev/null
+
+echo "=== Graphify installation complete ==="

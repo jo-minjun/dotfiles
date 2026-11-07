@@ -20,15 +20,6 @@
     "hermes-agent"
   ],
   "skills": {
-    "archify": {
-      "installedAt": "2026-10-18T13:08:55.259Z",
-      "skillFolderHash": "39069dd190f574064fe410aa3af1b6dfd98a522c",
-      "skillPath": "archify/SKILL.md",
-      "source": "tt-a1i/archify",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tt-a1i/archify.git",
-      "updatedAt": "2026-10-20T10:02:48.725Z"
-    },
     "brainstorming": {
       "installedAt": "2026-07-09T08:21:32.916Z",
       "skillFolderHash": "03d4c6657cd20ba0fce9d270fc688150bd191c3b",

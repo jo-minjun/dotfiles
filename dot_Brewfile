@@ -48,6 +48,7 @@ brew "maven"
 brew "oven-sh/bun/bun", trusted: true
 brew "pnpm"
 brew "rustup"
+brew "uv"
 
 # Databases
 brew "libpq"
