@@ -1,0 +1,40 @@
+#!/bin/bash
+# hooks.state.* 표의 trusted_hash 는 그 기기의 ~/.codex/hooks.json 내용으로 정해져 기기마다 다르다.
+# 본문(.chezmoitemplates/codex/config.toml)에는 해시를 두지 않고, 현재 파일의 해시를 같은 표에 다시 넣는다.
+# 본문을 만드는 capture-modify-files.sh(chezmoi-sync 스킬)도 같은 규칙으로 해시 줄을 뺀다.
+set -euo pipefail
+
+current=$(mktemp)
+body=$(mktemp)
+trap 'rm -f "$current" "$body"' EXIT
+cat > "$current"
+# 명령 치환이 끝 줄바꿈을 모두 지우므로 하나만 다시 붙인다.
+body_text=$(cat <<'CHEZMOI_CODEX_BODY'
+{{ template "codex/config.toml" . }}
+CHEZMOI_CODEX_BODY
+)
+printf '%s\n' "$body_text" > "$body"
+
+awk -v current="$current" '
+  function is_hook_table(t) { return t ~ /^\[hooks\.state\./ }
+  function is_hash(line) { return line ~ /^trusted_hash[[:space:]]*=/ }
+  # 표 끝의 빈 줄 앞에 해시를 넣어 Codex 가 쓰는 순서(enabled 다음 trusted_hash)를 유지한다.
+  function flush(   i, last) {
+    last = n
+    while (last > 0 && buf[last] ~ /^[[:space:]]*$/) last--
+    for (i = 1; i <= last; i++) print buf[i]
+    if (is_hook_table(table) && !has_hash && (table in hash)) print hash[table]
+    for (i = last + 1; i <= n; i++) print buf[i]
+    n = 0
+  }
+  BEGIN {
+    while ((getline line < current) > 0) {
+      if (line ~ /^\[/) t = line
+      else if (is_hook_table(t) && is_hash(line)) hash[t] = line
+    }
+  }
+  /^\[/ { flush(); table = $0; has_hash = 0 }
+  is_hook_table(table) && is_hash($0) { has_hash = 1 }
+  { buf[++n] = $0 }
+  END { flush() }
+' "$body"

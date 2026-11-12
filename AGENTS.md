@@ -6,10 +6,11 @@
 - 회사 정보는 private 저장소 `jo-minjun/dotfiles-work`(소스 `~/.local/share/chezmoi-work`)에 두어라
 - 커밋 전에 `git diff --staged`로 위 항목이 섞여 있는지 확인하라. 섞여 있으면 커밋하지 말고 사용자에게 알려라
 
-# Claude Code settings.json
-- `~/.claude/settings.json`의 소스는 본문 `.chezmoitemplates/claude/settings.json`과 `modify_` 템플릿 `dot_claude/modify_settings.json`이다. `chezmoi re-add`는 이 파일을 건너뛴다
-- 설정을 바꾸려면 대상 파일을 고친 뒤 `~/.claude/skills/chezmoi-sync/scripts/capture-claude-settings.sh`로 본문에 반영하라
-- 기기마다 따로 두는 키는 `.chezmoidata.toml`의 `claudeSettings.localKeys`에서 바꿔라. 본문에 그 키를 넣으면 apply 때 기기 값이 이긴다
+# 기기마다 값이 다른 설정 파일 (modify_)
+- 아래 파일은 `modify_`로 관리한다. `chezmoi re-add`는 이 파일을 건너뛰므로, 대상 파일을 고친 뒤 `~/.claude/skills/chezmoi-sync/scripts/capture-modify-files.sh`로 본문에 반영하라
+  - `~/.claude/settings.json`: 본문 `.chezmoitemplates/claude/settings.json`, 템플릿 `dot_claude/modify_settings.json`. 기기마다 따로 두는 키는 `.chezmoidata.toml`의 `claudeSettings.localKeys`에서 바꿔라. 본문에 그 키를 넣으면 apply 때 기기 값이 이긴다
+  - `~/.codex/config.toml`: 본문 `.chezmoitemplates/codex/config.toml`, 스크립트 `dot_codex/modify_private_config.toml.tmpl`. `hooks.state.*` 표의 `trusted_hash`는 기기의 `~/.codex/hooks.json`으로 정해지므로 본문에 넣지 마라
+- 본문 파일을 지우거나 옮기면 그 파일을 `include`하는 `.chezmoiscripts`도 같이 고쳐라. 고치지 않으면 apply가 템플릿 오류로 실패한다
 
 # Brewfile
 - `dot_Brewfile`에 서드파티 tap(homebrew/core·cask 외)의 formula/cask를 추가하거나 수정할 때는 tap 신뢰 선언을 확인하라

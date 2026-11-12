@@ -68,10 +68,17 @@ bash ~/.claude/skills/chezmoi-sync/scripts/normalize-json.sh
 chezmoi re-add <target>...
 ```
 
-`~/.claude/settings.json`은 `re-add` 대신 아래 스크립트로 반영한다. 이 파일은 `modify_` 템플릿(`dot_claude/modify_settings.json`)으로 관리해서 `re-add`가 오류 없이 건너뛴다. 스크립트는 기기마다 따로 두는 키(`.chezmoidata.toml`의 `claudeSettings.localKeys`: `model`, `effortLevel`, `modelSettings`)를 뺀 본문을 `.chezmoitemplates/claude/settings.json`에 쓴다. 본문 전체를 덮어쓰므로, 무관한 변경이 섞여 있으면 실행 전에 반영 범위를 사용자에게 확인한다.
+아래 두 파일은 `re-add` 대신 스크립트로 반영한다. 두 파일은 `modify_`로 관리해서 `re-add`가 오류 없이 건너뛴다. 스크립트는 기기마다 다른 값을 뺀 본문을 `.chezmoitemplates`에 쓴다.
+
+| 대상 | `modify_` 소스 | 본문 | 기기마다 따로 두는 값 |
+| --- | --- | --- | --- |
+| `~/.claude/settings.json` | `dot_claude/modify_settings.json` | `.chezmoitemplates/claude/settings.json` | `.chezmoidata.toml`의 `claudeSettings.localKeys`(`model`, `effortLevel`, `modelSettings`) |
+| `~/.codex/config.toml` | `dot_codex/modify_private_config.toml.tmpl` | `.chezmoitemplates/codex/config.toml` | `hooks.state.*` 표의 `trusted_hash` |
+
+스크립트는 두 본문 전체를 덮어쓴다. 무관한 변경이 섞여 있으면 실행 전에 반영 범위를 사용자에게 확인한다.
 
 ```bash
-bash ~/.claude/skills/chezmoi-sync/scripts/capture-claude-settings.sh
+bash ~/.claude/skills/chezmoi-sync/scripts/capture-modify-files.sh
 ```
 
 반영 후 대상 파일의 diff가 비어있는지 확인:
