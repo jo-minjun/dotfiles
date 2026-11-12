@@ -121,7 +121,7 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 
 | 타입 | 아이템 | 용도 |
 |------|--------|------|
-| Secure Note | BetterTouchTool License | BTT 라이선스 자동 설치 |
+| Secure Note | BetterTouchTool License | BTT 라이선스 자동 설치. `create_`라서 파일이 없을 때만 만든다(apply·diff·status가 매번 1Password를 읽지 않음). 라이선스를 바꾸면 파일을 지우고 apply |
 | API Credential (Personal vault) | 1Password Service Account: me-sa-agent | apply 때 키체인 `op-sa-me-sa-agent`에 복사. `with_me_sa`가 사용 |
 
 ### 서비스 어카운트 토큰
