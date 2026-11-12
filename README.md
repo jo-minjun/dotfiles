@@ -106,7 +106,7 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 
 ### 최초 설정
 
-1. 1Password "Secrets" vault에 아이템 생성:
+1. 1Password "me-sa" vault에 아이템 생성:
    - **Secure Note**: BetterTouchTool License
    - 업무 설정에 필요한 아이템은 dotfiles-work README를 참고
 2. 1Password CLI 인증:
