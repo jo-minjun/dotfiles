@@ -122,6 +122,22 @@ chezmoi가 1Password에서 시크릿을 자동으로 가져옵니다.
 | 타입 | 아이템 | 용도 |
 |------|--------|------|
 | Secure Note | BetterTouchTool License | BTT 라이선스 자동 설치 |
+| API Credential (Personal vault) | 1Password Service Account: me-sa-agent | apply 때 키체인 `op-sa-me-sa-agent`에 복사. `with_me_sa`가 사용 |
+
+### 서비스 어카운트 토큰
+
+`OP_SERVICE_ACCOUNT_TOKEN`은 셸 전체에 export하지 않는다. 이 변수가 있으면 chezmoi의 `onepasswordRead`가 `onepassword.mode is account` 오류로 실패한다.
+
+```bash
+# me-sa 금고 서비스 어카운트로 명령 하나만 실행
+with_me_sa op vault list
+```
+
+토큰을 새로 발급했으면 키체인 항목을 지우고 `chezmoi apply`를 다시 실행한다.
+
+```bash
+security delete-generic-password -a "$USER" -s op-sa-me-sa-agent
+```
 
 ## 일상 사용
 

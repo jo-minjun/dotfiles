@@ -38,6 +38,30 @@ chezmoi_work() {
   chezmoi --source "$CHEZMOI_WORK_SOURCE" --persistent-state "$CHEZMOI_WORK_STATE" "$@"
 }
 
+# 1Password 서비스 어카운트 토큰을 키체인에서 읽어, 넘겨받은 명령에만 OP_SERVICE_ACCOUNT_TOKEN으로 넣는다
+# 셸 전체에 export하면 chezmoi의 onepasswordRead(account 모드)가 실패하고 내 op 명령도 서비스 어카운트로 실행된다
+# 키체인 항목은 chezmoi apply가 1Password Personal 금고에서 복사한다
+_with_op_sa() {
+  local fn="$1" sa="$2"
+  shift 2
+  if [[ -z "$1" ]]; then
+    print_bold "${sa} 서비스 어카운트 토큰으로 명령을 실행합니다"
+    echo ""
+    echo "Usage: ${fn} <명령> [인자...]"
+    echo "  e.g. ${fn} op vault list"
+    return 0
+  fi
+  local token
+  token="$(security find-generic-password -a "$USER" -s "op-sa-${sa}" -w 2>/dev/null)"
+  if [[ -z "$token" ]]; then
+    print_red "키체인에 op-sa-${sa} 토큰이 없습니다. chezmoi apply를 실행하세요"
+    return 1
+  fi
+  OP_SERVICE_ACCOUNT_TOKEN="$token" "$@"
+}
+
+with_me_sa() { _with_op_sa with_me_sa me-sa-agent "$@"; }
+
 _chezmoi_sync_repo() {
   local label="$1" source_dir="$2"
   shift 2
