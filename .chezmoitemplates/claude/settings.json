@@ -1,6 +1,5 @@
 {
   "agentPushNotifEnabled": true,
-  "effortLevel": "xhigh",
   "enabledPlugins": {
     "code-review@claude-plugins-official": true,
     "codex@openai-codex": true,
@@ -254,19 +253,6 @@
     ]
   },
   "language": "Korean",
-  "model": "opus[1m]",
-  "modelSettings": {
-    "claude-fable-5-1": {
-      "effortLevel": "high"
-    },
-    "claude-fable-5-2": {
-      "effortLevel": "xhigh"
-    },
-    "claude-opus-5-5": {
-      "autoCompactWindow": 600000,
-      "effortLevel": "xhigh"
-    }
-  },
   "permissions": {
     "allow": [
       "WebSearch",

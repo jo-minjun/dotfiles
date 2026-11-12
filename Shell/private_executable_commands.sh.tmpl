@@ -43,6 +43,8 @@ _chezmoi_sync_repo() {
   shift 2
 
   print_bold "[$label] 변경사항을 반영합니다"
+  # ~/.claude/settings.json 은 modify_ 템플릿이라 re-add 가 건너뛴다. 공개 소스에서만 본문을 따로 반영한다.
+  [[ "$label" == dotfiles ]] && bash ~/.claude/skills/chezmoi-sync/scripts/capture-claude-settings.sh
   "$@" re-add
   if [[ -z $(git -C "$source_dir" status --porcelain) ]]; then
     print_yellow "변경사항이 없습니다"

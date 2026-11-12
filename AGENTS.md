@@ -6,6 +6,11 @@
 - 회사 정보는 private 저장소 `jo-minjun/dotfiles-work`(소스 `~/.local/share/chezmoi-work`)에 두어라
 - 커밋 전에 `git diff --staged`로 위 항목이 섞여 있는지 확인하라. 섞여 있으면 커밋하지 말고 사용자에게 알려라
 
+# Claude Code settings.json
+- `~/.claude/settings.json`의 소스는 본문 `.chezmoitemplates/claude/settings.json`과 `modify_` 템플릿 `dot_claude/modify_settings.json`이다. `chezmoi re-add`는 이 파일을 건너뛴다
+- 설정을 바꾸려면 대상 파일을 고친 뒤 `~/.claude/skills/chezmoi-sync/scripts/capture-claude-settings.sh`로 본문에 반영하라
+- 기기마다 따로 두는 키는 `.chezmoidata.toml`의 `claudeSettings.localKeys`에서 바꿔라. 본문에 그 키를 넣으면 apply 때 기기 값이 이긴다
+
 # Brewfile
 - `dot_Brewfile`에 서드파티 tap(homebrew/core·cask 외)의 formula/cask를 추가하거나 수정할 때는 tap 신뢰 선언을 확인하라
   - tap 줄과 해당 formula/cask 줄 모두에 `trusted: true`를 붙여라 (예: `tap "databricks/tap", trusted: true`, `brew "databricks/tap/databricks", trusted: true`)

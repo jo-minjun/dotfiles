@@ -1,0 +1,4 @@
+# ~/.claude/settings.json 에서 기기마다 따로 두는 키다.
+# 소스 본문(.chezmoitemplates/claude/settings.json)에는 넣지 않고, apply 때 그 기기의 현재 값을 유지한다.
+[claudeSettings]
+localKeys = ["model", "effortLevel", "modelSettings"]

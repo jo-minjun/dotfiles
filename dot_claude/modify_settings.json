@@ -1,0 +1,12 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* 본문은 .chezmoitemplates/claude/settings.json 이고, .claudeSettings.localKeys 는 현재 파일의 값을 유지한다 */ -}}
+{{- $result := include ".chezmoitemplates/claude/settings.json" | fromJson -}}
+{{- if .chezmoi.stdin | trim -}}
+{{-   $current := fromJson .chezmoi.stdin -}}
+{{-   range $key := .claudeSettings.localKeys -}}
+{{-     if hasKey $current $key -}}
+{{-       $_ := set $result $key (index $current $key) -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+{{- toPrettyJson $result -}}
