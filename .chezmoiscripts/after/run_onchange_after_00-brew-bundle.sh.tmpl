@@ -8,7 +8,9 @@ set -e
 [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 echo "Running brew bundle..."
-brew bundle --file="{{ .chezmoi.homeDir }}/.Brewfile"
+# 업그레이드는 apply에서 하지 않는다. .pkg cask 업그레이드가 apply 도중 sudo(Touch ID)를 요구하고 apply 시간이 길어진다
+# 업그레이드는 필요할 때 brew upgrade로 따로 한다
+brew bundle --no-upgrade --file="{{ .chezmoi.homeDir }}/.Brewfile"
 
 # Lockpaw hook이 ~/.local/bin/lockpaw를 경로로 호출하는데 cask는 앱만 설치하므로 CLI를 연결
 LOCKPAW_CLI="/Applications/Lockpaw.app/Contents/SharedSupport/lockpaw"

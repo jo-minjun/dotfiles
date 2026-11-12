@@ -18,7 +18,7 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 2. 1Password 앱을 실행하고 로그인합니다.
 3. 1Password 설정 > 개발자 > "CLI와의 생체 인증 잠금 해제"를 활성화합니다.
 4. `chezmoi apply`를 다시 실행합니다. 다음 순서로 진행됩니다.
-   1. brew bundle로 CLI 도구와 앱 설치
+   1. brew bundle로 CLI 도구와 앱 설치 (이미 설치된 항목은 업그레이드하지 않음)
    2. `gh auth login` 실행: **개인 계정 `jo-minjun`으로 로그인**합니다
    3. 외부 에이전트 스킬 설치
    4. 업무 설정(dotfiles-work)을 `~/.local/share/chezmoi-work`에 클론하고 적용
@@ -147,6 +147,9 @@ chezmoi update
 
 # 적용 (업무 설정도 함께 적용)
 chezmoi apply
+
+# 앱·CLI 업그레이드 (apply는 brew 업그레이드를 하지 않음)
+brew upgrade
 
 # 설정 파일 수정
 chezmoi edit ~/.zshrc
