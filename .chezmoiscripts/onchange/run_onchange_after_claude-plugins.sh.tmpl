@@ -35,6 +35,8 @@ get_marketplace_repo() {
 }
 
 PLUGINS=$(jq -r '.enabledPlugins | keys[]' "$SETTINGS_FILE" 2>/dev/null || echo "")
+# claude plugin install이 settings.json의 값을 true로 바꾸므로, 설치 전에 false인 플러그인을 읽어 둔다
+DISABLED_PLUGINS=$(jq -r '.enabledPlugins | to_entries[] | select(.value == false) | .key' "$SETTINGS_FILE" 2>/dev/null || echo "")
 
 if [[ -z "$PLUGINS" ]]; then
   echo "No plugins found in settings.json"
@@ -66,6 +68,16 @@ for plugin in $PLUGINS; do
   echo "  [+] $plugin"
   claude plugin install "$plugin" 2>/dev/null || echo "  [!] Warning: Failed to install $plugin"
 done
+
+if [[ -n "$DISABLED_PLUGINS" ]]; then
+  echo ""
+  echo "Disabling plugins set to false in enabledPlugins..."
+  for plugin in $DISABLED_PLUGINS; do
+    echo "  [-] $plugin"
+    # 스크립트는 홈에서 실행되어 scope를 자동으로 고르면 project가 된다. 읽은 파일과 같은 user scope로 끈다
+    claude plugin disable --scope user "$plugin" 2>/dev/null || echo "  [!] Warning: Failed to disable $plugin"
+  done
+fi
 
 echo ""
 echo "Removing plugins not listed in enabledPlugins..."
