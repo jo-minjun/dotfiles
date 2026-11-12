@@ -227,9 +227,3 @@
 - 관리 대상이 아닌 파일(예: `~/.claude/agent-memory/`, `~/.claude/keybindings.json`)은 chezmoi 소스에 추가하지 마라
 - 실제 파일을 수정한 뒤에는 `chezmoi-sync` 스킬로 chezmoi 소스를 갱신하고 커밋·푸시하라
 - 마지막에 동기화 상태를 보고하라
-
----
-
-# graphify
-- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
-When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
