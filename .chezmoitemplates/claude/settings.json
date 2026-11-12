@@ -6,7 +6,7 @@
     "datadog@claude-plugins-official": true,
     "jdtls-lsp@claude-plugins-official": true,
     "kotlin-lsp@claude-plugins-official": true,
-    "mermaid-view@claude-mermaid-view": true,
+    "mermaid-view@claude-mermaid-view": false,
     "orca-agent-view@inline": true,
     "php-lsp@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
