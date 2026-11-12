@@ -146,6 +146,16 @@
             "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"$HOME\"/.claude/hooks/sync-git-on-startup.sh",
+            "timeout": 30,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup"
       }
     ],
     "Stop": [
