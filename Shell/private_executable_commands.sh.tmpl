@@ -254,3 +254,14 @@ yazicd() {
   fi
   rm -f -- "$tmp"
 }
+
+# 업무용 Claude Code 설정 디렉터리로 clauded를 실행한다. 디렉터리는 업무 dotfiles(chezmoi-work)가 만든다
+# alias clauded는 이 파일보다 늦게 로드되어 함수 안에서 쓸 수 없으므로 claude를 직접 호출한다
+clauded_work() {
+  local config_dir="$HOME/.claude-work"
+  if [[ ! -d "$config_dir" ]]; then
+    print_red "${config_dir} 디렉터리가 없습니다. chezmoi_work apply를 실행하세요"
+    return 1
+  fi
+  CLAUDE_CONFIG_DIR="$config_dir" claude --dangerously-skip-permissions "$@"
+}
