@@ -24,7 +24,7 @@ while IFS=$'\t' read -r name source_url; do
     continue
   fi
   echo "  [+] $name"
-  # Orca 같은 앱이 CLAUDE_CONFIG_DIR을 바꿔 두면 ~/.claude/skills 대신 그쪽에 복사본이 생기므로 해제한다
+  # Paseo의 claude-work 프로바이더처럼 CLAUDE_CONFIG_DIR을 바꾼 세션에서 실행하면 ~/.claude/skills 대신 그쪽에 복사본이 생기므로 해제한다
   env -u CLAUDE_CONFIG_DIR npx -y skills add "$source_url" -g -s "$name" -a claude-code codex -y </dev/null >/dev/null \
     || echo "  [!] Warning: Failed to install $name"
 done < <(jq -r '.skills | to_entries[] | "\(.key)\t\(.value.sourceUrl)"' "$LOCK_FILE")

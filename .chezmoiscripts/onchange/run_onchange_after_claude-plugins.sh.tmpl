@@ -12,7 +12,7 @@ if ! command -v claude &>/dev/null; then
 fi
 
 SETTINGS_FILE="{{ .chezmoi.homeDir }}/.claude/settings.json"
-# Orca 같은 앱이 세션마다 --plugin-dir로 불러오는 플러그인은 마켓플레이스가 없어 설치·제거할 수 없다
+# --plugin-dir로 불러온 플러그인은 마켓플레이스가 inline이라 설치·제거할 수 없다
 INLINE_MARKETPLACE="inline"
 
 if [[ ! -f "$SETTINGS_FILE" ]]; then
