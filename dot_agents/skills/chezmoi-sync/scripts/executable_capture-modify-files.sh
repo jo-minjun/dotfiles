@@ -40,3 +40,14 @@ if [[ -f "$codex_target" ]]; then
 else
   echo "  [SKIP] $codex_target 이 없다"
 fi
+
+# ~/.paseo/config.json: daemon.auth(비밀번호 해시)를 빼고 홈 경로를 템플릿으로 바꾼다 (private_dot_paseo/modify_private_config.json)
+# 터미널 프로필 인자 {{{prompt}}} 의 {{ 가 템플릿 문법으로 읽히면 chezmoi 전체가 실패하므로, 홈 경로를 넣기 전에 {{ 를 먼저 이스케이프한다.
+paseo_target="$HOME/.paseo/config.json"
+if [[ -f "$paseo_target" ]]; then
+  jq --sort-keys 'del(.daemon.auth)' "$paseo_target" |
+    sed -E -e 's#\{\{#{{ "{{" }}#g' -e "s#${HOME}([/\"])#{{ .chezmoi.homeDir }}\\1#g" > "$tmp"
+  write_body "$source_dir/.chezmoitemplates/paseo/config.json"
+else
+  echo "  [SKIP] $paseo_target 이 없다"
+fi

@@ -10,6 +10,7 @@
 - 아래 파일은 `modify_`로 관리한다. `chezmoi re-add`는 이 파일을 건너뛰므로, 대상 파일을 고친 뒤 `~/.claude/skills/chezmoi-sync/scripts/capture-modify-files.sh`로 본문에 반영하라
   - `~/.claude/settings.json`: 본문 `.chezmoitemplates/claude/settings.json`, 템플릿 `dot_claude/modify_settings.json`. 기기마다 따로 두는 키는 `.chezmoidata.toml`의 `claudeSettings.localKeys`에서 바꿔라. 본문에 그 키를 넣으면 apply 때 기기 값이 이긴다
   - `~/.codex/config.toml`: 본문 `.chezmoitemplates/codex/config.toml`, 스크립트 `dot_codex/modify_private_config.toml.tmpl`. `hooks.state.*` 표의 `trusted_hash`는 기기의 `~/.codex/hooks.json`으로 정해지므로 본문에 넣지 마라
+  - `~/.paseo/config.json`: 본문 `.chezmoitemplates/paseo/config.json`, 템플릿 `private_dot_paseo/modify_private_config.json`. `daemon.auth`(비밀번호 해시)는 본문에 넣지 마라. apply 때 기기 값을 유지한다. 터미널 프로필 인자 `{{{prompt}}}`는 본문에서 `{{ "{{" }}{prompt}}}`로 이스케이프한다. 이스케이프하지 않으면 모든 chezmoi 명령이 템플릿 파싱 오류로 실패한다
 - 본문 파일을 지우거나 옮기면 그 파일을 `include`하는 `.chezmoiscripts`도 같이 고쳐라. 고치지 않으면 apply가 템플릿 오류로 실패한다
 
 # Brewfile

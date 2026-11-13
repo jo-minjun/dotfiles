@@ -1,0 +1,10 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* 본문은 .chezmoitemplates/paseo/config.json 이다. daemon.auth(비밀번호 해시)는 공개 저장소에 두지 않고 현재 파일의 값을 유지한다 */ -}}
+{{- $result := includeTemplate "paseo/config.json" . | fromJson -}}
+{{- if .chezmoi.stdin | trim -}}
+{{-   $auth := dig "daemon" "auth" "" (fromJson .chezmoi.stdin) -}}
+{{-   if $auth -}}
+{{-     $_ := set $result.daemon "auth" $auth -}}
+{{-   end -}}
+{{- end -}}
+{{- toPrettyJson $result -}}
