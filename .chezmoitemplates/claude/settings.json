@@ -280,6 +280,9 @@
       "Bash(md5:*)",
       "Bash(cut:*)"
     ],
+    "ask": [
+      "Bash(*pg-rw-query.py *)"
+    ],
     "defaultMode": "auto"
   },
   "pluginConfigs": {

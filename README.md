@@ -172,7 +172,7 @@ chezmoi_work apply
 chezmoi_sync
 ```
 
-> `chezmoi diff`, `chezmoi edit`로는 업무 설정 파일(`~/.aws/config`, `~/.pgpass` 등)을 다룰 수 없습니다. 공개 소스가 관리하지 않기 때문입니다. 업무 설정 파일에는 `chezmoi_work`를 사용합니다.
+> `chezmoi diff`, `chezmoi edit`로는 업무 설정 파일(`~/.aws/config`, `~/.pg/pgpass` 등)을 다룰 수 없습니다. 공개 소스가 관리하지 않기 때문입니다. 업무 설정 파일에는 `chezmoi_work`를 사용합니다.
 
 ## 업무 설정 (dotfiles-work)
 
