@@ -1,0 +1,32 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Paseo 데몬은 ~/.paseo/config.json이 바뀌어도 다시 읽지 않아 앱에 이전 설정이 남는다
+# 설정 본문이 바뀐 apply 뒤에 데몬이 파일을 다시 읽게 한다
+
+set -euo pipefail
+
+# config hash: {{ include ".chezmoitemplates/paseo/config.json" | sha256sum }}
+
+# 앱 데몬과 버전이 같은 앱 내장 CLI를 쓴다. ~/.local/bin/paseo 링크는 새 기기에 없을 수 있다
+PASEO="/Applications/Paseo.app/Contents/Resources/bin/paseo"
+if [[ ! -x "$PASEO" ]]; then
+  echo "Paseo 앱이 없어 데몬 설정 reload를 건너뜁니다"
+  exit 0
+fi
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 꺼진 데몬은 다음 시작 때 파일을 읽는다
+state="$("$PASEO" daemon status --json 2>/dev/null | jq -r '.localDaemon // empty')" || state=""
+if [[ "$state" != "running" ]]; then
+  echo "Paseo 데몬이 실행 중이 아니라(${state:-unknown}) 설정 reload를 건너뜁니다"
+  exit 0
+fi
+
+if ! "$PASEO" daemon reload >/dev/null 2>&1; then
+  echo "Paseo 데몬 설정 reload에 실패했습니다. 'paseo daemon reload'를 직접 실행하세요"
+  exit 0
+fi
+echo "Paseo 데몬이 바뀐 config.json을 다시 읽었습니다"
+{{- end }}
