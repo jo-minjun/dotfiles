@@ -61,7 +61,7 @@
         "color": "red",
         "id": "agent_profile_mwfc99p7_ydp70pjvka",
         "modeId": "bypassPermissions",
-        "model": "claude-opus-5-5",
+        "model": "claude-fable-5-2",
         "name": "work-fable",
         "provider": "claude-work",
         "thinkingOptionId": "xhigh"
