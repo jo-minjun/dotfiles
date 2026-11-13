@@ -51,7 +51,6 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 | 카테고리 | 앱 | 설명 |
 |----------|----|------|
 | AI | Claude | AI 어시스턴트 |
-|  | Orca | AI 에이전트 워크트리 관리 |
 |  | ego lite | AI 에이전트용 브라우저 (공식 설치 스크립트, 온보딩은 수동) |
 | 개발 | Ghostty | 터미널 |
 |  | Docker Desktop | 컨테이너 |
@@ -82,7 +81,7 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 | Codex | `config.toml`(MCP, 플러그인, 프로젝트 신뢰). `hooks.state`의 `trusted_hash`는 기기마다 따로 둔다 |
 | 에이전트 스킬 | 직접 만든 스킬만 저장소에 둔다. 외부 스킬은 `~/.agents/.skill-lock.json`의 출처에서 `npx skills`로 설치하고, 업데이트는 `npx skills update -g`로 한다 |
 | 업무 설정 | private 저장소 [dotfiles-work](https://github.com/jo-minjun/dotfiles-work)를 별도 chezmoi 소스로 적용 (아래 참고) |
-| mise | 기본 도구(node lts, java corretto-25, python 3.15, kotlin 2.4), `~/Projects`·`~/orca/workspaces` 하위 설정 자동 신뢰 |
+| mise | 기본 도구(node lts, java corretto-25, python 3.15, kotlin 2.4), `~/Projects` 하위 설정 자동 신뢰 |
 | BetterTouchTool | 라이선스 자동 설치, 프리셋 자동 임포트 (bttcli Socket Server·스크립트 임포트 확인 생략 설정 활성화) |
 
 ### 디렉토리 구조

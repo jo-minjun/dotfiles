@@ -96,12 +96,6 @@ trust_level = "trusted"
 [projects."{{ .chezmoi.homeDir }}/Projects/me/honey-bloom"]
 trust_level = "trusted"
 
-[projects."{{ .chezmoi.homeDir }}/orca/workspaces"]
-trust_level = "trusted"
-
-[projects."{{ .chezmoi.homeDir }}/Library/Application Support/orca/rate-limit-pty-cwd"]
-trust_level = "trusted"
-
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "pull-request-number", "branch-changes", "context-used", "fast-mode"]
 status_line_use_colors = true
@@ -127,31 +121,7 @@ goals = true
 command = "npx"
 args = ["-y", "@plaud-ai/mcp@latest"]
 
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:session_start:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:user_prompt_submit:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:pre_tool_use:0:0"]
-enabled = true
-
 [hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:permission_request:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:post_tool_use:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:subagent_start:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:subagent_stop:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:stop:0:0"]
-enabled = true
-
-[hooks.state."{{ .chezmoi.homeDir }}/.codex/hooks.json:interrupt:0:0"]
 enabled = true
 
 [mcp_servers.rea]

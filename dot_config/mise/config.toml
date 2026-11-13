@@ -6,4 +6,4 @@ kotlin = "2.4"
 
 [settings]
 experimental = true
-trusted_config_paths = ["~/Projects", "~/orca/workspaces"]
+trusted_config_paths = ["~/Projects"]

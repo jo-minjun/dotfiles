@@ -354,25 +354,6 @@
               "BTTAutoAdaptToKeyboardLayout": 0
             },
             {
-              "BTTLastUpdatedAt": 1792740359.939203,
-              "BTTTriggerType": 0,
-              "BTTTriggerParentUUID": "6052F751-15D5-496A-84D7-E69BCCF7C024",
-              "BTTTriggerClass": "BTTTriggerTypeKeyboardShortcut",
-              "BTTUUID": "9351A803-06E2-4C0F-A5A6-C2EBF54D4B6B",
-              "BTTPredefinedActionType": 49,
-              "BTTPredefinedActionName": "앱 실행  or  파일 열기  or  AppleScript 시작…",
-              "BTTLaunchPath": "/Applications/Orca.app",
-              "BTTAdditionalConfiguration": "524320",
-              "BTTShortcutKeyboardType": 1708,
-              "BTTTriggerOnDown": 1,
-              "BTTLayoutIndependentChar": "t",
-              "BTTShortcutKeyCode": 17,
-              "BTTShortcutAdvancedModifierKeys": "524320",
-              "BTTShortcutModifierKeys": 524288,
-              "BTTOrder": 2,
-              "BTTAutoAdaptToKeyboardLayout": 0
-            },
-            {
               "BTTLastUpdatedAt": 1792740359.939317,
               "BTTTriggerType": 0,
               "BTTTriggerParentUUID": "6052F751-15D5-496A-84D7-E69BCCF7C024",

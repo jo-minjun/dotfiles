@@ -2,7 +2,6 @@
 tap "hashicorp/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "databricks/tap", trusted: true
-tap "stablyai/orca", trusted: true
 tap "sorkila/lockpaw", trusted: true
 
 # CLI Tools
@@ -72,7 +71,6 @@ cask "font-noto-serif-cjk-kr"
 
 # Applications - AI
 cask "claude"
-cask "stablyai/orca/orca", trusted: true
 
 # Applications - Development
 cask "ghostty"
