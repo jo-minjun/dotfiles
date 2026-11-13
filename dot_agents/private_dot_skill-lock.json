@@ -29,15 +29,6 @@
       "sourceUrl": "https://github.com/obra/superpowers.git",
       "updatedAt": "2026-10-09T12:54:26.822Z"
     },
-    "computer-use": {
-      "installedAt": "2026-07-28T08:25:09.033Z",
-      "skillFolderHash": "b59f27370a41225c22127e91da0c91cd2519f217",
-      "skillPath": "skills/computer-use/SKILL.md",
-      "source": "stablyai/orca",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/stablyai/orca.git",
-      "updatedAt": "2026-10-02T12:34:54.781Z"
-    },
     "databricks-core": {
       "installedAt": "2026-10-22T09:49:01.200Z",
       "skillFolderHash": "f43e284160deb63382b60f06286ab64cc9cc795c",
