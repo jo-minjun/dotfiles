@@ -12,6 +12,8 @@ if ! command -v claude &>/dev/null; then
 fi
 
 SETTINGS_FILE="{{ .chezmoi.homeDir }}/.claude/settings.json"
+# Orca 같은 앱이 세션마다 --plugin-dir로 불러오는 플러그인은 마켓플레이스가 없어 설치·제거할 수 없다
+INLINE_MARKETPLACE="inline"
 
 if [[ ! -f "$SETTINGS_FILE" ]]; then
   echo "Claude settings.json not found. Skipping."
@@ -48,7 +50,7 @@ INSTALLED_MARKETPLACES=$(claude plugin marketplace list 2>/dev/null || echo "")
 echo "Checking marketplaces..."
 for plugin in $PLUGINS; do
   marketplace="${plugin#*@}"
-  [[ "$marketplace" == "claude-plugins-official" ]] && continue
+  [[ "$marketplace" == "claude-plugins-official" || "$marketplace" == "$INLINE_MARKETPLACE" ]] && continue
 
   if echo "$INSTALLED_MARKETPLACES" | grep -q "$marketplace"; then
     echo "  [OK] $marketplace"
@@ -65,6 +67,10 @@ done
 echo ""
 echo "Installing plugins..."
 for plugin in $PLUGINS; do
+  if [[ "${plugin#*@}" == "$INLINE_MARKETPLACE" ]]; then
+    echo "  [SKIP] $plugin (--plugin-dir로 불러오는 플러그인)"
+    continue
+  fi
   echo "  [+] $plugin"
   claude plugin install "$plugin" 2>/dev/null || echo "  [!] Warning: Failed to install $plugin"
 done
@@ -84,7 +90,7 @@ echo "Removing plugins not listed in enabledPlugins..."
 INSTALLED_PLUGINS=$(claude plugin list 2>/dev/null | awk '/^  ❯/ {print $2}' || echo "")
 DESIRED_SORTED=$(echo "$PLUGINS" | sort)
 # project scope의 projectPath가 홈이면 같은 플러그인이 user/project로 중복 출력되므로 중복을 제거한다
-INSTALLED_SORTED=$(echo "$INSTALLED_PLUGINS" | sort -u)
+INSTALLED_SORTED=$(echo "$INSTALLED_PLUGINS" | grep -v "@${INLINE_MARKETPLACE}\$" | sort -u)
 TO_REMOVE=$(comm -23 <(echo "$INSTALLED_SORTED") <(echo "$DESIRED_SORTED"))
 
 if [[ -z "$TO_REMOVE" ]]; then
