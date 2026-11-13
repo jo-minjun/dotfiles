@@ -230,6 +230,7 @@
 
 # DOTFILES
 - ~/.claude, ~/.agents, ~/.codex 아래 파일 중 일부(지침 파일, agents, skills, settings.json, statusline)만 chezmoi로 관리한다
+- 업무용 Claude Code 설정 디렉터리 ~/.claude-work는 ~/.claude로 가는 링크 6개, 플러그인, MCP 서버만 업무 소스로 관리한다
 - chezmoi 소스는 공개 소스(`~/.local/share/chezmoi`)와 업무 소스(`~/.local/share/chezmoi-work`) 두 개다. 업무 스킬처럼 공개하면 안 되는 파일은 업무 소스에 있다
 - 관리 대상인지는 `chezmoi managed`와 `chezmoi_work managed`를 둘 다 실행해 확인하라. 두 소스 모두에 없을 때만 관리 대상이 아니다
 - 관리 대상이 아닌 파일(예: `~/.claude/agent-memory/`, `~/.claude/keybindings.json`)은 chezmoi 소스에 추가하지 마라
