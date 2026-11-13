@@ -1,0 +1,40 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Paseo 데몬은 localhost에만 열어 두고, tailnet 기기는 tailscale serve의 TCP 전달로 접속한다
+# --bg 설정은 재부팅 뒤에도 유지된다. 이미 설정되어 있으면 건너뛴다
+# 로그인 전이라 Tailscale이 연결되지 않은 새 기기도 다음 apply에서 설정되도록 run_onchange가 아니라 run_after로 둔다
+
+set -euo pipefail
+
+# ~/.paseo/config.json의 daemon.listen과 같아야 한다
+PASEO_PORT=6767
+PASEO_TARGET="127.0.0.1:${PASEO_PORT}"
+
+# 앱 데몬과 버전이 같은 앱 내장 CLI를 쓴다. brew formula CLI는 버전이 달라 경고를 낸다
+TAILSCALE="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+if [[ ! -x "$TAILSCALE" ]]; then
+  echo "Tailscale 앱이 없어 Paseo tailnet 전달 설정을 건너뜁니다"
+  exit 0
+fi
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+state="$("$TAILSCALE" status --json 2>/dev/null | jq -r '.BackendState // empty')" || state=""
+if [[ "$state" != "Running" ]]; then
+  echo "Tailscale이 연결되지 않아(${state:-unknown}) Paseo tailnet 전달 설정을 건너뜁니다"
+  exit 0
+fi
+
+current="$("$TAILSCALE" serve status --json 2>/dev/null | jq -r --arg port "$PASEO_PORT" '.TCP[$port].TCPForward // empty')" || current=""
+if [[ "$current" == "$PASEO_TARGET" ]]; then
+  exit 0
+fi
+if [[ -n "$current" ]]; then
+  echo "tailnet ${PASEO_PORT} 포트가 이미 ${current}로 전달 중이라 Paseo 전달 설정을 건너뜁니다"
+  exit 0
+fi
+
+"$TAILSCALE" serve --bg --tcp "$PASEO_PORT" "tcp://${PASEO_TARGET}" >/dev/null
+echo "tailnet ${PASEO_PORT} 포트를 Paseo 데몬(${PASEO_TARGET})으로 전달하도록 설정했습니다"
+{{- end }}
