@@ -76,7 +76,6 @@ cask "paseo"
 # Applications - Development
 cask "ghostty"
 cask "docker-desktop"
-cask "dbeaver-community"
 cask "bruno"
 cask "postman"
 

@@ -39,7 +39,7 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 | 언어 서버 | jdtls, kotlin-language-server, python-lsp-server, typescript-language-server, intelephense (npm) |
 | 클라우드/인프라 | awscli, aws-iam-authenticator, kubernetes-cli, kubectx, k9s, helm, argocd, kafkactl, terraform, databricks |
 | API | bruno-cli, @modelcontextprotocol/inspector (npm) |
-| DB | libpq, mysql-client, dbvr (DBeaver Community CLI, GitHub 릴리스) |
+| DB | libpq, mysql-client |
 | AI | Claude Code (설치 스크립트), codex |
 | 배포 | vercel (npm) |
 | 네트워크 | tailscale |
@@ -55,7 +55,6 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 |  | Paseo | 코딩 에이전트 실행 환경 (데스크톱 앱과 데몬) |
 | 개발 | Ghostty | 터미널 |
 |  | Docker Desktop | 컨테이너 |
-|  | DBeaver Community | DB 클라이언트 |
 |  | Bruno | API 테스트 |
 |  | Postman | API 테스트 |
 | 생산성 | 1Password | 패스워드 관리 |
