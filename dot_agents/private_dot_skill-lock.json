@@ -140,6 +140,15 @@
       "sourceUrl": "https://github.com/zarazhangrui/frontend-slides.git",
       "updatedAt": "2026-10-09T16:34:36.730Z"
     },
+    "iph": {
+      "installedAt": "2026-11-14T02:50:38.489Z",
+      "skillFolderHash": "e38b878fed1eb2e8841d3f36fe3b44124a5caffb",
+      "skillPath": "skills/iph/SKILL.md",
+      "source": "HyunSeob/iphone-cli",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/HyunSeob/iphone-cli.git",
+      "updatedAt": "2026-11-14T02:50:38.489Z"
+    },
     "pdf": {
       "installedAt": "2026-10-09T16:59:02.893Z",
       "pluginName": "document-skills",
