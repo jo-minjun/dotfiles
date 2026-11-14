@@ -49,6 +49,15 @@
         "thinkingOptionId": "xhigh"
       },
       {
+        "color": "violet",
+        "id": "agent_profile_mwfuqza2_nxz42dx0roz",
+        "modeId": "bypassPermissions",
+        "model": "claude-sonnet-5-5",
+        "name": "personal-sonnet",
+        "provider": "claude",
+        "thinkingOptionId": "xhigh"
+      },
+      {
         "color": "red",
         "id": "agent_profile_mwfc8xf6_1fj9cezhqpu",
         "modeId": "bypassPermissions",
@@ -63,6 +72,15 @@
         "modeId": "bypassPermissions",
         "model": "claude-fable-5-2",
         "name": "work-fable",
+        "provider": "claude-work",
+        "thinkingOptionId": "xhigh"
+      },
+      {
+        "color": "red",
+        "id": "agent_profile_mwfuqza4_gflaxp9ie9q",
+        "modeId": "bypassPermissions",
+        "model": "claude-sonnet-5-5",
+        "name": "work-sonnet",
         "provider": "claude-work",
         "thinkingOptionId": "xhigh"
       }
