@@ -1,0 +1,12 @@
+#!/bin/zsh
+# with_me_sa는 ~/Shell/commands.sh의 zsh 함수라서 bash를 쓰는 도구(Hermes 터미널 등)에서는 보이지 않는다.
+# 그런 도구에서도 같은 이름으로 부를 수 있게, 이 파일이 함수를 대신 부른다.
+source "$HOME/Shell/commands.sh" >/dev/null 2>&1
+
+# 함수가 없으면 아래 호출이 PATH에서 이 파일을 다시 찾아 끝없이 자신을 실행한다.
+if ! typeset -f with_me_sa >/dev/null; then
+  echo "with_me_sa: ~/Shell/commands.sh에서 함수 with_me_sa를 찾지 못했습니다" >&2
+  exit 1
+fi
+
+with_me_sa "$@"
