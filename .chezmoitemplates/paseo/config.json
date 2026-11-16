@@ -31,33 +31,6 @@
   "daemon": {
     "agentProfiles": [
       {
-        "color": "violet",
-        "id": "agent_profile_mwfaezgh_q7jkyxfxzhk",
-        "modeId": "bypassPermissions",
-        "model": "claude-opus-5-5",
-        "name": "personal-opus",
-        "provider": "claude",
-        "thinkingOptionId": "xhigh"
-      },
-      {
-        "color": "violet",
-        "id": "agent_profile_mwfc8kdx_cprmvq9dfse",
-        "modeId": "bypassPermissions",
-        "model": "claude-fable-5-2",
-        "name": "personal-fable",
-        "provider": "claude",
-        "thinkingOptionId": "xhigh"
-      },
-      {
-        "color": "violet",
-        "id": "agent_profile_mwfuqza2_nxz42dx0roz",
-        "modeId": "bypassPermissions",
-        "model": "claude-sonnet-5-5",
-        "name": "personal-sonnet",
-        "provider": "claude",
-        "thinkingOptionId": "xhigh"
-      },
-      {
         "color": "red",
         "id": "agent_profile_mwfc8xf6_1fj9cezhqpu",
         "modeId": "bypassPermissions",
@@ -82,6 +55,33 @@
         "model": "claude-sonnet-5-5",
         "name": "work-sonnet",
         "provider": "claude-work",
+        "thinkingOptionId": "xhigh"
+      },
+      {
+        "color": "violet",
+        "id": "agent_profile_mwfaezgh_q7jkyxfxzhk",
+        "modeId": "bypassPermissions",
+        "model": "claude-opus-5-5",
+        "name": "personal-opus",
+        "provider": "claude",
+        "thinkingOptionId": "xhigh"
+      },
+      {
+        "color": "violet",
+        "id": "agent_profile_mwfc8kdx_cprmvq9dfse",
+        "modeId": "bypassPermissions",
+        "model": "claude-fable-5-2",
+        "name": "personal-fable",
+        "provider": "claude",
+        "thinkingOptionId": "xhigh"
+      },
+      {
+        "color": "violet",
+        "id": "agent_profile_mwfuqza2_nxz42dx0roz",
+        "modeId": "bypassPermissions",
+        "model": "claude-sonnet-5-5",
+        "name": "personal-sonnet",
+        "provider": "claude",
         "thinkingOptionId": "xhigh"
       }
     ],
