@@ -121,5 +121,6 @@
       }
     ]
   },
+  "pluginsEnabled": true,
   "version": 1
 }

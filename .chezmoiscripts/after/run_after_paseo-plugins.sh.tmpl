@@ -1,0 +1,39 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Paseo 플러그인을 GitHub 저장소에서 설치한다. 설치 기록(~/.paseo/config.json의 plugins)은 기기마다 경로가 달라 chezmoi 본문에 두지 않는다
+# 데몬이 꺼져 있던 새 기기도 다음 apply에서 설치되도록 run_onchange가 아니라 run_after로 둔다. 이미 설치되어 있으면 건너뛴다
+
+set -euo pipefail
+
+PLUGIN_ID="dot-worktrees"
+PLUGIN_SOURCE="git:jo-minjun/paseo-dot-worktrees"
+
+# 앱 데몬과 버전이 같은 앱 내장 CLI를 쓴다. ~/.local/bin/paseo 링크는 새 기기에 없을 수 있다
+PASEO="/Applications/Paseo.app/Contents/Resources/bin/paseo"
+if [[ ! -x "$PASEO" ]]; then
+  echo "Paseo 앱이 없어 플러그인 설치를 건너뜁니다"
+  exit 0
+fi
+
+# Initialize Homebrew PATH (Apple Silicon)
+[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+state="$("$PASEO" daemon status --json 2>/dev/null | jq -r '.localDaemon // empty')" || state=""
+if [[ "$state" != "running" ]]; then
+  echo "Paseo 데몬이 실행 중이 아니라(${state:-unknown}) 플러그인 설치를 건너뜁니다"
+  exit 0
+fi
+
+if "$PASEO" plugin ls --json 2>/dev/null | jq -e --arg id "$PLUGIN_ID" 'any(.[]; .id == $id)' >/dev/null; then
+  exit 0
+fi
+
+# paseo-reload 스크립트는 이 스크립트보다 뒤에 실행된다. 설치 기록을 쓰기 전에 데몬이 이번 apply의 설정(pluginsEnabled)을 먼저 읽게 한다
+"$PASEO" daemon reload >/dev/null 2>&1 || true
+
+if ! "$PASEO" plugin install "$PLUGIN_SOURCE" >/dev/null 2>&1; then
+  echo "Paseo 플러그인 ${PLUGIN_ID} 설치에 실패했습니다. 'paseo plugin install ${PLUGIN_SOURCE}'를 직접 실행하세요"
+  exit 0
+fi
+echo "Paseo 플러그인 ${PLUGIN_ID}를 설치했습니다"
+{{- end }}

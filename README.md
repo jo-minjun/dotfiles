@@ -79,7 +79,7 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 | Ghostty | JetBrains Mono, Idea 테마 |
 | Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬. `settings.json`의 `model`·`effortLevel`·`modelSettings`는 기기마다 따로 둔다 |
 | Codex | `config.toml`(MCP, 플러그인, 프로젝트 신뢰). `hooks.state`의 `trusted_hash`는 기기마다 따로 둔다 |
-| Paseo | `config.json`(에이전트 프로필, 프로바이더, relay). `daemon.auth`(비밀번호 해시)는 기기마다 따로 둔다. 데몬은 localhost에만 열고, apply 때마다 tailnet 6767 포트를 데몬으로 전달하는 `tailscale serve` 설정을 확인한다 |
+| Paseo | `config.json`(에이전트 프로필, 프로바이더, relay). `daemon.auth`(비밀번호 해시)와 `plugins`(플러그인 설치 기록)는 기기마다 따로 둔다. apply 때마다 [paseo-dot-worktrees](https://github.com/jo-minjun/paseo-dot-worktrees) 플러그인(워크트리를 프로젝트의 `.worktrees/`에 만든다)이 설치되어 있는지 확인한다. 데몬은 localhost에만 열고, apply 때마다 tailnet 6767 포트를 데몬으로 전달하는 `tailscale serve` 설정을 확인한다 |
 | 에이전트 스킬 | 직접 만든 스킬만 저장소에 둔다. 외부 스킬은 `~/.agents/.skill-lock.json`의 출처에서 `npx skills`로 설치하고, 업데이트는 `npx skills update -g`로 한다 |
 | 업무 설정 | private 저장소 [dotfiles-work](https://github.com/jo-minjun/dotfiles-work)를 별도 chezmoi 소스로 적용 (아래 참고) |
 | mise | 기본 도구(node lts, java corretto-25, python 3.15, kotlin 2.4), `~/Projects` 하위 설정 자동 신뢰 |
