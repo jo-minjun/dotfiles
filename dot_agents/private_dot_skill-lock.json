@@ -103,6 +103,176 @@
       "sourceUrl": "https://github.com/obra/superpowers.git",
       "updatedAt": "2026-10-09T12:54:33.222Z"
     },
+    "figma-3d-transforms": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.577Z",
+      "skillFolderHash": "0bc6af2e09c597a5cacb3df393f59a26e1ca02d1",
+      "skillPath": "skills/figma-3d-transforms/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.577Z"
+    },
+    "figma-code-connect": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.578Z",
+      "skillFolderHash": "e431043b082872e6f5401e09441d26dc7dbcc788",
+      "skillPath": "skills/figma-code-connect/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.578Z"
+    },
+    "figma-code-workflows": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.578Z",
+      "skillFolderHash": "4727638758f53ffef530120cecb7ec77a6e81551",
+      "skillPath": "skills/figma-code-workflows/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.578Z"
+    },
+    "figma-create-new-file": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.578Z",
+      "skillFolderHash": "eb73eadb18d4547d819dc8d8ba581a4646c4d80d",
+      "skillPath": "skills/figma-create-new-file/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.578Z"
+    },
+    "figma-design-to-code": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.578Z",
+      "skillFolderHash": "4ee4f35d1fa6f581f556f486736fe203c01d8c11",
+      "skillPath": "skills/figma-design-to-code/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.578Z"
+    },
+    "figma-generate-design": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.578Z",
+      "skillFolderHash": "f8050b4af0269bd7ef0916e67685af478d8d75fa",
+      "skillPath": "skills/figma-generate-design/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.578Z"
+    },
+    "figma-generate-diagram": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "ba8bc86d449efcaf338fa5c05d33fc16db965475",
+      "skillPath": "skills/figma-generate-diagram/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-generate-library": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "6327dfbb5f56d8265c69f7e03024ec65c3c55349",
+      "skillPath": "skills/figma-generate-library/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-generative-plugins": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "af84ca29b6cb0a44a898a268ca2ca8c3ee3cf006",
+      "skillPath": "skills/figma-generative-plugins/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-implement-motion": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "7f16ad41a115a9e3879a774374908874d6f48b2a",
+      "skillPath": "skills/figma-implement-motion/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-shaders": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "6cdf5210d22d243a8dfd82f2d86eb42cff2aad2e",
+      "skillPath": "skills/figma-shaders/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-spec": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "c5236f5a20dd0b67ea4a7e4fc62e9baeee06e420",
+      "skillPath": "skills/figma-spec/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-swiftui": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.579Z",
+      "skillFolderHash": "95f147a2e770e1e26d2a7ad65acc7a59f9a85169",
+      "skillPath": "skills/figma-swiftui/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.579Z"
+    },
+    "figma-use": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:29.770Z",
+      "skillFolderHash": "3771fa2e7246e42528c8ad38ef198d414354a52d",
+      "skillPath": "skills/figma-use/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.580Z"
+    },
+    "figma-use-figjam": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.580Z",
+      "skillFolderHash": "044b9f7b72d66908beaeb40bb66ad5f4331f493c",
+      "skillPath": "skills/figma-use-figjam/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.580Z"
+    },
+    "figma-use-motion": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.580Z",
+      "skillFolderHash": "726d83c1dc9bd1fd42da77d30f3cfbe2c710c998",
+      "skillPath": "skills/figma-use-motion/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.580Z"
+    },
+    "figma-use-slides": {
+      "commit": "43a06ff1738935ad5c3d9b0437b5373aaf45cdc3",
+      "installedAt": "2026-11-23T07:59:37.580Z",
+      "skillFolderHash": "05fdbd3db9c651ce4f66c1968eb8b0e5e03ff993",
+      "skillPath": "skills/figma-use-slides/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git",
+      "updatedAt": "2026-11-23T07:59:37.580Z"
+    },
     "find-skills": {
       "installedAt": "2026-03-24T08:46:03.634Z",
       "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
