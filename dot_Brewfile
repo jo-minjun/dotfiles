@@ -71,7 +71,6 @@ cask "font-noto-serif-cjk-kr"
 
 # Applications - AI
 cask "claude"
-cask "paseo"
 
 # Applications - Development
 cask "ghostty"
