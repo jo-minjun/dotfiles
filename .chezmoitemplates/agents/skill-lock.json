@@ -1,0 +1,290 @@
+{
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "pi",
+    "warp",
+    "zed",
+    "claude-code",
+    "hermes-agent"
+  ],
+  "skills": {
+    "brainstorming": {
+      "skillPath": "skills/brainstorming/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "databricks-core": {
+      "skillPath": "skills/databricks-core/SKILL.md",
+      "source": "databricks/databricks-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/databricks/databricks-agent-skills.git"
+    },
+    "databricks-dbsql": {
+      "skillPath": "skills/databricks-dbsql/SKILL.md",
+      "source": "databricks/databricks-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/databricks/databricks-agent-skills.git"
+    },
+    "databricks-jobs": {
+      "skillPath": "skills/databricks-jobs/SKILL.md",
+      "source": "databricks/databricks-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/databricks/databricks-agent-skills.git"
+    },
+    "diagnosing-superpowers": {
+      "skillPath": "skills/diagnosing-superpowers/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "dispatching-parallel-agents": {
+      "skillPath": "skills/dispatching-parallel-agents/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "doc-coauthoring": {
+      "pluginName": "example-skills",
+      "skillPath": "skills/doc-coauthoring/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "docx": {
+      "pluginName": "document-skills",
+      "skillPath": "skills/docx/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "executing-plans": {
+      "skillPath": "skills/executing-plans/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "figma-3d-transforms": {
+      "skillPath": "skills/figma-3d-transforms/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-code-connect": {
+      "skillPath": "skills/figma-code-connect/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-code-workflows": {
+      "skillPath": "skills/figma-code-workflows/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-create-new-file": {
+      "skillPath": "skills/figma-create-new-file/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-design-to-code": {
+      "skillPath": "skills/figma-design-to-code/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-generate-design": {
+      "skillPath": "skills/figma-generate-design/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-generate-diagram": {
+      "skillPath": "skills/figma-generate-diagram/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-generate-library": {
+      "skillPath": "skills/figma-generate-library/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-generative-plugins": {
+      "skillPath": "skills/figma-generative-plugins/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-implement-motion": {
+      "skillPath": "skills/figma-implement-motion/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-shaders": {
+      "skillPath": "skills/figma-shaders/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-spec": {
+      "skillPath": "skills/figma-spec/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-swiftui": {
+      "skillPath": "skills/figma-swiftui/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-use": {
+      "skillPath": "skills/figma-use/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-use-figjam": {
+      "skillPath": "skills/figma-use-figjam/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-use-motion": {
+      "skillPath": "skills/figma-use-motion/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "figma-use-slides": {
+      "skillPath": "skills/figma-use-slides/SKILL.md",
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/figma/mcp-server-guide.git"
+    },
+    "find-skills": {
+      "skillPath": "skills/find-skills/SKILL.md",
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git"
+    },
+    "finishing-a-development-branch": {
+      "skillPath": "skills/finishing-a-development-branch/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "frontend-design": {
+      "pluginName": "example-skills",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "frontend-slides": {
+      "skillPath": "SKILL.md",
+      "source": "zarazhangrui/frontend-slides",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/zarazhangrui/frontend-slides.git"
+    },
+    "pdf": {
+      "pluginName": "document-skills",
+      "skillPath": "skills/pdf/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "pptx": {
+      "pluginName": "document-skills",
+      "skillPath": "skills/pptx/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "receiving-code-review": {
+      "skillPath": "skills/receiving-code-review/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "requesting-code-review": {
+      "skillPath": "skills/requesting-code-review/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "skill-creator": {
+      "pluginName": "example-skills",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "subagent-driven-development": {
+      "skillPath": "skills/subagent-driven-development/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "systematic-debugging": {
+      "skillPath": "skills/systematic-debugging/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "test-driven-development": {
+      "skillPath": "skills/test-driven-development/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "using-git-worktrees": {
+      "skillPath": "skills/using-git-worktrees/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "using-superpowers": {
+      "skillPath": "skills/using-superpowers/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "verification-before-completion": {
+      "skillPath": "skills/verification-before-completion/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "writing-plans": {
+      "skillPath": "skills/writing-plans/SKILL.md",
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git"
+    },
+    "xlsx": {
+      "pluginName": "document-skills",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    }
+  },
+  "version": 3
+}

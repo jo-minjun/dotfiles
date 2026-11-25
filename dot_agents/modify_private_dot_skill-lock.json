@@ -1,0 +1,20 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* 본문은 .chezmoitemplates/agents/skill-lock.json 이고, 스킬마다 .skillLock.localFields 는 현재 파일의 값을 유지한다 */ -}}
+{{- $result := include ".chezmoitemplates/agents/skill-lock.json" | fromJson -}}
+{{- if .chezmoi.stdin | trim -}}
+{{-   $current := fromJson .chezmoi.stdin -}}
+{{-   if and (hasKey $current "skills") (hasKey $result "skills") -}}
+{{-     $currentSkills := index $current "skills" -}}
+{{-     range $name, $skill := index $result "skills" -}}
+{{-       if hasKey $currentSkills $name -}}
+{{-         $old := index $currentSkills $name -}}
+{{-         range $field := $.skillLock.localFields -}}
+{{-           if hasKey $old $field -}}
+{{-             $_ := set $skill $field (index $old $field) -}}
+{{-           end -}}
+{{-         end -}}
+{{-       end -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+{{- toPrettyJson $result -}}

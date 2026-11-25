@@ -38,6 +38,17 @@ else
   echo "  [SKIP] $claude_target 이 없다"
 fi
 
+# ~/.agents/.skill-lock.json: 스킬마다 .chezmoidata.toml 의 skillLock.localFields 를 뺀다 (dot_agents/modify_private_dot_skill-lock.json)
+lock_target="$HOME/.agents/.skill-lock.json"
+if [[ -f "$lock_target" ]]; then
+  # 필드 목록을 못 읽으면 기기별 값이 본문에 섞이므로 여기서 실패시킨다.
+  fields=$(chezmoi data --format json | jq -ce '.skillLock.localFields | arrays')
+  jq --sort-keys --argjson fields "$fields" '.skills |= map_values(delpaths([$fields[] | [.]]))' "$lock_target" > "$tmp"
+  write_body "$source_dir/.chezmoitemplates/agents/skill-lock.json"
+else
+  echo "  [SKIP] $lock_target 이 없다"
+fi
+
 # ~/.codex/config.toml: Orca 훅의 hooks.state.* 표와 trusted_hash 줄을 빼고 홈 경로를 템플릿으로 바꾼다 (dot_codex/modify_private_config.toml.tmpl)
 codex_target="$HOME/.codex/config.toml"
 codex_hooks="$HOME/.codex/hooks.json"

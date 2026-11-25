@@ -12,6 +12,7 @@
     - Orca 앱이 넣는 hooks 항목(명령에 `.orca/agent-hooks/`가 들어간 항목)은 앱이 다시 쓰는 값이라 본문에 넣지 않는다. apply 때 현재 파일의 항목을 그대로 유지한다
   - `~/.codex/config.toml`: 본문 `.chezmoitemplates/codex/config.toml`, 스크립트 `dot_codex/modify_private_config.toml.tmpl`. `hooks.state.*` 표의 `trusted_hash`는 기기의 `~/.codex/hooks.json`으로 정해지므로 본문에 넣지 마라
     - Orca 앱이 `~/.codex/hooks.json`에 넣은 훅(명령에 `orca-agent-hook`이 들어간 훅)의 `hooks.state.*` 표도 본문에 넣지 않는다. apply 때 본문에 없는 `hooks.state.*` 표는 현재 파일의 것을 유지한다
+  - `~/.agents/.skill-lock.json`: 본문 `.chezmoitemplates/agents/skill-lock.json`, 템플릿 `dot_agents/modify_private_dot_skill-lock.json`. 스킬마다 `npx skills`가 설치한 기기에서 정하는 필드(`.chezmoidata.toml`의 `skillLock.localFields`)는 본문에 넣지 않고, apply 때 현재 파일의 값을 유지한다
 - 본문 파일을 지우거나 옮기면 그 파일을 `include`하는 `.chezmoiscripts`도 같이 고쳐라. 고치지 않으면 apply가 템플릿 오류로 실패한다
 
 # Brewfile
