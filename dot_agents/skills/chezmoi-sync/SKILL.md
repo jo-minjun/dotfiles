@@ -72,8 +72,8 @@ chezmoi re-add <target>...
 
 | 대상 | `modify_` 소스 | 본문 | 기기마다 따로 두는 값 |
 | --- | --- | --- | --- |
-| `~/.claude/settings.json` | `dot_claude/modify_settings.json` | `.chezmoitemplates/claude/settings.json` | `.chezmoidata.toml`의 `claudeSettings.localKeys`(`model`, `effortLevel`, `modelSettings`) |
-| `~/.codex/config.toml` | `dot_codex/modify_private_config.toml.tmpl` | `.chezmoitemplates/codex/config.toml` | `hooks.state.*` 표의 `trusted_hash` |
+| `~/.claude/settings.json` | `dot_claude/modify_settings.json` | `.chezmoitemplates/claude/settings.json` | `.chezmoidata.toml`의 `claudeSettings.localKeys`(`model`, `effortLevel`, `modelSettings`, `theme`), Orca 앱이 넣는 hooks 항목(`.orca/agent-hooks/`) |
+| `~/.codex/config.toml` | `dot_codex/modify_private_config.toml.tmpl` | `.chezmoitemplates/codex/config.toml` | `hooks.state.*` 표의 `trusted_hash`, Orca 훅의 `hooks.state.*` 표 |
 
 스크립트는 두 본문 전체를 덮어쓴다. 무관한 변경이 섞여 있으면 실행 전에 반영 범위를 사용자에게 확인한다.
 

@@ -1,5 +1,7 @@
 {{- /* chezmoi:modify-template */ -}}
 {{- /* 본문은 .chezmoitemplates/claude/settings.json 이고, .claudeSettings.localKeys 는 현재 파일의 값을 유지한다 */ -}}
+{{- /* Orca 앱이 넣는 hooks 항목은 앱이 다시 쓰는 값이라 본문에 두지 않고, 현재 파일의 항목을 그대로 붙인다 */ -}}
+{{- $orcaHookMarker := ".orca/agent-hooks/" -}}
 {{- $result := include ".chezmoitemplates/claude/settings.json" | fromJson -}}
 {{- if .chezmoi.stdin | trim -}}
 {{-   $current := fromJson .chezmoi.stdin -}}
@@ -7,6 +9,24 @@
 {{-     if hasKey $current $key -}}
 {{-       $_ := set $result $key (index $current $key) -}}
 {{-     end -}}
+{{-   end -}}
+{{-   if hasKey $current "hooks" -}}
+{{-     $hooks := dict -}}
+{{-     if hasKey $result "hooks" -}}
+{{-       $hooks = index $result "hooks" -}}
+{{-     end -}}
+{{-     range $event, $entries := index $current "hooks" -}}
+{{-       range $entry := $entries -}}
+{{-         if contains $orcaHookMarker (toJson $entry) -}}
+{{-           $list := list -}}
+{{-           if hasKey $hooks $event -}}
+{{-             $list = index $hooks $event -}}
+{{-           end -}}
+{{-           $_ := set $hooks $event (append $list $entry) -}}
+{{-         end -}}
+{{-       end -}}
+{{-     end -}}
+{{-     $_ := set $result "hooks" $hooks -}}
 {{-   end -}}
 {{- end -}}
 {{- toPrettyJson $result -}}

@@ -133,6 +133,5 @@
   },
   "switchModelsOnFlag": true,
   "syncClaudeAiSkills": false,
-  "theme": "dark",
   "tui": "fullscreen"
 }
