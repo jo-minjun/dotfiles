@@ -1,8 +1,10 @@
 {{- /* chezmoi:modify-template */ -}}
 {{- /* 본문은 .chezmoitemplates/claude/settings.json 이고, .claudeSettings.localKeys 는 현재 파일의 값을 유지한다 */ -}}
-{{- /* Orca 앱이 넣는 hooks 항목은 앱이 다시 쓰는 값이라 본문에 두지 않고, 현재 파일의 항목을 그대로 붙인다 */ -}}
+{{- /* Orca 앱이 넣는 hooks 항목은 앱이 다시 쓰는 값이라 본문에 두지 않고, 현재 파일의 항목을 조각 하나로 모아 붙인다 */ -}}
+{{- /* 다른 소스가 .claudeSettings.fragmentDir 에 둔 조각(*.json)도 같이 합친다. 최상위 객체 안의 배열은 없는 항목만 덧붙이고, 그 밖의 값은 조각 값으로 바꾼다 */ -}}
 {{- $orcaHookMarker := ".orca/agent-hooks/" -}}
 {{- $result := include ".chezmoitemplates/claude/settings.json" | fromJson -}}
+{{- $fragments := list -}}
 {{- if .chezmoi.stdin | trim -}}
 {{-   $current := fromJson .chezmoi.stdin -}}
 {{-   range $key := .claudeSettings.localKeys -}}
@@ -11,22 +13,39 @@
 {{-     end -}}
 {{-   end -}}
 {{-   if hasKey $current "hooks" -}}
-{{-     $hooks := dict -}}
-{{-     if hasKey $result "hooks" -}}
-{{-       $hooks = index $result "hooks" -}}
-{{-     end -}}
+{{-     $orcaHooks := dict -}}
 {{-     range $event, $entries := index $current "hooks" -}}
 {{-       range $entry := $entries -}}
 {{-         if contains $orcaHookMarker (toJson $entry) -}}
-{{-           $list := list -}}
-{{-           if hasKey $hooks $event -}}
-{{-             $list = index $hooks $event -}}
-{{-           end -}}
-{{-           $_ := set $hooks $event (append $list $entry) -}}
+{{-           $_ := set $orcaHooks $event (append (get $orcaHooks $event | default (list)) $entry) -}}
 {{-         end -}}
 {{-       end -}}
 {{-     end -}}
-{{-     $_ := set $result "hooks" $hooks -}}
+{{-     $fragments = append $fragments (dict "hooks" $orcaHooks) -}}
+{{-   end -}}
+{{- end -}}
+{{- range $path := glob (joinPath .chezmoi.destDir .claudeSettings.fragmentDir "*.json") -}}
+{{-   $fragments = append $fragments (include $path | fromJson) -}}
+{{- end -}}
+{{- range $fragment := $fragments -}}
+{{-   range $key, $value := $fragment -}}
+{{-     if kindIs "map" $value -}}
+{{-       $section := get $result $key | default (dict) -}}
+{{-       range $name, $item := $value -}}
+{{-         if kindIs "slice" $item -}}
+{{-           $list := get $section $name | default (list) -}}
+{{-           range $entry := $item -}}
+{{-             if not (has $entry $list) -}}
+{{-               $list = append $list $entry -}}
+{{-             end -}}
+{{-           end -}}
+{{-           $item = $list -}}
+{{-         end -}}
+{{-         $_ := set $section $name $item -}}
+{{-       end -}}
+{{-       $value = $section -}}
+{{-     end -}}
+{{-     $_ := set $result $key $value -}}
 {{-   end -}}
 {{- end -}}
 {{- toPrettyJson $result -}}

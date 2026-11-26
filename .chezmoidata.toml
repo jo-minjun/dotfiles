@@ -2,6 +2,9 @@
 # 소스 본문(.chezmoitemplates/claude/settings.json)에는 넣지 않고, apply 때 그 기기의 현재 값을 유지한다.
 [claudeSettings]
 localKeys = ["model", "effortLevel", "modelSettings", "theme"]
+# 다른 chezmoi 소스(업무 소스 등)가 ~/.claude/settings.json 에 합칠 조각(*.json)을 두는 홈 기준 디렉터리다.
+# 조각 항목은 그 소스가 관리하므로 소스 본문에는 넣지 않고, apply 때 합친다.
+fragmentDir = ".config/chezmoi/claude-settings.d"
 
 # ~/.agents/.skill-lock.json 의 스킬 항목에서 기기마다 따로 두는 필드다.
 # `npx skills`가 설치한 기기에서 정하는 값이라, 소스 본문(.chezmoitemplates/agents/skill-lock.json)에는 넣지 않고 apply 때 그 기기의 현재 값을 유지한다.

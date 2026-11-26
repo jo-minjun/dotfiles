@@ -28,3 +28,14 @@ fi
 
 echo "=== Applying work dotfiles ==="
 chezmoi --source "$WORK_SOURCE" --persistent-state "$WORK_STATE" apply
+
+# 업무 apply 는 settings.json 조각을 공개 파일 적용 단계보다 늦게 두거나 바꾼다. 그래서 공개 템플릿으로 settings.json 을 다시 만든다
+# 이 apply 가 상태 파일 잠금을 잡고 있어 apply 는 다시 부를 수 없지만, cat 은 잠금 없이 동작한다
+CLAUDE_SETTINGS="{{ .chezmoi.destDir }}/.claude/settings.json"
+rendered=$(mktemp)
+trap 'rm -f "$rendered"' EXIT
+chezmoi --source "{{ .chezmoi.sourceDir }}" --destination "{{ .chezmoi.destDir }}" cat "$CLAUDE_SETTINGS" > "$rendered"
+if ! cmp -s "$rendered" "$CLAUDE_SETTINGS"; then
+  cat "$rendered" > "$CLAUDE_SETTINGS"
+  echo "Updated $CLAUDE_SETTINGS with settings fragments"
+fi

@@ -72,11 +72,12 @@ chezmoi re-add <target>...
 
 | 대상 | `modify_` 소스 | 본문 | 기기마다 따로 두는 값 |
 | --- | --- | --- | --- |
-| `~/.claude/settings.json` | `dot_claude/modify_settings.json` | `.chezmoitemplates/claude/settings.json` | `.chezmoidata.toml`의 `claudeSettings.localKeys`(`model`, `effortLevel`, `modelSettings`, `theme`), Orca 앱이 넣는 hooks 항목(`.orca/agent-hooks/`) |
+| `~/.claude/settings.json` | `dot_claude/modify_settings.json` | `.chezmoitemplates/claude/settings.json` | `.chezmoidata.toml`의 `claudeSettings.localKeys`(`model`, `effortLevel`, `modelSettings`, `theme`), Orca 앱이 넣는 hooks 항목(`.orca/agent-hooks/`), 다른 소스가 `claudeSettings.fragmentDir`에 둔 조각의 항목 |
 | `~/.agents/.skill-lock.json` | `dot_agents/modify_private_dot_skill-lock.json` | `.chezmoitemplates/agents/skill-lock.json` | 스킬마다 `.chezmoidata.toml`의 `skillLock.localFields`(`commit`, `installedAt`, `skillFolderHash`, `updatedAt`) |
 | `~/.codex/config.toml` | `dot_codex/modify_private_config.toml.tmpl` | `.chezmoitemplates/codex/config.toml` | `hooks.state.*` 표의 `trusted_hash`, Orca 훅의 `hooks.state.*` 표 |
 
 스크립트는 세 본문 전체를 덮어쓴다. 무관한 변경이 섞여 있으면 실행 전에 반영 범위를 사용자에게 확인한다.
+`settings.json` 본문에 다른 소스의 항목이 남으면(조각 디렉터리의 `*.markers`에 적힌 글자가 남으면) 스크립트는 본문을 쓰지 않고 실패한다. 그 소스의 조각을 현재 `settings.json`에 맞게 고친 뒤 다시 실행한다.
 
 ```bash
 bash ~/.claude/skills/chezmoi-sync/scripts/capture-modify-files.sh

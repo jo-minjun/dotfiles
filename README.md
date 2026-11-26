@@ -76,7 +76,7 @@ chezmoi로 관리하는 macOS 개발 환경. 명령어 하나로 새 머신 설�
 | oh-my-zsh + Powerlevel10k | 쉘 테마 |
 | Git 이메일 분리 | `~/Projects/work/` → 회사 이메일, 그 외 → 개인 이메일 |
 | Ghostty | JetBrains Mono, Idea 테마 |
-| Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬. `settings.json`의 `model`·`effortLevel`·`modelSettings`는 기기마다 따로 둔다 |
+| Claude Code | LSP, statusline, 권한 설정, 서브에이전트, 스킬. `settings.json`의 `model`·`effortLevel`·`modelSettings`·`theme`은 기기마다 따로 두고, 업무 설정이 배포한 조각은 apply 때 합친다 |
 | Codex | `config.toml`(MCP, 플러그인, 프로젝트 신뢰). `hooks.state`의 `trusted_hash`는 기기마다 따로 둔다 |
 | 에이전트 스킬 | 직접 만든 스킬만 저장소에 둔다. 외부 스킬은 `~/.agents/.skill-lock.json`의 출처에서 `npx skills`로 설치하고, 업데이트는 `npx skills update -g`로 한다 |
 | 업무 설정 | private 저장소 [dotfiles-work](https://github.com/jo-minjun/dotfiles-work)를 별도 chezmoi 소스로 적용 (아래 참고) |

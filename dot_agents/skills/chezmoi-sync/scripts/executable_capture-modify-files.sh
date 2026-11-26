@@ -4,6 +4,7 @@
 set -euo pipefail
 
 source_dir="$(chezmoi source-path)"
+chezmoi_data=$(chezmoi data --format json)
 tmp=$(mktemp)
 trap 'rm -f "$tmp"' EXIT
 
@@ -21,18 +22,47 @@ echo "=== modify_ 파일 본문 반영 ==="
 CLAUDE_ORCA_HOOK_MARKER=".orca/agent-hooks/"
 CODEX_ORCA_HOOK_MARKER="orca-agent-hook"
 
-# ~/.claude/settings.json: .chezmoidata.toml 의 claudeSettings.localKeys 와 Orca 훅을 뺀다 (dot_claude/modify_settings.json)
+# ~/.claude/settings.json: .chezmoidata.toml 의 claudeSettings.localKeys, Orca 훅, 다른 소스가 둔 조각의 항목을 뺀다 (dot_claude/modify_settings.json)
 claude_target="$HOME/.claude/settings.json"
 if [[ -f "$claude_target" ]]; then
-  # 키 목록을 못 읽으면 기기별 키가 본문에 섞이므로 여기서 실패시킨다.
-  keys=$(chezmoi data --format json | jq -ce '.claudeSettings.localKeys | arrays')
-  jq --sort-keys --argjson keys "$keys" --arg marker "$CLAUDE_ORCA_HOOK_MARKER" '
+  # 키 목록이나 조각 위치를 못 읽으면 기기별 키나 다른 소스의 항목이 본문에 섞이므로 여기서 실패시킨다.
+  keys=$(jq -ce '.claudeSettings.localKeys | arrays' <<<"$chezmoi_data")
+  fragment_dir="$HOME/$(jq -re '.claudeSettings.fragmentDir | strings' <<<"$chezmoi_data")"
+  fragments='[]'
+  if compgen -G "$fragment_dir/*.json" >/dev/null; then
+    fragments=$(jq -cs '.' "$fragment_dir"/*.json)
+  fi
+  claude_body="$source_dir/.chezmoitemplates/claude/settings.json"
+  # 조각 항목은 modify_ 템플릿과 반대 규칙으로 뺀다. 조각이 바꾼 값은 지금 본문의 값으로 되돌리고, 본문에 없던 값은 지운다.
+  # 배열은 본문에 없던 조각 항목만 뺀다. 그래서 본문과 조각에 함께 있는 항목은 본문에 남는다.
+  jq --sort-keys --argjson keys "$keys" --arg marker "$CLAUDE_ORCA_HOOK_MARKER" --argjson fragments "$fragments" \
+    --slurpfile body "$claude_body" '
+    def has_path($p): getpath($p[:-1]) | type == "object" and has($p[-1]);
+    def restore($p): if $body[0] | has_path($p) then setpath($p; $body[0] | getpath($p)) else delpaths([$p]) end;
     delpaths([$keys[] | [.]])
     | if has("hooks") then
         .hooks |= (map_values(map(select(tojson | contains($marker) | not)))
                    | with_entries(select(.value | length > 0)))
       else . end
+    | reduce ($fragments[] | to_entries[]) as {key: $key, value: $value} (.;
+        if has_path([$key]) | not then .
+        elif ($value | type) == "object" and (.[$key] | type) == "object" then
+          reduce ($value | to_entries[]) as {key: $name, value: $item} (.;
+            [$key, $name] as $p
+            | if has_path($p) | not then .
+              elif ($item | type) == "array" and (getpath($p) | type) == "array" then
+                setpath($p; getpath($p) - ($item - (($body[0] | getpath($p) | arrays) // [])))
+                | if getpath($p) == [] then restore($p) else . end
+              else restore($p) end)
+          | if .[$key] == {} then restore([$key]) else . end
+        else restore([$key]) end)
   ' "$claude_target" > "$tmp"
+  # 조각과 글자가 조금만 달라도 위에서 빠지지 않으므로, 조각 소스가 *.markers 에 적은 글자가 남으면 본문을 쓰지 않는다.
+  if compgen -G "$fragment_dir/*.markers" >/dev/null && leaked=$(cat "$fragment_dir"/*.markers | grep -v '^$' | grep -F -f - "$tmp"); then
+    echo "  [FAIL] $claude_body 에 다른 소스의 항목이 남는다. 조각을 현재 settings.json 에 맞게 고친 뒤 다시 실행한다:" >&2
+    echo "$leaked" >&2
+    exit 1
+  fi
   write_body "$source_dir/.chezmoitemplates/claude/settings.json"
 else
   echo "  [SKIP] $claude_target 이 없다"
@@ -42,7 +72,7 @@ fi
 lock_target="$HOME/.agents/.skill-lock.json"
 if [[ -f "$lock_target" ]]; then
   # 필드 목록을 못 읽으면 기기별 값이 본문에 섞이므로 여기서 실패시킨다.
-  fields=$(chezmoi data --format json | jq -ce '.skillLock.localFields | arrays')
+  fields=$(jq -ce '.skillLock.localFields | arrays' <<<"$chezmoi_data")
   jq --sort-keys --argjson fields "$fields" '.skills |= map_values(delpaths([$fields[] | [.]]))' "$lock_target" > "$tmp"
   write_body "$source_dir/.chezmoitemplates/agents/skill-lock.json"
 else
