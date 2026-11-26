@@ -15,6 +15,17 @@ write_body() {
   echo "  [OK] ${1#"$HOME"/}"
 }
 
+# 조각과 글자가 조금만 달라도 조각 항목이 빠지지 않으므로, 조각 소스가 *.markers 에 적은 글자가 $tmp 에 남으면 본문을 쓰지 않는다.
+# $1: 조각 디렉터리, $2: 본문 경로, $3: 고치는 방법
+fail_on_markers() {
+  local leaked
+  if compgen -G "$1/*.markers" >/dev/null && leaked=$(cat "$1"/*.markers | grep -v '^$' | grep -F -f - "$tmp"); then
+    echo "  [FAIL] $2 에 다른 소스의 항목이 남는다. $3:" >&2
+    echo "$leaked" >&2
+    exit 1
+  fi
+}
+
 echo "=== modify_ 파일 본문 반영 ==="
 
 # Orca 앱이 settings.json·hooks.json 에 넣는 훅은 앱이 다시 쓰는 값이라 본문에서 뺀다.
@@ -57,12 +68,7 @@ if [[ -f "$claude_target" ]]; then
           | if .[$key] == {} then restore([$key]) else . end
         else restore([$key]) end)
   ' "$claude_target" > "$tmp"
-  # 조각과 글자가 조금만 달라도 위에서 빠지지 않으므로, 조각 소스가 *.markers 에 적은 글자가 남으면 본문을 쓰지 않는다.
-  if compgen -G "$fragment_dir/*.markers" >/dev/null && leaked=$(cat "$fragment_dir"/*.markers | grep -v '^$' | grep -F -f - "$tmp"); then
-    echo "  [FAIL] $claude_body 에 다른 소스의 항목이 남는다. 조각을 현재 settings.json 에 맞게 고친 뒤 다시 실행한다:" >&2
-    echo "$leaked" >&2
-    exit 1
-  fi
+  fail_on_markers "$fragment_dir" "$claude_body" "조각을 현재 settings.json 에 맞게 고친 뒤 다시 실행한다"
   write_body "$source_dir/.chezmoitemplates/claude/settings.json"
 else
   echo "  [SKIP] $claude_target 이 없다"
@@ -79,10 +85,13 @@ else
   echo "  [SKIP] $lock_target 이 없다"
 fi
 
-# ~/.codex/config.toml: Orca 훅의 hooks.state.* 표와 trusted_hash 줄을 빼고 홈 경로를 템플릿으로 바꾼다 (dot_codex/modify_private_config.toml.tmpl)
+# ~/.codex/config.toml: Orca 훅의 hooks.state.* 표, 다른 소스가 *.tables 에 적은 표, trusted_hash 줄을 빼고 홈 경로를 템플릿으로 바꾼다 (dot_codex/modify_private_config.toml.tmpl)
 codex_target="$HOME/.codex/config.toml"
 codex_hooks="$HOME/.codex/hooks.json"
 if [[ -f "$codex_target" ]]; then
+  # 조각 위치를 못 읽으면 다른 소스의 표가 본문에 섞이므로 여기서 실패시킨다.
+  codex_fragment_dir="$HOME/$(jq -re '.codexConfig.fragmentDir | strings' <<<"$chezmoi_data")"
+  owned_tables=$(cat "$codex_fragment_dir"/*.tables 2>/dev/null || true)
   if grep -q '{{' "$codex_target"; then
     echo "  [FAIL] $codex_target 에 '{{' 가 있어 템플릿 본문으로 쓸 수 없다" >&2
     exit 1
@@ -101,15 +110,20 @@ if [[ -f "$codex_target" ]]; then
   fi
   # 뺀 표 앞의 빈 줄이 겹치거나 파일 끝에 남지 않도록 빈 줄은 다음 출력 줄 앞에서만 쓴다.
   # BSD awk 는 -v 값에 줄바꿈을 받지 않아 환경 변수로 넘긴다.
-  ORCA_TABLES="$orca_tables" awk '
-    BEGIN { n = split(ENVIRON["ORCA_TABLES"], names, "\n"); for (i = 1; i <= n; i++) if (names[i] != "") skip[names[i]] = 1 }
-    /^\[/ { table = $0; skipping = (table in skip) }
+  # 다른 소스 표는 modify_ 스크립트와 같은 규칙(.chezmoitemplates/codex/owned-tables.awk)으로 뺀다.
+  ORCA_TABLES="$orca_tables" OWNED_TABLES="$owned_tables" awk "$(cat "$source_dir/.chezmoitemplates/codex/owned-tables.awk")"'
+    BEGIN {
+      n = split(ENVIRON["ORCA_TABLES"], names, "\n"); for (i = 1; i <= n; i++) if (names[i] != "") skip[names[i]] = 1
+      load_owned()
+    }
+    /^\[/ { table = $0; skipping = (table in skip) || is_owned(table) }
     skipping { next }
     table ~ /^\[hooks\.state\./ && /^trusted_hash[[:space:]]*=/ { next }
     /^[[:space:]]*$/ { blanks = blanks $0 "\n"; next }
     { printf "%s", blanks; blanks = ""; print }
   ' "$codex_target" |
     sed -E "s#${HOME}([/\"])#{{ .chezmoi.homeDir }}\\1#g" > "$tmp"
+  fail_on_markers "$codex_fragment_dir" "$source_dir/.chezmoitemplates/codex/config.toml" "그 소스의 *.tables 에 표를 더하거나 현재 config.toml 에서 그 글자를 뺀 뒤 다시 실행한다"
   write_body "$source_dir/.chezmoitemplates/codex/config.toml"
 else
   echo "  [SKIP] $codex_target 이 없다"

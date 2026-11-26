@@ -5,7 +5,9 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+# pnpm 12는 global 명령을 $PNPM_HOME/bin 에 두고, 이 폴더가 PATH에 없으면 `pnpm add -g`가 실패한다
+# $PNPM_HOME 은 pnpm 10 이하가 global 명령을 둔 위치라 남겨 둔다
+export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 
 # Claude Code configuration
 export CLAUDE_BIN_PATH="$HOME/.local/bin/claude"

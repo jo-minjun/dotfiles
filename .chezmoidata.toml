@@ -10,3 +10,9 @@ fragmentDir = ".config/chezmoi/claude-settings.d"
 # `npx skills`가 설치한 기기에서 정하는 값이라, 소스 본문(.chezmoitemplates/agents/skill-lock.json)에는 넣지 않고 apply 때 그 기기의 현재 값을 유지한다.
 [skillLock]
 localFields = ["commit", "installedAt", "skillFolderHash", "updatedAt"]
+
+# 다른 chezmoi 소스(업무 소스 등)가 ~/.codex/config.toml 에서 맡는 표 이름(*.tables, 한 줄에 표 머리글 하나)과
+# 소스 본문에 남으면 안 되는 글자(*.markers, 한 줄에 하나)를 두는 홈 기준 디렉터리다.
+# 그 표는 그 소스가 codex 명령으로 쓰므로 소스 본문(.chezmoitemplates/codex/config.toml)에는 넣지 않고, apply 때 현재 파일의 표를 유지한다.
+[codexConfig]
+fragmentDir = ".config/chezmoi/codex-config.d"
